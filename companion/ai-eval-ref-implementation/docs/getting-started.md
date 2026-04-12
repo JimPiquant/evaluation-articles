@@ -6,7 +6,8 @@ This guide walks you through deploying the reference implementation and running 
 
 - **Azure subscription** with permissions to create Cognitive Services / AI Services resources
 - **Azure CLI** (`az`) v2.60+ installed and authenticated (`az login`)
-- **Python 3.10+** with `pip`
+- **Python 3.10+**
+- **[uv](https://docs.astral.sh/uv/)** — fast Python package and environment manager (`curl -LsSf https://astral.sh/uv/install.sh | sh`)
 - **GitHub account** with a repository for CI/CD workflows
 
 ## Step 1: Deploy infrastructure
@@ -29,8 +30,10 @@ Note the outputs — you'll need the AI Services endpoint and deployment names.
 ## Step 2: Create the agent
 
 ```bash
-# Install dependencies
-pip install -r src/requirements.txt
+# Create a virtual environment and install dependencies
+uv venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+uv pip install -r src/requirements.txt
 
 # Set environment variables
 export AZURE_AI_PROJECT_ENDPOINT="https://<your-account>.services.ai.azure.com/api/projects/<your-project>"

@@ -919,10 +919,12 @@ ai-eval-ref-implementation/
    # Edit .env with your Foundry project endpoint, deployment name, etc.
    ```
 
-4. **Install dependencies and run your first evaluation**
+4. **Create a virtual environment, install dependencies, and run your first evaluation**
 
    ```bash
-   pip install -r src/requirements.txt
+   uv venv .venv
+   source .venv/bin/activate   # Windows: .venv\Scripts\activate
+   uv pip install -r src/requirements.txt
    python src/evaluation/run_local_eval.py
    ```
 

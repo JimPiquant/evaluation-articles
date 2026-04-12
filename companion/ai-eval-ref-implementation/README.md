@@ -18,9 +18,9 @@ This repository provides a working implementation of an AI evaluation pipeline f
 
 ```
 ┌─────────────┐     ┌──────────────────┐     ┌─────────────────┐
-│  Golden      │────▶│  Evaluation      │────▶│  Gate Decision  │
-│  Dataset     │     │  Pipeline        │     │  (pass / fail)  │
-│  (JSONL)     │     │  (SDK + Action)  │     │                 │
+│  Golden     │────▶│  Evaluation      │────▶│  Gate Decision  │
+│  Dataset    │     │  Pipeline        │     │  (pass / fail)  │
+│  (JSONL)    │     │  (SDK + Action)  │     │                 │
 └─────────────┘     └──────────────────┘     └─────────────────┘
                            │
                     ┌──────┴──────┐
@@ -34,6 +34,7 @@ This repository provides a working implementation of an AI evaluation pipeline f
 
 - Azure subscription with permissions to create Foundry resources
 - Python 3.10+
+- [uv](https://docs.astral.sh/uv/) — fast Python package and environment manager
 - Azure CLI (`az`) installed and authenticated
 - GitHub account (for CI/CD workflows)
 
@@ -48,10 +49,12 @@ az deployment group create \
   --parameters infra/parameters/dev.bicepparam
 ```
 
-### 2. Install Python dependencies
+### 2. Create a virtual environment and install dependencies
 
 ```bash
-pip install -r src/requirements.txt
+uv venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+uv pip install -r src/requirements.txt
 ```
 
 ### 3. Configure environment
