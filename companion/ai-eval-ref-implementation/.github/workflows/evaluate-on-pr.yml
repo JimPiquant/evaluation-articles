@@ -1,0 +1,47 @@
+# AI Agent Evaluation — Pull Request Gate
+#
+# Runs evaluation on the Contoso Support Agent when a PR is opened or updated.
+# Uses the microsoft/ai-agent-evals GitHub Action to invoke the agent,
+# run evaluators, and generate a summary report.
+#
+# Prerequisites:
+# - Azure OIDC federated credentials configured (see docs/getting-started.md)
+# - GitHub repository variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_SUBSCRIPTION_ID
+# - Foundry agent deployed and accessible
+
+name: "AI Agent Evaluation — PR Gate"
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "datasets/**"
+      - ".github/workflows/evaluate-on-pr.yml"
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Azure login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Run agent evaluation
+        uses: microsoft/ai-agent-evals@v3-beta
+        with:
+          azure-ai-project-endpoint: ${{ vars.AZURE_AI_PROJECT_ENDPOINT }}
+          deployment-name: ${{ vars.EVALUATION_MODEL }}
+          agent-ids: ${{ vars.AGENT_ID }}
+          data-path: ${{ github.workspace }}/datasets/eval-config.json

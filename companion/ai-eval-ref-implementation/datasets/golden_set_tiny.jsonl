@@ -1,0 +1,15 @@
+{"query": "I need help tracking my order #12345", "ground_truth": "The agent should look up order #12345 using the lookup_order tool and provide the current status."}
+{"query": "How do I reset my password?", "ground_truth": "The agent should search the knowledge base for password reset instructions and provide step-by-step guidance."}
+{"query": "I want to return a defective product I received last week", "ground_truth": "The agent should look up recent orders, identify the defective product, and create a return/support ticket."}
+{"query": "What are your business hours?", "ground_truth": "The agent should search the knowledge base for business hours information and respond with the hours."}
+{"query": "My package was damaged during shipping and I want a replacement", "ground_truth": "The agent should look up the order, verify the shipping issue, and create a replacement ticket."}
+{"query": "Can you help me compare two products before I buy?", "ground_truth": "The agent should search the knowledge base for product information and provide a comparison."}
+{"query": "I was charged twice for my last order", "ground_truth": "The agent should look up the order to verify the double charge and create a billing support ticket."}
+{"query": "How do I cancel my subscription?", "ground_truth": "The agent should search the knowledge base for cancellation policy and guide the user through the process."}
+{"query": "I need to update my shipping address for an upcoming order", "ground_truth": "The agent should look up the pending order and guide the user through the address update process."}
+{"query": "What's your refund policy for digital products?", "ground_truth": "The agent should search the knowledge base for the digital products refund policy and provide the relevant details."}
+{"query": "I placed an order three days ago and haven't received a confirmation email", "ground_truth": "The agent should look up recent orders for the user and verify the order status and confirmation details."}
+{"query": "Can you escalate my issue to a manager? I've been waiting for a resolution for two weeks.", "ground_truth": "The agent should look up the existing ticket history and create an escalation ticket."}
+{"query": "I received the wrong item in my order #67890", "ground_truth": "The agent should look up order #67890, verify the wrong item, and create a replacement/return ticket."}
+{"query": "Do you offer student discounts?", "ground_truth": "The agent should search the knowledge base for discount policies and provide information about student discounts."}
+{"query": "I need help with a bulk order for my company — about 500 units", "ground_truth": "The agent should search the knowledge base for bulk order policies and create a ticket for the sales team."}
