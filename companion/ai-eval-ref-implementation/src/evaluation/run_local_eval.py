@@ -1,8 +1,15 @@
 """
 Local Evaluation Script — Development Workflow
 
-Run evaluators locally against the tiny development dataset using the
-azure-ai-evaluation SDK. Use this for rapid iteration during development.
+Run quality and safety evaluators locally against reference answers in the
+tiny development dataset. This script scores ground_truth (your "ideal"
+answers) to establish a baseline quality bar before you wire up the live
+agent. It helps you validate that your golden dataset is well-formed and
+that the evaluator configuration works end-to-end.
+
+To evaluate the live agent, use one of:
+  - run_cloud_eval.py   (Foundry cloud evaluation with agent target)
+  - The GitHub Action    (CI/CD pipeline with microsoft/ai-agent-evals)
 
 Usage:
     python run_local_eval.py
@@ -43,7 +50,12 @@ DATASET_PATH = REPO_ROOT / "datasets" / "golden_set_tiny.jsonl"
 
 
 def run_local_evaluation():
-    """Run a local evaluation with quality and safety evaluators."""
+    """Run a local evaluation scoring ground_truth as a baseline quality check.
+
+    Maps dataset ground_truth (reference answers) into the 'response' column
+    so quality evaluators score the ideal answers. This validates your dataset
+    and evaluator config before running the more expensive live-agent evaluation.
+    """
 
     print(f"Running local evaluation on: {DATASET_PATH}")
     print(f"Judge model: {model_config['azure_deployment']}")
