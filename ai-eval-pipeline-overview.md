@@ -33,39 +33,39 @@ The following diagram shows the end-to-end architecture of an AI evaluation pipe
 ```mermaid
 flowchart LR
     subgraph Input
-        DS[("Evaluation Dataset\n(versioned golden set)\nquery · ground_truth · context")]
+        DS[("Evaluation Dataset<br/>(versioned golden set)<br/>query · ground_truth · context")]
     end
 
     subgraph Target["Target Under Test"]
-        EP["Model Endpoint\n/ RAG App / Agent"]
+        EP["Model Endpoint<br/>/ RAG App / Agent"]
     end
 
     subgraph Judges["Evaluation Infrastructure"]
-        JM["Judge Model Deployment\n(for quality · RAG · agent\n· custom prompt-based)"]
-        FS["Foundry Safety Service\n(hosted models — no\ndeployment needed)"]
+        JM["Judge Model Deployment<br/>(for quality · RAG · agent<br/>· custom prompt-based)"]
+        FS["Foundry Safety Service<br/>(hosted models — no<br/>deployment needed)"]
     end
 
     subgraph Evaluators["Evaluator Layer"]
-        BI["Built-in Evaluators\n(quality · RAG · agent)"]
+        BI["Built-in Evaluators<br/>(quality · RAG · agent)"]
         SE["Safety Evaluators"]
-        CU["Custom Evaluators\n(code-based · prompt-based)"]
+        CU["Custom Evaluators<br/>(code-based · prompt-based)"]
         GR["Azure OpenAI Graders"]
     end
 
     subgraph Results["Result Store & Observability"]
-        RS[("Score Store\n(Foundry portal · SDK)")]
-        OB["Traces · Metrics\nDashboards"]
+        RS[("Score Store<br/>(Foundry portal · SDK)")]
+        OB["Traces · Metrics<br/>Dashboards"]
     end
 
     subgraph Gate["Decision Gate"]
         AG["Automated Thresholds"]
-        HR["Human Review\n(safety-critical)"]
+        HR["Human Review<br/>(safety-critical)"]
     end
 
     subgraph Promotion["Promotion Path"]
         DEV["Dev"] --> TEST["Test / Staging"]
         TEST --> PROD["Production"]
-        PROD -. "drift · safety incidents\n· red team findings" .-> DS
+        PROD -. "drift · safety incidents<br/>· red team findings" .-> DS
     end
 
     DS --> EP
@@ -89,6 +89,24 @@ flowchart LR
     RS --> AG
     AG --> HR
     HR --> Promotion
+
+    classDef data fill:#4A90D9,stroke:#2C5F8A,color:#fff
+    classDef target fill:#2AA198,stroke:#1B6B65,color:#fff
+    classDef eval fill:#7B68EE,stroke:#4B3EAE,color:#fff
+    classDef safety fill:#E8590C,stroke:#A83E08,color:#fff
+    classDef results fill:#51A351,stroke:#367336,color:#fff
+    classDef gate fill:#D4A017,stroke:#9A7412,color:#fff
+    classDef env fill:#6C757D,stroke:#495057,color:#fff
+
+    class DS data
+    class EP target
+    class JM eval
+    class FS safety
+    class BI,CU,GR eval
+    class SE safety
+    class RS,OB results
+    class AG,HR gate
+    class DEV,TEST,PROD env
 ```
 
 ### Evaluation dataset
@@ -202,15 +220,15 @@ flowchart TB
     end
 
     subgraph BuiltIn["Built-in Evaluators"]
-        QE["Quality Evaluators\nCoherence · Fluency\nGroundedness · Relevance"]
-        RE["RAG Evaluators\nRetrieval · Document Retrieval\nResponse Completeness"]
-        AE["Agent Evaluators ⓘ preview\nTask Adherence · Tool Call Accuracy\nIntent Resolution · Task Completion"]
-        SE["Safety Evaluators\nHate · Sexual · Violence · Self-Harm\nProtected Materials · XPIA\n(severity 0–7 scale)"]
+        QE["Quality Evaluators<br/>Coherence · Fluency<br/>Groundedness · Relevance"]
+        RE["RAG Evaluators<br/>Retrieval · Document Retrieval<br/>Response Completeness"]
+        AE["Agent Evaluators ⓘ preview<br/>Task Adherence · Tool Call Accuracy<br/>Intent Resolution · Task Completion"]
+        SE["Safety Evaluators<br/>Hate · Sexual · Violence · Self-Harm<br/>Protected Materials · XPIA<br/>(severity 0–7 scale)"]
     end
 
     subgraph Custom["Custom Evaluators ⓘ preview"]
-        CB["Code-based\n(Python grade function)"]
-        PB["Prompt-based\n(LLM-as-judge · custom rubric)"]
+        CB["Code-based<br/>(Python grade function)"]
+        PB["Prompt-based<br/>(LLM-as-judge · custom rubric)"]
     end
 
     subgraph Graders["Azure OpenAI Graders"]
@@ -221,8 +239,8 @@ flowchart TB
     end
 
     subgraph RedTeam["Adversarial Testing"]
-        PR["PyRIT\nAttack Strategies"]
-        RT["Foundry AI Red Teaming\nAgent ⓘ preview"]
+        PR["PyRIT<br/>Attack Strategies"]
+        RT["Foundry AI Red Teaming<br/>Agent ⓘ preview"]
     end
 
     RUN --> QE
@@ -238,7 +256,23 @@ flowchart TB
     PR --> RUN
     RT --> RUN
 
-    SE -. "hosted Foundry\nsafety models" .-> SafetyService["Foundry Safety Service"]
+    SE -. "hosted Foundry<br/>safety models" .-> SafetyService["Foundry Safety Service"]
+
+    classDef pipeline fill:#4A90D9,stroke:#2C5F8A,color:#fff
+    classDef quality fill:#7B68EE,stroke:#4B3EAE,color:#fff
+    classDef safety fill:#E8590C,stroke:#A83E08,color:#fff
+    classDef custom fill:#2AA198,stroke:#1B6B65,color:#fff
+    classDef grader fill:#51A351,stroke:#367336,color:#fff
+    classDef redteam fill:#DC3545,stroke:#A02530,color:#fff
+    classDef service fill:#6C757D,stroke:#495057,color:#fff
+
+    class RUN pipeline
+    class QE,RE,AE quality
+    class SE safety
+    class CB,PB custom
+    class ML,SC,TS,MS grader
+    class PR,RT redteam
+    class SafetyService service
 ```
 
 ## Microsoft Foundry evaluation tooling
@@ -286,31 +320,39 @@ Evaluation rigor should scale with deployment risk. Running your full evaluator 
 ```mermaid
 flowchart LR
     subgraph Dev["Development"]
-        D1["Local evaluations\n(azure-ai-evaluation SDK)"]
-        D2["Small dataset\n10–50 examples"]
-        D3["Quality + Relevance\n+ safety smoke test"]
-        D4["Fast iteration:\nrun after each\nprompt or retrieval change"]
+        D1["Local evaluations<br/>(azure-ai-evaluation SDK)"]
+        D2["Small dataset<br/>10–50 examples"]
+        D3["Quality + Relevance<br/>+ safety smoke test"]
+        D4["Fast iteration:<br/>run after each<br/>prompt or retrieval change"]
     end
 
     subgraph Test["Test / Staging"]
-        T1["Cloud evaluations (preview)\nor local SDK in CI/CD"]
-        T2["Full golden dataset\n100+ examples"]
-        T3["Complete evaluator suite\nincluding safety"]
-        T4["CI/CD integration\nstatistical confidence\nautomated gates"]
-        T5["Human review\nfor safety-critical\ndecisions"]
+        T1["Cloud evaluations (preview)<br/>or local SDK in CI/CD"]
+        T2["Full golden dataset<br/>100+ examples"]
+        T3["Complete evaluator suite<br/>including safety"]
+        T4["CI/CD integration<br/>statistical confidence<br/>automated gates"]
+        T5["Human review<br/>for safety-critical<br/>decisions"]
     end
 
     subgraph Prod["Production"]
-        P1["Continuous evaluation\n(agents: Foundry built-in\nothers: custom telemetry\n+ scheduled offline runs)"]
-        P2["Quality drift\nmonitoring"]
-        P3["Safety incident\nresponse"]
-        P4["Periodic red\nteaming scans"]
-        P5["Observability:\ntraces · metrics\nFoundry dashboards"]
+        P1["Continuous evaluation<br/>(agents: Foundry built-in<br/>others: custom telemetry<br/>+ scheduled offline runs)"]
+        P2["Quality drift<br/>monitoring"]
+        P3["Safety incident<br/>response"]
+        P4["Periodic red<br/>teaming scans"]
+        P5["Observability:<br/>traces · metrics<br/>Foundry dashboards"]
     end
 
-    Dev -- "quality gate\npassed" --> Test
-    Test -- "full gate\npassed +\nhuman review" --> Prod
-    Prod -. "drift · safety incidents\n· red team findings\n→ new test cases" .-> Dev
+    Dev -- "quality gate<br/>passed" --> Test
+    Test -- "full gate<br/>passed +<br/>human review" --> Prod
+    Prod -. "drift · safety incidents<br/>· red team findings<br/>→ new test cases" .-> Dev
+
+    classDef dev fill:#4A90D9,stroke:#2C5F8A,color:#fff
+    classDef test fill:#D4A017,stroke:#9A7412,color:#fff
+    classDef prod fill:#51A351,stroke:#367336,color:#fff
+
+    class D1,D2,D3,D4 dev
+    class T1,T2,T3,T4,T5 test
+    class P1,P2,P3,P4,P5 prod
 ```
 
 ### Development
