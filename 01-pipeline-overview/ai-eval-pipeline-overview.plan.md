@@ -14,7 +14,7 @@ Software developers and architects who build or oversee AI applications on Azure
 
 This article is part of a cross-documentation-set series on AI evaluation:
 
-- The **strategy guide** ([ai-eval-strategy-guide.md](../00-strategy-guide/ai-eval-strategy-guide.md)) targets the **Cloud Adoption Framework (CAF)** — strategic guidance for IT leaders and architects designing their evaluation approach.
+- The **strategy guide** ([ai-eval-strategy-guide.md](../00-strategy-guide-caf/ai-eval-strategy-guide.md)) targets the **Cloud Adoption Framework (CAF)** — strategic guidance for IT leaders and architects designing their evaluation approach.
 - The **AAC articles** (this article and the deep dives below) target the **Azure Architecture Center (AAC)** AI & ML section — architecture guidance and hands-on implementation for developers, architects, and DevOps engineers.
 
 ### AAC article series
@@ -32,7 +32,7 @@ This article is part of a cross-documentation-set series on AI evaluation:
 
 | Article | Audience | Status |
 |---------|----------|--------|
-| [AI Evaluation Strategy for Technical Leaders](../00-strategy-guide/ai-eval-strategy-guide.md) | IT leaders & architects | Draft |
+| [AI Evaluation Strategy for Technical Leaders](../00-strategy-guide-caf/ai-eval-strategy-guide.md) | IT leaders & architects | Draft |
 
 ## Outline
 

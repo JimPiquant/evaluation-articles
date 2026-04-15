@@ -19,7 +19,7 @@ This article includes code samples — it is aimed at practitioners, not leaders
 
 This article is part of a cross-documentation-set series on AI evaluation:
 
-- The **strategy guide** ([ai-eval-strategy-guide.md](../00-strategy-guide/ai-eval-strategy-guide.md)) targets the **Cloud Adoption Framework (CAF)** — strategic guidance for IT leaders and architects.
+- The **strategy guide** ([ai-eval-strategy-guide.md](../00-strategy-guide-caf/ai-eval-strategy-guide.md)) targets the **Cloud Adoption Framework (CAF)** — strategic guidance for IT leaders and architects.
 - The **AAC articles** (including this article) target the **Azure Architecture Center (AAC)** AI & ML section — architecture guidance and hands-on implementation.
 
 ### AAC article series
