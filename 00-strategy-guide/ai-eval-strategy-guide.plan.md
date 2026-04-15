@@ -33,8 +33,8 @@ This article is part of a cross-documentation-set series on AI evaluation:
 
 | # | Article | Audience | Status |
 |---|---------|----------|--------|
-| 1 | [Building AI Evaluation Pipelines on Azure](ai-eval-pipeline-overview.md) | Developers & architects | Published |
-| 2 | [Reference Architecture for Agent Evaluation](ai-eval-ref-architecture.md) | Developers & DevOps | Draft |
+| 1 | [Building AI Evaluation Pipelines on Azure](../01-pipeline-overview/ai-eval-pipeline-overview.md) | Developers & architects | Published |
+| 2 | [Reference Architecture for Agent Evaluation](../02-ref-architecture/ai-eval-ref-architecture.md) | Developers & DevOps | Draft |
 | 3 | Quality and RAG Evaluators Deep Dive | Developers | Planned |
 | 4 | Agent Evaluators Deep Dive | Developers | Planned |
 | 5 | Safety Evaluations | Developers & security | Planned |
@@ -115,8 +115,8 @@ Guided navigation into the rest of the series, with clear descriptions of what e
 
 | Article | What it covers | Read this if you... |
 |---------|---------------|---------------------|
-| [Building AI Evaluation Pipelines on Azure](ai-eval-pipeline-overview.md) | Reference architecture, evaluation types, environment guidance | Want the full technical foundation |
-| [Reference Architecture for Agent Evaluation](ai-eval-ref-architecture.md) | Working implementation with code, infra, and CI/CD | Want to deploy an evaluation pipeline today |
+| [Building AI Evaluation Pipelines on Azure](../01-pipeline-overview/ai-eval-pipeline-overview.md) | Reference architecture, evaluation types, environment guidance | Want the full technical foundation |
+| [Reference Architecture for Agent Evaluation](../02-ref-architecture/ai-eval-ref-architecture.md) | Working implementation with code, infra, and CI/CD | Want to deploy an evaluation pipeline today |
 | Quality and RAG Evaluators (coming soon) | Coherence, groundedness, retrieval quality, dataset design | Build RAG applications |
 | Agent Evaluators (coming soon) | Task adherence, tool accuracy, intent resolution | Build agentic applications |
 | Safety Evaluations (coming soon) | Content safety, severity scoring, safety gates | Need to implement safety guardrails |

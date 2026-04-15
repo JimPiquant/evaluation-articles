@@ -14,7 +14,7 @@ Software developers and architects who build or oversee AI applications on Azure
 
 This article is part of a cross-documentation-set series on AI evaluation:
 
-- The **strategy guide** ([ai-eval-strategy-guide.md](ai-eval-strategy-guide.md)) targets the **Cloud Adoption Framework (CAF)** — strategic guidance for IT leaders and architects designing their evaluation approach.
+- The **strategy guide** ([ai-eval-strategy-guide.md](../00-strategy-guide/ai-eval-strategy-guide.md)) targets the **Cloud Adoption Framework (CAF)** — strategic guidance for IT leaders and architects designing their evaluation approach.
 - The **AAC articles** (this article and the deep dives below) target the **Azure Architecture Center (AAC)** AI & ML section — architecture guidance and hands-on implementation for developers, architects, and DevOps engineers.
 
 ### AAC article series
@@ -22,7 +22,7 @@ This article is part of a cross-documentation-set series on AI evaluation:
 | # | Article | Audience | Status |
 |---|---------|----------|--------|
 | 1 | **[Building AI Evaluation Pipelines on Azure](ai-eval-pipeline-overview.md)** ← this article | Developers & architects | Published |
-| 2 | [Reference Architecture for Agent Evaluation](ai-eval-ref-architecture.md) | Developers & DevOps | Draft |
+| 2 | [Reference Architecture for Agent Evaluation](../02-ref-architecture/ai-eval-ref-architecture.md) | Developers & DevOps | Draft |
 | 3 | Quality and RAG Evaluators Deep Dive | Developers | Planned |
 | 4 | Agent Evaluators Deep Dive | Developers | Planned |
 | 5 | Safety Evaluations | Developers & security | Planned |
@@ -32,7 +32,7 @@ This article is part of a cross-documentation-set series on AI evaluation:
 
 | Article | Audience | Status |
 |---------|----------|--------|
-| [AI Evaluation Strategy for Technical Leaders](ai-eval-strategy-guide.md) | IT leaders & architects | Draft |
+| [AI Evaluation Strategy for Technical Leaders](../00-strategy-guide/ai-eval-strategy-guide.md) | IT leaders & architects | Draft |
 
 ## Outline
 

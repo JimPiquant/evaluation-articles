@@ -1,8 +1,8 @@
 # Reference Architecture: Evaluating AI Agents with Microsoft Foundry
 
-> Part 2 of a series on AI evaluation pipelines for the Azure Architecture Center. See the [strategy guide](ai-eval-strategy-guide.md) for organizational context or the [overview](ai-eval-pipeline-overview.md) for foundational concepts.
+> Part 2 of a series on AI evaluation pipelines for the Azure Architecture Center. See the [strategy guide](../00-strategy-guide/ai-eval-strategy-guide.md) for organizational context or the [overview](../01-pipeline-overview/ai-eval-pipeline-overview.md) for foundational concepts.
 
-The [overview article](ai-eval-pipeline-overview.md) introduced evaluation pipelines as the architectural pattern that keeps AI applications reliable, grounded, and safe. This article makes it concrete. We walk through a full reference architecture for evaluating a Microsoft Foundry Agent — from golden dataset design through local development, CI/CD automation, cloud evaluation, and production monitoring. Every component maps to working code in the [companion repository](https://github.com/contoso/ai-eval-ref-implementation).
+The [overview article](../01-pipeline-overview/ai-eval-pipeline-overview.md) introduced evaluation pipelines as the architectural pattern that keeps AI applications reliable, grounded, and safe. This article makes it concrete. We walk through a full reference architecture for evaluating a Microsoft Foundry Agent — from golden dataset design through local development, CI/CD automation, cloud evaluation, and production monitoring. Every component maps to working code in the [companion repository](https://github.com/contoso/ai-eval-ref-implementation).
 
 ## Introduction
 
@@ -35,7 +35,7 @@ The [companion repository](https://github.com/contoso/ai-eval-ref-implementation
 - A [Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/) project with a deployed model (GPT-4o or equivalent) for both the agent and judge evaluations
 - Python 3.10 or later
 - A GitHub account with Actions enabled
-- Familiarity with the concepts from [Part 1: Building AI Evaluation Pipelines on Azure](ai-eval-pipeline-overview.md) — evaluation types, evaluator categories, and environment progression
+- Familiarity with the concepts from [Part 1: Building AI Evaluation Pipelines on Azure](../01-pipeline-overview/ai-eval-pipeline-overview.md) — evaluation types, evaluator categories, and environment progression
 
 ## Architecture overview
 
@@ -946,7 +946,7 @@ This article gave you a deployable reference architecture. The rest of the serie
 
 | # | Article | Focus |
 |---|---------|-------|
-| 1 | [Building AI Evaluation Pipelines on Azure](ai-eval-pipeline-overview.md) | Overview and foundations |
+| 1 | [Building AI Evaluation Pipelines on Azure](../01-pipeline-overview/ai-eval-pipeline-overview.md) | Overview and foundations |
 | **2** | **Reference Architecture for Agent Evaluation** (this article) | End-to-end implementation |
 | 3 | Quality and RAG Evaluators Deep Dive | Dataset design, threshold tuning, quality metrics |
 | 4 | Agent Evaluators Deep Dive | System + process evaluators, tool call assessment |

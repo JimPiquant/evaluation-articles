@@ -11,7 +11,7 @@ Give developers a hands-on, implementation-ready guide to Microsoft Foundry's qu
 Software developers building RAG applications on Azure. Assumes familiarity with:
 - RAG architecture basics (retrieval → augmentation → generation)
 - Python development
-- The concepts from the [overview article](ai-eval-pipeline-overview.md) (evaluation types, environment progression, evaluator categories)
+- The concepts from the [overview article](../01-pipeline-overview/ai-eval-pipeline-overview.md) (evaluation types, environment progression, evaluator categories)
 
 This article includes code samples — it is aimed at practitioners, not leaders.
 
@@ -19,15 +19,15 @@ This article includes code samples — it is aimed at practitioners, not leaders
 
 This article is part of a cross-documentation-set series on AI evaluation:
 
-- The **strategy guide** ([ai-eval-strategy-guide.md](ai-eval-strategy-guide.md)) targets the **Cloud Adoption Framework (CAF)** — strategic guidance for IT leaders and architects.
+- The **strategy guide** ([ai-eval-strategy-guide.md](../00-strategy-guide/ai-eval-strategy-guide.md)) targets the **Cloud Adoption Framework (CAF)** — strategic guidance for IT leaders and architects.
 - The **AAC articles** (including this article) target the **Azure Architecture Center (AAC)** AI & ML section — architecture guidance and hands-on implementation.
 
 ### AAC article series
 
 | # | Article | Status |
 |---|---------|--------|
-| 1 | [Building AI Evaluation Pipelines on Azure](ai-eval-pipeline-overview.md) | Published |
-| 2 | [Reference Architecture for Agent Evaluation](ai-eval-ref-architecture.md) | Draft |
+| 1 | [Building AI Evaluation Pipelines on Azure](../01-pipeline-overview/ai-eval-pipeline-overview.md) | Published |
+| 2 | [Reference Architecture for Agent Evaluation](../02-ref-architecture/ai-eval-ref-architecture.md) | Draft |
 | **3** | **Quality and RAG Evaluators Deep Dive** (this article) | **Draft** |
 | 4 | Agent Evaluators Deep Dive | Planned |
 | 5 | Safety Evaluations | Planned |
@@ -205,7 +205,7 @@ Practical guidance for acting on evaluation results:
 - [Agent Evaluators Deep Dive](article 4) — evaluating tool use, task completion, and multi-step reasoning
 - [Safety Evaluations](article 5) — content risk scoring and safety gates
 - [Red Teaming](article 6) — adversarial testing with PyRIT and the Foundry AI Red Teaming Agent
-- [Reference Architecture](ai-eval-ref-architecture.md) — full working implementation with infrastructure and CI/CD
+- [Reference Architecture](../02-ref-architecture/ai-eval-ref-architecture.md) — full working implementation with infrastructure and CI/CD
 
 ## Diagrams to create
 
@@ -230,8 +230,8 @@ Practical guidance for acting on evaluation results:
 - Fluency sample: https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/ai/azure-ai-projects/samples/evaluations/agentic_evaluators/sample_fluency.py
 - Optimize agentic RAG: https://aka.ms/optimize-agentic-rag-blog
 - Azure DevOps evaluation task: https://learn.microsoft.com/en-us/azure/foundry/how-to/develop/run-evaluations-azure-devops
-- Overview article (series part 1): ai-eval-pipeline-overview.md
-- Reference architecture (series part 2): ai-eval-ref-architecture.md
+- Overview article (series part 1): ../01-pipeline-overview/ai-eval-pipeline-overview.md
+- Reference architecture (series part 2): ../02-ref-architecture/ai-eval-ref-architecture.md
 
 ## Notes
 

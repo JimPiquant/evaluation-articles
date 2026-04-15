@@ -328,8 +328,8 @@ This article provides the strategic foundation. The rest of the series delivers 
 
 | Article | What it covers | Read this if you... |
 |---------|---------------|---------------------|
-| [Building AI Evaluation Pipelines on Azure](ai-eval-pipeline-overview.md) | Reference architecture, evaluation types, Foundry tooling, environment guidance | Want the full technical architecture and decision framework |
-| [Reference Architecture for Agent Evaluation](ai-eval-ref-architecture.md) | End-to-end implementation with Python code, Bicep infrastructure, GitHub Actions CI/CD, and sample datasets | Want to deploy a working evaluation pipeline today |
+| [Building AI Evaluation Pipelines on Azure](../01-pipeline-overview/ai-eval-pipeline-overview.md) | Reference architecture, evaluation types, Foundry tooling, environment guidance | Want the full technical architecture and decision framework |
+| [Reference Architecture for Agent Evaluation](../02-ref-architecture/ai-eval-ref-architecture.md) | End-to-end implementation with Python code, Bicep infrastructure, GitHub Actions CI/CD, and sample datasets | Want to deploy a working evaluation pipeline today |
 | Quality and RAG Evaluators *(coming soon)* | Coherence, groundedness, retrieval quality, custom evaluators, dataset design | Build RAG applications and need to evaluate retrieval and generation quality |
 | Agent Evaluators *(coming soon)* | Task adherence, tool accuracy, intent resolution, multi-step evaluation | Build agentic applications with tool use and multi-step reasoning |
 | Safety Evaluations *(coming soon)* | Content safety evaluators, severity scoring, safety gates, content filtering | Need to implement safety guardrails and content risk management |

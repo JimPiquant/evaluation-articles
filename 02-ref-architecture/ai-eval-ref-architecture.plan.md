@@ -4,7 +4,7 @@
 
 ## Purpose
 
-Provide a concrete, implementable reference architecture for evaluating a Microsoft Foundry Agent across development, test, and production environments. This article bridges the foundational concepts in the [overview article](ai-eval-pipeline-overview.md) and a companion GitHub repository containing working code, infrastructure-as-code, and CI/CD pipelines. Readers should be able to deploy the reference implementation and adapt it to their own agent evaluation workflows.
+Provide a concrete, implementable reference architecture for evaluating a Microsoft Foundry Agent across development, test, and production environments. This article bridges the foundational concepts in the [overview article](../01-pipeline-overview/ai-eval-pipeline-overview.md) and a companion GitHub repository containing working code, infrastructure-as-code, and CI/CD pipelines. Readers should be able to deploy the reference implementation and adapt it to their own agent evaluation workflows.
 
 ## Audience
 
@@ -18,14 +18,14 @@ Software developers and DevOps engineers building AI agent applications on Azure
 
 This article is part of a cross-documentation-set series on AI evaluation:
 
-- The **strategy guide** ([ai-eval-strategy-guide.md](ai-eval-strategy-guide.md)) targets the **Cloud Adoption Framework (CAF)** — strategic guidance for IT leaders and architects.
+- The **strategy guide** ([ai-eval-strategy-guide.md](../00-strategy-guide/ai-eval-strategy-guide.md)) targets the **Cloud Adoption Framework (CAF)** — strategic guidance for IT leaders and architects.
 - The **AAC articles** (including this article) target the **Azure Architecture Center (AAC)** AI & ML section — architecture guidance and hands-on implementation.
 
 ### AAC article series
 
 | # | Article | Status |
 |---|---------|--------|
-| 1 | [Building AI Evaluation Pipelines on Azure](ai-eval-pipeline-overview.md) | Published |
+| 1 | [Building AI Evaluation Pipelines on Azure](../01-pipeline-overview/ai-eval-pipeline-overview.md) | Published |
 | **2** | **Reference Architecture for Agent Evaluation** (this article) | **Draft** |
 | 3 | Quality and RAG Evaluators Deep Dive | Planned |
 | 4 | Agent Evaluators Deep Dive | Planned |
@@ -132,7 +132,7 @@ This article is part of a cross-documentation-set series on AI evaluation:
 - Foundry observability: https://learn.microsoft.com/en-us/azure/foundry/concepts/observability
 - PyRIT: https://github.com/Azure/PyRIT
 - azure-ai-projects SDK samples: https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/ai/azure-ai-projects/samples/evaluations
-- Overview article (series part 1): ai-eval-pipeline-overview.md
+- Overview article (series part 1): ../01-pipeline-overview/ai-eval-pipeline-overview.md
 
 ## Notes
 
