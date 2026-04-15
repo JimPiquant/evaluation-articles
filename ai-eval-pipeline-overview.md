@@ -1,6 +1,6 @@
 # Building AI Evaluation Pipelines on Azure
 
-> Part 1 of 6 in a series on AI evaluation pipelines for the Azure Architecture Center (AI & ML section).
+> Part 1 of a series on AI evaluation pipelines for the Azure Architecture Center (AI & ML section). Start with the [strategy guide for technical leaders](ai-eval-strategy-guide.md) if you're designing your organization's evaluation approach.
 
 Shipping an AI application that works in a demo is easy. Shipping one that's reliable, grounded, and safe across thousands of real-world interactions is a different problem entirely. This article introduces the evaluation pipeline — the architectural pattern that bridges that gap. We walk through a reference architecture, a decision framework for choosing the right evaluation types, the tooling available in [Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/), and practical guidance for structuring evaluations across development, test, and production environments. No code in this article — the follow-on deep dives cover implementation.
 
@@ -389,12 +389,13 @@ Integrate with [Foundry observability](https://learn.microsoft.com/en-us/azure/f
 
 This article gives you the map. The rest of this series fills in the details:
 
-1. **Building AI evaluation pipelines on Azure** — overview and foundations (this article)
-2. **Quality and RAG evaluators** — SDK deep-dive into quality and retrieval evaluation, including dataset design and threshold tuning
-3. **Agent evaluators** — evaluating multi-step reasoning, tool use, and task completion
-4. **Safety evaluations** — implementing content safety evaluators, severity scoring, and safety gates
-5. **Red teaming with PyRIT and the Foundry AI Red Teaming Agent** — adversarial testing strategies and automation
-6. **CI/CD integration and production monitoring** — pipeline integration, automated gates, continuous evaluation, and observability
+- **[AI Evaluation Strategy for Technical Leaders](ai-eval-strategy-guide.md)** — strategic context, governance considerations, and adoption roadmap for leaders designing their organization's evaluation approach
+- **Building AI evaluation pipelines on Azure** — overview and foundations (this article)
+- **[Reference Architecture for Agent Evaluation](ai-eval-ref-architecture.md)** — end-to-end implementation with Python code, Bicep infrastructure, GitHub Actions CI/CD, and sample datasets
+- **Quality and RAG evaluators** *(coming soon)* — SDK deep-dive into quality and retrieval evaluation, including dataset design and threshold tuning
+- **Agent evaluators** *(coming soon)* — evaluating multi-step reasoning, tool use, and task completion
+- **Safety evaluations** *(coming soon)* — implementing content safety evaluators, severity scoring, and safety gates
+- **Red teaming with PyRIT and the Foundry AI Red Teaming Agent** *(coming soon)* — adversarial testing strategies and automation
 
 ### Additional resources
 

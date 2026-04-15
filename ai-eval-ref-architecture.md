@@ -1,6 +1,6 @@
 # Reference Architecture: Evaluating AI Agents with Microsoft Foundry
 
-> Part 2 of 6 in a series on AI evaluation pipelines for the Azure Architecture Center.
+> Part 2 of a series on AI evaluation pipelines for the Azure Architecture Center. See the [strategy guide](ai-eval-strategy-guide.md) for organizational context or the [overview](ai-eval-pipeline-overview.md) for foundational concepts.
 
 The [overview article](ai-eval-pipeline-overview.md) introduced evaluation pipelines as the architectural pattern that keeps AI applications reliable, grounded, and safe. This article makes it concrete. We walk through a full reference architecture for evaluating a Microsoft Foundry Agent — from golden dataset design through local development, CI/CD automation, cloud evaluation, and production monitoring. Every component maps to working code in the [companion repository](https://github.com/contoso/ai-eval-ref-implementation).
 
