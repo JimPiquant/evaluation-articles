@@ -18,11 +18,21 @@ Assumes familiarity with enterprise software delivery practices (CI/CD, environm
 
 ## Series context
 
-This article becomes the new series landing page. The existing articles shift in numbering:
+This article is part of a cross-documentation-set series on AI evaluation:
+
+- The **strategy guide** (this article) targets the **Cloud Adoption Framework (CAF)** — strategic guidance for IT leaders and architects.
+- The **AAC articles** target the **Azure Architecture Center (AAC)** AI & ML section — architecture guidance and hands-on implementation for developers, architects, and DevOps engineers.
+
+### CAF article
+
+| Article | Audience | Status |
+|---------|----------|--------|
+| **AI Evaluation Strategy for Technical Leaders** (this article) | IT leaders & architects | Draft |
+
+### AAC article series
 
 | # | Article | Audience | Status |
 |---|---------|----------|--------|
-| **0** | **AI Evaluation Strategy for Technical Leaders** (this article) | **Leaders & architects** | **Planned** |
 | 1 | [Building AI Evaluation Pipelines on Azure](ai-eval-pipeline-overview.md) | Developers & architects | Published |
 | 2 | [Reference Architecture for Agent Evaluation](ai-eval-ref-architecture.md) | Developers & DevOps | Draft |
 | 3 | Quality and RAG Evaluators Deep Dive | Developers | Planned |

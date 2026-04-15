@@ -12,14 +12,27 @@ Software developers and architects who build or oversee AI applications on Azure
 
 ## Series context
 
-This is article 1 of 6:
+This article is part of a cross-documentation-set series on AI evaluation:
 
-1. **Overview and foundations** ← this article
-2. Quality and RAG evaluators (SDK deep-dive)
-3. Agent evaluators (SDK deep-dive)
-4. Safety evaluations (SDK deep-dive)
-5. Red teaming with PyRIT and Foundry AI Red Teaming Agent
-6. CI/CD integration and production monitoring
+- The **strategy guide** ([ai-eval-strategy-guide.md](ai-eval-strategy-guide.md)) targets the **Cloud Adoption Framework (CAF)** — strategic guidance for IT leaders and architects designing their evaluation approach.
+- The **AAC articles** (this article and the deep dives below) target the **Azure Architecture Center (AAC)** AI & ML section — architecture guidance and hands-on implementation for developers, architects, and DevOps engineers.
+
+### AAC article series
+
+| # | Article | Audience | Status |
+|---|---------|----------|--------|
+| 1 | **[Building AI Evaluation Pipelines on Azure](ai-eval-pipeline-overview.md)** ← this article | Developers & architects | Published |
+| 2 | [Reference Architecture for Agent Evaluation](ai-eval-ref-architecture.md) | Developers & DevOps | Draft |
+| 3 | Quality and RAG Evaluators Deep Dive | Developers | Planned |
+| 4 | Agent Evaluators Deep Dive | Developers | Planned |
+| 5 | Safety Evaluations | Developers & security | Planned |
+| 6 | Red Teaming with PyRIT and Foundry | Developers & security | Planned |
+
+### CAF companion
+
+| Article | Audience | Status |
+|---------|----------|--------|
+| [AI Evaluation Strategy for Technical Leaders](ai-eval-strategy-guide.md) | IT leaders & architects | Draft |
 
 ## Outline
 
@@ -63,7 +76,7 @@ This is article 1 of 6:
 - **Diagram**: environment progression with evaluation checkpoints at each stage
 
 ### 6. Where to go next
-- Links to the other articles in the series (quality, agent, safety, red teaming, CI/CD)
+- Links to the other articles in the series and the CAF strategy guide
 
 ## References
 

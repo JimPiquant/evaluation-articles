@@ -16,6 +16,13 @@ Software developers and DevOps engineers building AI agent applications on Azure
 
 ## Series context
 
+This article is part of a cross-documentation-set series on AI evaluation:
+
+- The **strategy guide** ([ai-eval-strategy-guide.md](ai-eval-strategy-guide.md)) targets the **Cloud Adoption Framework (CAF)** — strategic guidance for IT leaders and architects.
+- The **AAC articles** (including this article) target the **Azure Architecture Center (AAC)** AI & ML section — architecture guidance and hands-on implementation.
+
+### AAC article series
+
 | # | Article | Status |
 |---|---------|--------|
 | 1 | [Building AI Evaluation Pipelines on Azure](ai-eval-pipeline-overview.md) | Published |
