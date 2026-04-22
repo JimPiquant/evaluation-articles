@@ -396,6 +396,7 @@ This article gives you the map. The rest of this series fills in the details:
 - **Agent evaluators** *(coming soon)* — evaluating multi-step reasoning, tool use, and task completion
 - **Safety evaluations** *(coming soon)* — implementing content safety evaluators, severity scoring, and safety gates
 - **Red teaming with PyRIT and the Foundry AI Red Teaming Agent** *(coming soon)* — adversarial testing strategies and automation
+- **[Deploying Microsoft Foundry Agents — A Leader's Guide](../07-deploy-foundry-agents/foundry-agents-deployment.md)** — strategic guidance on agent type selection and private-network deployment shape for the Foundry Agent Service that hosts what these pipelines evaluate
 
 ### Additional resources
 

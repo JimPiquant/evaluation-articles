@@ -334,6 +334,7 @@ This article provides the strategic foundation. The rest of the series delivers 
 | Agent Evaluators *(coming soon)* | Task adherence, tool accuracy, intent resolution, multi-step evaluation | Build agentic applications with tool use and multi-step reasoning |
 | Safety Evaluations *(coming soon)* | Content safety evaluators, severity scoring, safety gates, content filtering | Need to implement safety guardrails and content risk management |
 | Red Teaming with PyRIT and Foundry *(coming soon)* | PyRIT attack strategies, AI Red Teaming Agent, adversarial testing automation | Need to proactively test your application's adversarial resilience |
+| [Deploying Microsoft Foundry Agents — A Leader's Guide](../07-deploy-foundry-agents/foundry-agents-deployment.md) | Foundry agent types (prompt, workflow, hosted), platform footprint, private-networking constraints, decision checklist | Are choosing how to deploy Foundry agents and need to make region, topology, and network decisions before building |
 
 ### Additional resources
 
