@@ -16,7 +16,8 @@ The goal is to give readers a clear, end-to-end understanding of how to design, 
 
 ## Article inventory
 
-We can change this around
+We can change this around if required
+
 | # | Title | Audience | Target | Status |
 |---|-------|----------|--------|--------|
 | 00 | AI Evaluation Strategy for Technical Leaders | IT leaders & architects | CAF | Draft (~85%) |
