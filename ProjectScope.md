@@ -27,11 +27,11 @@ We can change this around
 | 05 | Safety Evaluations | Developers & security engineers | AAC | Planned (outline done) |
 | 06 | Red Teaming with PyRIT and Foundry | Developers & security engineers | AAC | Planned (outline done) |
 | 07 | Deploying Microsoft Foundry Agents — Guide| Architects  | AAC | WIP |
-| 07 | Deploying Microsoft Foundry Agents — Code Sample| Architects  | AAC | WIP |
-| 08 | Deploying Microsoft Foundry IQ  CICD — Guide | Architects | AAC | To Do |
-| 08 | Deploying Microsoft Foundry IQ  CICD — Code Sample| Architects | AAC | To Do |
-| 09 | Deploying Microsoft Foundry Tool CICD  — Guide | Architects | AAC | To Do |
-| 09 | Deploying Microsoft Foundry Tool CICD  — Code Sample| Architects | AAC | To Do |
+| 08 | Deploying Microsoft Foundry Agents — Code Sample| Architects  | AAC | WIP |
+| 09 | Deploying Microsoft Foundry IQ  CICD — Guide | Architects | AAC | To Do |
+| 10 | Deploying Microsoft Foundry IQ  CICD — Code Sample| Architects | AAC | To Do |
+| 11 | Deploying Microsoft Foundry Tool CICD  — Guide | Architects | AAC | To Do |
+| 12 | Deploying Microsoft Foundry Tool CICD  — Code Sample| Architects | AAC | To Do |
 
 Code sample build on the existing landing zone from https://github.com/Azure/AI-Landing-Zones
 
