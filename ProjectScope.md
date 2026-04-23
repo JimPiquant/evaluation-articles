@@ -11,10 +11,12 @@ The goal is to give readers a clear, end-to-end understanding of how to design, 
 | Layer | Publication target | Audience |
 |-------|--------------------|----------|
 | Strategy | Cloud Adoption Framework (CAF) | IT leaders, architects, program managers |
+| Strategy | Well Architecture Framework (CAF) | IT leaders, architects, program managers |
 | Implementation | Azure Architecture Center (AAC) | Software developers, DevOps engineers, security engineers |
 
 ## Article inventory
 
+We can change this around
 | # | Title | Audience | Target | Status |
 |---|-------|----------|--------|--------|
 | 00 | AI Evaluation Strategy for Technical Leaders | IT leaders & architects | CAF | Draft (~85%) |
@@ -24,31 +26,16 @@ The goal is to give readers a clear, end-to-end understanding of how to design, 
 | 04 | Agent Evaluators Deep Dive | Developers (agentic apps) | AAC | Planned (outline done) |
 | 05 | Safety Evaluations | Developers & security engineers | AAC | Planned (outline done) |
 | 06 | Red Teaming with PyRIT and Foundry | Developers & security engineers | AAC | Planned (outline done) |
-| 07 | Deploying Microsoft Foundry Agents — | Architects  | AAC | WIP |
-| 08 | Deploying Microsoft Foundry IQ  — | Architects | AAC | To Do |
-| 09 | Deploying Microsoft Foundry Tool Setup  — | Architects | AAC | To Do |
+| 07 | Deploying Microsoft Foundry Agents — Guide| Architects  | AAC | WIP |
+| 07 | Deploying Microsoft Foundry Agents — Code Sample| Architects  | AAC | WIP |
+| 08 | Deploying Microsoft Foundry IQ  CICD — Guide | Architects | AAC | To Do |
+| 08 | Deploying Microsoft Foundry IQ  CICD — Code Sample| Architects | AAC | To Do |
+| 09 | Deploying Microsoft Foundry Tool CICD  — Guide | Architects | AAC | To Do |
+| 09 | Deploying Microsoft Foundry Tool CICD  — Code Sample| Architects | AAC | To Do |
 
-## Series structure
+Code sample build on the existing landing zone from https://github.com/Azure/AI-Landing-Zones
 
-```
-┌──────────────────────────────────────────────────────────────────┐
-│ STRATEGY LAYER  (CAF — IT Leaders & Architects)                  │
-│   Article 00: AI Evaluation Strategy                             │
-│   Article 07: Deploying Foundry Agents                           │
-└──────────────────────────────────────────────────────────────────┘
-                              ↕
-┌──────────────────────────────────────────────────────────────────┐
-│ IMPLEMENTATION LAYER  (AAC — Developers & Engineers)             │
-│   Article 01: Pipeline Overview (foundational)                   │
-│   Article 02: Reference Architecture + companion repo            │
-│   Articles 03–06: Deep dives (quality/RAG, agents, safety,       │
-│                    red teaming)                                   │
-└──────────────────────────────────────────────────────────────────┘
-```
 
-- **Strategy articles** (00, 07) target non-developers. No code samples; focus on decision frameworks, governance, and organizational guidance.
-- **Implementation articles** (01–06) target developers. Include concrete code examples, evaluator configurations, and CI/CD integration patterns.
-- **Article 02** includes a companion reference implementation (`02-ref-architecture/companion/`) with deployable Bicep, Python scripts, sample datasets, and CI/CD workflows.
 
 ## Running scenario
 
