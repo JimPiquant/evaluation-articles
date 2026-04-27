@@ -27,6 +27,16 @@
   alongside the network topology — VNet-injected GitHub-hosted runners (GHEC),
   self-hosted runners on Azure Container Apps jobs, or self-hosted runners on
   VMs/AKS — and use OIDC federation, not secrets, for the workflow identity.
+- **Foundry now provisions first-class agent identities in Microsoft Entra ID**
+  (preview). Unpublished agents in a project share a single identity; **the
+  Foundry publish operation atomically creates a new Agent Application resource
+  *and* a new distinct agent identity** for it — your CI/CD pipeline does not
+  create the identity itself, and you cannot pre-create or BYO it today. What
+  CI/CD *must* do is **re-assign the data-plane RBAC** to the new
+  `agentIdentityId` after every publish — those roles do not carry over from
+  the shared project identity. Keep the *deployer* identity (the human or
+  workflow that publishes) separate from the *runtime* identity (the agent
+  identity that calls tools and data).
 
 ## 1. Introduction
 
@@ -524,11 +534,23 @@ credential). This avoids long-lived service principal secrets in GitHub.
 
 For private Foundry specifically, the workflow identity needs:
 
-- `Azure AI User` on the Foundry project (publish agents, run cloud evaluations).
-- `AcrPush` on the Container Registry (hosted-agent images).
-- `Reader` on the resource group (for `azd` and template lookups).
+- **Azure AI Project Manager** on the **Foundry account/resource** scope —
+  required to publish agents (the older "Azure AI User" role is *not*
+  sufficient; the **Publish Agent** action is gated on Project Manager at the
+  account scope, not just the project scope).
+- **AcrPush** (or *Container Registry Repository Writer*) on the Container
+  Registry — push hosted-agent images.
+- **Role Based Access Administrator** scoped to each downstream resource the
+  published agent must reach (Storage, Cosmos DB, AI Search, Key Vault, etc.).
+  This is what lets the workflow grant the *new* agent identity created at
+  publish time its data-plane roles, without giving the workflow itself broad
+  Owner rights.
+- **Reader** on the resource group (for `azd` and template lookups).
 
-Keep these scoped to the project and registry — not to the subscription.
+Keep these scoped to the project, registry, and the specific data resources —
+not to the subscription. Section 7 explains why the workflow identity needs
+RBAC-admin rights on the data resources but does *not* itself become the
+runtime principal.
 
 ### Practical guidance
 
@@ -548,31 +570,239 @@ Keep these scoped to the project and registry — not to the subscription.
 
 ## 7. Security, identity, and governance
 
-### RBAC for deploy vs. use
+Identity is the single biggest source of confusion when teams move from a Foundry
+demo to a production deployment. There are several different principals involved
+— a *deployer* that stands the platform up, a *workflow identity* that publishes
+agents from CI/CD, a *project managed identity* that the Foundry runtime owns, and
+one or more *agent identities* in Microsoft Entra ID that actually authenticate
+tool calls. They need different roles, at different scopes, and they change as an
+agent moves from "in development" to "published."
 
-The roles needed to **stand up** the platform are different from the roles needed to
-**use** it day to day. Define them separately so you can keep deploy permissions
-narrow.
+### 7.1 Identities involved in a Foundry deployment
+
+| Identity | What it is | Where it lives | Used for | Who manages it |
+|----------|------------|----------------|----------|----------------|
+| **Deployer principal** | A human or service principal with control-plane rights | Microsoft Entra ID | Provisioning the Foundry account, project, network, and dependent resources | Platform / cloud team |
+| **CI/CD workflow identity** | A user-assigned managed identity or Entra app with **OIDC federation** to GitHub | Microsoft Entra ID | Publishing agent definitions, pushing hosted-agent images, running cloud evaluations | Platform / DevOps team |
+| **Foundry project managed identity** | System- or user-assigned managed identity attached to the Foundry project | Microsoft Entra ID, bound to the project resource | Authenticating the agent identity *blueprint* via federated credential, pulling images from ACR | Foundry / Azure |
+| **Agent identity blueprint** (preview) | Entra object that governs a *class* of agents and holds the OAuth credentials Foundry uses to mint agent-identity tokens | Microsoft Entra ID | Lifecycle, Conditional Access, and audit at the agent-class level | Foundry, governed by IT |
+| **Shared project agent identity** (preview) | A service principal that represents *all unpublished agents* in a project | Microsoft Entra ID | Tool calls (MCP, A2A, downstream Azure resources) for in-development agents | Foundry, RBAC by IT |
+| **Distinct (published) agent identity** (preview) | A service principal created automatically when an agent is published, bound to the agent application | Microsoft Entra ID | Tool calls for the published agent in test or production | Foundry, RBAC by IT |
+
+> **Preview.** Microsoft Entra **Agent ID** — the framework that gives agents
+> their own service principals — is in preview at the time of writing. Treat
+> the framework as stable enough to design around, but expect API and portal
+> surface changes before GA, and confirm the current state on Microsoft Learn
+> before committing.
+
+### 7.2 Runtime identity *at Foundry*
+
+When a deployed agent calls a tool — an MCP server, another agent via A2A, or a
+downstream Azure resource — the principal on the wire is **the agent identity**,
+not the project's managed identity and not the user who started the conversation
+(unless you have explicitly opted into the on-behalf-of flow).
+
+The chain Foundry uses at runtime is:
+
+```mermaid
+flowchart LR
+    Caller["Caller<br/>(user / app)"] --> AS["Agent Service<br/>runtime"]
+    AS --> MI["Project<br/>managed identity"]
+    MI -. "federated credential" .-> BP["Agent identity<br/>blueprint"]
+    BP --> AID["Agent identity<br/>(service principal)"]
+    AID -. "scoped token<br/>(audience = downstream service)" .-> DS["Downstream resource<br/>(Storage, Cosmos, MCP, A2A, ...)"]
+```
+
+A few implications follow from this diagram:
+
+- **The project managed identity authenticates the *blueprint*, not the
+  resource.** It is the credential anchor that lets Foundry mint agent-identity
+  tokens without storing client secrets. RBAC on Storage, Cosmos DB, AI Search,
+  MCP servers, and so on must be granted to the **agent identity**, not to the
+  project managed identity.
+- **Tokens are scoped to the downstream service's audience**, for example
+  `https://storage.azure.com`, `https://cosmos.azure.com`,
+  `https://vault.azure.net`, or `https://graph.microsoft.com`. An incorrect
+  audience produces auth failures even when RBAC is correct — the platform team
+  should standardise on the correct values for each tool category.
+- **Unpublished agents share a single identity per project.** Anything you grant
+  the shared project agent identity is, in effect, granted to every
+  in-development agent in that project. Treat the shared identity as a wider
+  blast radius and a *development* permission set.
+- **Publishing an agent creates a distinct identity.** That distinct identity is
+  bound to the agent application resource and has its own lifecycle. **No role
+  assignment from the shared project identity carries over.** Re-assignment is
+  required for every downstream resource the published agent touches.
+- **Today, agent-identity authentication is supported by MCP and A2A tools.**
+  Other tools may still use key-based auth or OAuth identity passthrough. The
+  long-term direction is agent-identity-everywhere, but the platform team should
+  inventory which tools each agent uses and confirm the current auth mode per
+  tool.
+
+For attended scenarios (agent acting on behalf of a signed-in user), Foundry
+supports the OAuth 2.0 **on-behalf-of (OBO)** flow on the agent identity. The
+agent's effective access is the *intersection* of the user's delegated
+permissions and the agent identity's own role assignments. For unattended
+scenarios (agent acting on its own authority), the client credentials flow on
+the agent identity is used and only the agent identity's RBAC matters. Decide
+per workload which model is in scope before granting roles.
+
+> **Is the runtime identity the Foundry project's managed identity?**
+> **No.** The principal on the wire to Storage, Cosmos DB, AI Search, MCP
+> servers, or other agents is always **the agent identity** — a dedicated
+> Microsoft Entra service principal. The project managed identity only acts as
+> the *federated-credential anchor* that lets Foundry mint tokens for the
+> blueprint without storing client secrets. Granting data-plane roles to the
+> project MI does *not* grant your agents access; you must grant those roles
+> to the agent identity (`agentIdentityId`) — shared for unpublished agents,
+> distinct per published agent.
+
+#### 7.2.1 How the published agent identity is created
+
+The first time you create an agent in a Foundry project, Foundry provisions a
+default agent identity blueprint and a shared agent identity for the project.
+After that, **the only event that creates a new agent identity is publishing**.
+
+When the publish operation runs, the Foundry control plane atomically creates:
+
+1. A new **Agent Application** ARM resource (its own invocation URL,
+   authorisation policy, and lifecycle).
+2. A new **agent identity blueprint** in Microsoft Entra ID, scoped to that
+   application.
+3. A new **agent identity** (Entra service principal) bound to the blueprint.
+4. A federated credential trust between the new blueprint and the project's
+   managed identity, so Foundry can mint tokens for the new agent identity at
+   runtime.
+
+A few consequences worth flagging for architects and security reviewers:
+
+- **The customer does not grant the project managed identity any Microsoft
+  Entra role for blueprint or identity creation.** Foundry runs on a
+  Microsoft-owned platform that has built-in Entra Agent ID rights to create
+  blueprints and identities on the customer's behalf. From the IT
+  administrator's point of view, new agent identities simply *appear* in the
+  tenant when an agent is published, attributed to Foundry.
+- **You cannot pre-create or "bring your own" agent identity for a Foundry
+  agent today.** There is no Azure portal or Microsoft Entra admin center
+  path to create agent identity blueprints, and Foundry owns blueprint
+  creation for its own agents. (Microsoft Graph / PowerShell paths exist for
+  non-Foundry platforms, but they are not how you stand up identities for a
+  Foundry-hosted agent.)
+- **CI/CD's job at publish time is not to create the identity — it is to
+  re-assign RBAC to it.** The pipeline should call the publish API, read the
+  new `agentIdentityId` and `agentIdentityBlueprint` back from the Agent
+  Application resource, and then apply the data-plane role assignments to the
+  new identity on Storage, Cosmos DB, AI Search, and any other downstream
+  resource the agent uses. The workflow identity needs *Role Based Access
+  Administrator* (or Owner) scoped to those resources to do this — see
+  §7.3.
+- **Lifecycle is tied to the Agent Application resource.** Deleting the agent
+  application removes its distinct identity; deleting the project removes the
+  shared identity and its blueprint. The *agents' user account* objects in
+  Entra are not auto-cleaned and may need a manual sweep — track this against
+  the Entra Agent ID preview known-issues page.
+
+### 7.3 Deployer and publishing identity
+
+The principal that *publishes* an agent is not the same as the principal that
+the published agent runs as. Keep them separate, scope them tightly, and prefer
+federated credentials over secrets at every layer.
+
+**Standing up the platform** (typically run once per environment, by a platform
+engineer or an IaC pipeline):
 
 | Activity | Built-in role | Scope |
 |----------|---------------|-------|
-| Create Foundry account and project | **Azure AI Account Owner** | Subscription |
-| Assign roles to dependent resources (Cosmos DB, Storage, AI Search) | **Role Based Access Administrator** (or **Owner**) | Subscription |
-| Build, edit, publish agents from portal or SDK | **Azure AI User** | Foundry project |
-| Invoke deployed agents from applications | **Azure AI User** (read + action on `agents/*`) | Foundry project |
+| Create the Foundry account and project | **Azure AI Account Owner** | Subscription |
+| Provision dependent resources (Storage, Cosmos DB, AI Search, ACR, App Insights, networking) | **Contributor** (or scoped Owner) | Resource group |
+| Assign RBAC across dependent resources | **Role Based Access Administrator** (or **Owner**) | Resource group |
 
-For hosted agents, the build pipeline also needs `AcrPush` on the Container Registry
-and `Azure AI User` on the project to register new versions.
+**Publishing agents** (typically run from CI/CD per release):
 
-### Managed identity and data-plane access
+| Activity | Built-in role | Scope |
+|----------|---------------|-------|
+| Publish prompt, workflow, or hosted agents (the **Publish Agent** action) | **Azure AI Project Manager** | Foundry **account** (resource) — not just project |
+| Build and edit agents in the project; run cloud evaluations | **Azure AI User** | Foundry project |
+| Push hosted-agent images | **Container Registry Repository Writer** *or* **AcrPush** | Container Registry |
+| Re-assign data-plane RBAC to the *new* agent identity created at publish time | **Role Based Access Administrator** (or **Owner**) | Each downstream resource (Storage / Cosmos DB / AI Search / Key Vault / …) |
+| Look up resources for `azd` / template deploys | **Reader** | Resource group |
 
-In the private-network setup, the Foundry runtime uses its **managed identity** to
-reach BYO Storage, Cosmos DB, and AI Search through their private endpoints. There
-should be **no shared keys or connection strings** in your agent definitions. Verify
-that Storage account-key access and Cosmos DB key-based auth are disabled (or at
-least unused) on the dependent resources.
+> The publishing principal does **not** create the agent identity — Foundry's
+> control plane does, atomically with the Agent Application resource (see
+> §7.2.1). What the publishing principal *does* need is enough role-management
+> rights at the downstream-resource scope to grant the new `agentIdentityId`
+> its data-plane roles immediately after publish. That is why **Role Based
+> Access Administrator** at the data-resource scope appears in the table and
+> not, for example, broad *Owner* on the resource group.
 
-### Observability and audit
+**Runtime side of publishing** (configured once, used by Foundry):
+
+| Activity | Built-in role | Scope |
+|----------|---------------|-------|
+| Pull hosted-agent images from ACR at runtime | **AcrPull** | Container Registry |
+| Reach BYO Storage, Cosmos DB, AI Search through private endpoints | Data-plane roles (e.g. **Storage Blob Data Contributor**, **Cosmos DB Built-in Data Contributor**, **Search Index Data Contributor**) | Each resource |
+
+The data-plane roles in the third table belong on **the agent identity** (shared
+project identity for in-development agents, distinct identity for each published
+agent), not on the project managed identity. The project managed identity needs
+only the credential-anchor and ACR-pull rights; everything else flows through the
+agent identity by design.
+
+A few practical rules of thumb:
+
+- **Use OIDC federation, not secrets, for the CI/CD workflow identity.**
+  Section 6 covers the runner topology; the same workflow identity should hold
+  *Azure AI Project Manager* on the Foundry account, *AcrPush* on the
+  registry, *Role Based Access Administrator* scoped to each downstream
+  resource the published agent will use, and *Reader* on the resource group —
+  and nothing else.
+- **`azd` automates only part of the model.** It assigns *Azure AI User* to the
+  shared project agent identity for unpublished agents. It does **not** configure
+  Container Registry, Application Insights, or custom data-plane RBAC, and it
+  does **not** assign anything to the *distinct* identity created when an agent
+  is published. Plan to do those manually (or in your own IaC), per environment.
+- **Make publish a deliberate, scripted step.** Because publishing creates a new
+  agent identity, every publish should run a follow-on RBAC step that reads
+  the new `agentIdentityId` from the Agent Application resource and grants the
+  required data-plane roles to it. Build this into the pipeline so it cannot be
+  forgotten — missed re-assignment is the single most common cause of "tool
+  calls worked in dev but fail after publish."
+- **Keep deploy and use permissions disjoint.** Application code that *invokes*
+  a published agent only needs *Azure AI User* on the **Agent Application**
+  resource (not on the whole project) — Agent Application RBAC is managed
+  through Azure Resource Manager, not through the Entra agent identity. That
+  invocation principal should never share the publishing identity.
+
+### 7.4 Tool and data-plane access
+
+In the private-network setup, the Foundry runtime — through the agent identity —
+reaches BYO Storage, Cosmos DB, and AI Search over their private endpoints.
+There should be **no shared keys or connection strings** in your agent
+definitions. Verify that Storage account-key access and Cosmos DB key-based
+auth are disabled (or at least unused) on the dependent resources, and that the
+relevant data-plane roles are assigned to the agent identity at the resource
+scope.
+
+For agent tools beyond BYO data:
+
+- **Model Context Protocol (MCP).** Use agent-identity authentication for any
+  MCP server that supports it (connection auth type `AgenticIdentityToken`,
+  category `RemoteTool`). The audience must match the downstream resource the
+  MCP server fronts, not the URL of the MCP server itself.
+- **Agent-to-Agent (A2A).** Agents call other agents using their own agent
+  identity (connection auth type `AgenticIdentity`, category `RemoteA2A`).
+- **Other tools.** Some integrations still use key-based auth or OAuth identity
+  passthrough. Inventory each tool, prefer agent-identity auth where it is
+  available, and document the exceptions.
+
+Finally, treat the **Microsoft Entra admin center → Agent ID → All agent
+identities** view as the single source of truth for inventorying agents across
+the tenant. That is where Conditional Access, Identity Protection, network
+access policies, and governance (owners, sponsors, expiration) are applied to
+agent identities — Foundry-created agents show up alongside Copilot Studio and
+other agent platforms.
+
+### 7.5 Observability and audit
 
 Plan for:
 
@@ -581,19 +811,23 @@ Plan for:
 - **Log Analytics** — destination for diagnostic logs from Foundry, Container Apps
   (for hosted agents), and the dependent data resources.
 - **Audit** — Foundry control-plane operations land in Azure Activity Log; data-plane
-  access lands in the diagnostic logs of each resource.
+  access lands in the diagnostic logs of each resource. Sign-in and token-issuance
+  events for the agent identities themselves land in Microsoft Entra sign-in logs
+  (filtered by service principal).
 
 For continuous evaluation in production, see the rest of this series.
 
-### Preview features and risk posture
+### 7.6 Preview features and risk posture
 
-Workflow and hosted agents are in **preview**. For each production workload that
-relies on them, document:
+Workflow agents, hosted agents, and the Microsoft Entra **Agent ID** framework
+are all in **preview**. For each production workload that relies on any of them,
+document:
 
-1. The reason a prompt agent was insufficient.
+1. The reason a prompt agent (or a non-Foundry deployment) was insufficient.
 2. The fallback path if the preview feature is changed or withdrawn (typically
-   "collapse to a prompt agent" or "lift the framework code out of Foundry into your
-   own Container Apps").
+   "collapse to a prompt agent" or "lift the framework code out of Foundry into
+   your own Container Apps", and for Agent ID, "fall back to the project managed
+   identity for tool calls").
 3. The owner who tracks the Learn page and Azure update feed for breaking changes.
 
 This is light governance, not heavyweight process — but it is the difference between
@@ -619,8 +853,22 @@ Use this as a one-page checklist for a design review.
   - [ ] Egress path (Azure Firewall, NAT) and FQDN allowlist designed.
   - [ ] Access path for users (VPN, ExpressRoute, Bastion) designed.
   - [ ] Teardown runbook written (purge Foundry before deleting VNet).
-- [ ] **RBAC model defined** for deploy vs. use; managed identity used for data-plane
-      access.
+- [ ] **RBAC model defined** for deploy vs. use; agent identity (not the project
+      managed identity) holds the data-plane roles on BYO Storage, Cosmos DB,
+      and AI Search.
+- [ ] **Runtime identity model decided** — shared project agent identity for
+      development, distinct agent identity per published agent for test and prod.
+- [ ] **Publish-time RBAC re-assignment** scripted into the promotion pipeline
+      so the new distinct `agentIdentityId` gets the data-plane roles it needs.
+- [ ] **Deployer / publishing principal identified** for each environment, with
+      OIDC federation, *Azure AI Project Manager* on the **Foundry account**
+      scope (publish), *AcrPush* at the registry, *Role Based Access
+      Administrator* scoped to each downstream resource the published agent
+      will use (post-publish RBAC), and *Reader* on the resource group — and
+      nothing wider.
+- [ ] **Entra Agent ID governance reviewed** — Conditional Access, Identity
+      Protection, network access, and ownership policies applied to agent
+      identities in the Microsoft Entra admin center.
 - [ ] **Observability wired** to Log Analytics and Foundry observability.
 - [ ] **Preview-feature exposure** documented per workload, with a fallback path.
 - [ ] **Evaluation gates** from the AI evaluation series wired into the promotion
@@ -656,6 +904,14 @@ Use this as a one-page checklist for a design review.
 - [Configuring virtual networks for Azure Container Apps](https://learn.microsoft.com/azure/container-apps/custom-virtual-networks) — subnet sizing and delegation
 - [Integrate Azure Container Apps with Azure Firewall](https://learn.microsoft.com/azure/container-apps/use-azure-firewall) — egress allowlist FQDNs
 - [Foundry RBAC](https://learn.microsoft.com/azure/foundry/concepts/rbac-foundry)
+- [Agent identity concepts in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/agents/concepts/agent-identity) — primary source for §7.1 and §7.2
+- [Hosted agent permissions reference](https://learn.microsoft.com/azure/foundry/agents/concepts/hosted-agent-permissions) — primary source for §7.3
+- [Deploy a hosted agent](https://learn.microsoft.com/azure/foundry/agents/how-to/deploy-hosted-agent)
+- [Publish an agent](https://learn.microsoft.com/azure/foundry/agents/how-to/publish-agent)
+- [MCP server authentication](https://learn.microsoft.com/azure/foundry/agents/how-to/mcp-authentication)
+- [Agent2Agent (A2A) authentication](https://learn.microsoft.com/azure/foundry/agents/concepts/agent-to-agent-authentication)
+- [Microsoft Entra Agent ID overview (preview)](https://learn.microsoft.com/entra/agent-id/)
+- [Microsoft Entra Agent ID — preview known issues](https://learn.microsoft.com/entra/agent-id/preview-known-issues)
 - [Baseline Microsoft Foundry chat reference architecture](https://learn.microsoft.com/azure/architecture/ai-ml/architecture/baseline-azure-ai-foundry-chat)
 - Bicep sample: [Private-network standard agent setup](https://github.com/microsoft-foundry/foundry-samples/tree/main/infrastructure/infrastructure-setup-bicep/15-private-network-standard-agent-setup)
 - Terraform sample: [BYO VNet standard agent setup](https://github.com/microsoft-foundry/foundry-samples/tree/main/infrastructure/infrastructure-setup-terraform/15b-private-network-standard-agent-setup-byovnet)

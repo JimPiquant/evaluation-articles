@@ -127,13 +127,30 @@ deployment is shaped and constrained.
 - Practical guidance and DNS-zone gotchas.
 
 ### 7. Security, identity, and governance
-- RBAC roles required to **deploy** (Azure AI Account Owner, Role Based Access
-  Administrator or Owner) versus to **use** (Azure AI User).
-- Managed identity model: how Agent Service connects to BYO Storage, Cosmos DB, and
-  AI Search.
-- Auditing and observability hooks: Log Analytics, Foundry observability.
-- How preview features (workflow agents, hosted agents) change the risk profile and
-  what to commit to in production.
+- **Identities involved in a Foundry deployment** (overview table): deployer
+  principal, CI/CD workflow identity (OIDC federated), Foundry project managed
+  identity, agent identity blueprint, shared project agent identity, distinct
+  per-published-agent identity, project MI as the ACR pull identity.
+- **Runtime identity *at Foundry*** — project managed identity authenticates the
+  *blueprint* via federated credential; the **agent identity** (not the MI) is
+  the principal that needs RBAC on downstream resources; shared identity for
+  unpublished agents vs distinct identity bound to each published agent;
+  audience values for token exchange (Storage, Cosmos DB, Key Vault, Graph);
+  attended (OBO) vs unattended (client credentials) flows. Microsoft Entra
+  **Agent ID** flagged as preview.
+- **Deployer / publishing identity** — Azure AI Account Owner / Contributor for
+  platform setup; Azure AI User on the project + AcrPush at ACR scope for
+  publishing; project MI needs AcrPull on ACR; OIDC federation for the CI/CD
+  workflow identity; `azd` automation gaps; the rule that publishing creates a
+  new agent identity and roles do **not** carry over.
+- **Tool & data-plane access** — BYO Storage, Cosmos DB, and AI Search via
+  private endpoints with no shared keys; MCP (`AgenticIdentityToken` /
+  `RemoteTool`) and A2A (`AgenticIdentity` / `RemoteA2A`) use the agent
+  identity; other tools may still use keys or OAuth passthrough.
+- Auditing and observability hooks: Log Analytics, Foundry observability,
+  Microsoft Entra sign-in logs for the agent service principals.
+- How preview features (workflow agents, hosted agents, Microsoft Entra Agent
+  ID) change the risk profile and what to commit to in production.
 
 ### 8. Decision checklist for leaders
 A one-page checklist suitable for a design review:
@@ -141,7 +158,10 @@ A one-page checklist suitable for a design review:
 - Region (data residency, model availability, Bing region overlap).
 - Subscription and project topology (per-env, per-LOB).
 - Network model (public, service-endpoint, or private with BYO VNet).
-- RBAC structure for build, deploy, and use roles.
+- RBAC structure for build, deploy, and use roles, including publish-time
+  re-assignment to the new distinct agent identity.
+- Microsoft Entra **Agent ID** governance reviewed (Conditional Access, Identity
+  Protection, ownership) for shared and distinct agent identities.
 - Preview-feature exposure and rollback plan.
 - CI/CD runner pattern and OIDC federation for the workflow identity.
 
