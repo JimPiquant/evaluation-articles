@@ -20,6 +20,8 @@ ARTICLES=(
   "00-strategy-guide-caf:ai-eval-strategy-guide.md"
   "01-pipeline-overview:ai-eval-pipeline-overview.md"
   "02-ref-architecture:ai-eval-ref-architecture.md"
+  "07-deploy-foundry-agents:foundry-agents-deployment.md"
+  "07-deploy-foundry-agents:hosted-agents-developer-guide.md"
 )
 
 # Check dependencies
