@@ -6,23 +6,25 @@
 
 ## TL;DR
 
-- **Microsoft Foundry Agent Service** supports three agent types — **prompt agents**
-  (GA, declarative), **workflow agents** (preview, declarative orchestration), and
-  **hosted agents** (preview, code-in-containers). Each has a different code, hosting,
-  and ownership profile.
-- All three sit on the same shared platform: a Foundry account and project, model
-  deployments, plus Azure Storage, Azure Cosmos DB, and Azure AI Search for state and
-  retrieval. Choose region, subscription, and network shape **before** picking an agent
-  type — those decisions constrain everything that follows.
+- **Microsoft Foundry Agent Service** supports two declarative agent types covered
+  in this guide — **prompt agents** (GA) and **workflow agents** (preview,
+  declarative orchestration). A third type, **hosted agents** (preview,
+  code-in-containers), has a different code, hosting, and ownership profile and is
+  covered in a dedicated companion: see
+  [Deploying Foundry Hosted Agents — A Developer's Guide](./hosted-agents-developer-guide.md).
+- Both agent types in scope sit on the same shared platform: a Foundry account and
+  project, model deployments, plus Azure Storage, Azure Cosmos DB, and Azure AI Search
+  for state and retrieval. Choose region, subscription, and network shape **before**
+  picking an agent type — those decisions constrain everything that follows.
 - **Private networking is the highest-leverage decision.** The "Standard Setup with
   private networking" pattern injects an agent subnet into your VNet (delegated to
   `Microsoft.App/environments`) and locks all dependent resources behind private
   endpoints, but it can only be deployed via Bicep or Terraform and it carries a
   specific set of constraints (RFC1918-only subnets, single region for everything,
   subnet exclusivity, restricted Bing regions, and more).
-- Treat **workflow** and **hosted** agents as preview when you make production
-  commitments. Build a rollback path that falls back to prompt agents or to a
-  framework-only deployment outside Foundry.
+- Treat **workflow agents** as preview when you make production commitments. Build
+  a rollback path that falls back to prompt agents or to a framework-only deployment
+  outside Foundry.
 - A private Foundry **breaks default GitHub-hosted CI/CD**. Plan the runner topology
   alongside the network topology — VNet-injected GitHub-hosted runners (GHEC),
   self-hosted runners on Azure Container Apps jobs, or self-hosted runners on
@@ -69,15 +71,29 @@ The decisions that are hardest to reverse are made before any agent ships:
 - **Network model** — public, service-endpoint, or fully private with BYO VNet. The
   private model is the only one with no public egress, but it is also the most
   constrained at deploy time.
-- **Preview-feature exposure** — workflow and hosted agents are in preview. Standing up
-  a production workload on them is a deliberate risk choice with a rollback plan.
+- **Preview-feature exposure** — workflow agents are in preview. Standing up a
+  production workload on them is a deliberate risk choice with a rollback plan.
 
 The rest of this article walks through these decisions in the order you should make them.
 
-## 2. The three Foundry agent types
+## 2. The Foundry agent types in scope
 
-Foundry Agent Service supports three agent types. They are not tiers — they are
-different shapes for different problems.
+Foundry Agent Service supports three agent types — **prompt agents**, **workflow
+agents**, and **hosted agents**. They are not tiers; they are different shapes for
+different problems. This guide focuses on the two **declarative** types:
+
+- **Prompt agents (GA)** — a model, a system prompt, and attached tools.
+- **Workflow agents (preview)** — declarative orchestration of multiple steps or
+  agents.
+
+> **Hosted agents** (preview, code-in-containers) are out of scope for this leader's
+> guide. They have a different code, hosting, and ownership profile and warrant a
+> separate, code-rich treatment. See the companion
+> [Deploying Foundry Hosted Agents — A Developer's Guide](./hosted-agents-developer-guide.md).
+> Where this article touches on platform-wide concerns (private networking, CI/CD,
+> identity, governance), the same patterns apply to hosted agents — but the
+> hosted-specific surface (container build, ACR push, instance identity, version
+> rollout) lives in the developer guide.
 
 ### Prompt agents (GA)
 
@@ -103,33 +119,17 @@ and repeatable processes that do not justify writing custom orchestration code.
 > **Preview.** Treat workflow agents as preview for production commitments. SLA, API
 > stability, and feature surface may change.
 
-### Hosted agents (preview)
-
-A hosted agent is **your code, packaged as a container, run by Foundry Agent Service.**
-You build the agent with the framework of your choice (Microsoft Agent Framework,
-LangGraph, Semantic Kernel, or custom code), push the image to Azure Container
-Registry, and deploy it through the Visual Studio Code Foundry extension or the
-Foundry `azd` template. Foundry handles the runtime, scaling, identity, and the
-inbound API surface; you own the image, the dependencies, the orchestration logic,
-and the observability hooks inside your code.
-
-**Best for:** complex multi-step orchestration, custom tool integrations, multi-agent
-systems that need code-level control, and teams that already have framework expertise
-and want managed hosting rather than running their own AKS or Container Apps.
-
-> **Preview.** Same caveat as workflow agents — plan a fallback path.
-
 ### Comparison
 
-|                    | Prompt agents       | Workflow agents (preview) | Hosted agents (preview)        |
-|--------------------|---------------------|---------------------------|--------------------------------|
-| Code required      | No                  | No (YAML optional)        | Yes                            |
-| Hosting            | Fully managed       | Fully managed             | Container, managed by Foundry  |
-| Orchestration      | Single agent        | Multi-agent, branching    | Custom logic, your framework   |
-| Author surface     | Portal, SDK, REST   | Portal, YAML in VS Code   | VS Code extension, `azd`       |
-| Customer owns      | Definition + tools  | Definition + tools        | Image, code, deps, telemetry   |
-| Best for           | Prototypes, simple  | Multi-step automation     | Custom logic, framework users  |
-| GA status          | GA                  | Preview                   | Preview                        |
+|                    | Prompt agents       | Workflow agents (preview) |
+|--------------------|---------------------|---------------------------|
+| Code required      | No                  | No (YAML optional)        |
+| Hosting            | Fully managed       | Fully managed             |
+| Orchestration      | Single agent        | Multi-agent, branching    |
+| Author surface     | Portal, SDK, REST   | Portal, YAML in VS Code   |
+| Customer owns      | Definition + tools  | Definition + tools        |
+| Best for           | Prototypes, simple  | Multi-step automation     |
+| GA status          | GA                  | Preview                   |
 
 ### Decision flow
 
@@ -138,12 +138,11 @@ flowchart TD
     A[New agent workload] --> B{Single LLM call<br/>with tools is enough?}
     B -- Yes --> P[Prompt agent]
     B -- No --> C{Need custom code,<br/>frameworks, or full<br/>orchestration control?}
-    C -- Yes --> H[Hosted agent<br/>preview]
+    C -- Yes --> H[Hosted agent — preview<br/>see developer guide]
     C -- No --> D{Multi-step or<br/>multi-agent coordination<br/>expressible declaratively?}
     D -- Yes --> W[Workflow agent<br/>preview]
     D -- No --> P
-    H -.production?.-> R[Confirm rollback plan<br/>preview SLA]
-    W -.production?.-> R
+    W -.production?.-> R[Confirm rollback plan<br/>preview SLA]
 ```
 
 Use the diagram as a starter, not a rule. A workload that "almost fits" a prompt agent
@@ -152,7 +151,7 @@ than as a preview workflow agent — keep complexity proportional to the problem
 
 ## 3. Deployment models per agent type
 
-All three agent types share the same platform footprint. What changes is **what you
+Both agent types share the same platform footprint. What changes is **what you
 ship** into it.
 
 ### Shared platform footprint
@@ -165,7 +164,6 @@ ship** into it.
 | Azure Cosmos DB | Threads, messages, agent state | Customer (BYO in private setup) |
 | Azure AI Search | Vector store / retrieval | Customer (BYO in private setup) |
 | Log Analytics workspace | Logs and telemetry | Customer |
-| Azure Container Registry | Hosted-agent images | Customer (hosted agents only) |
 | Agent runtime (compute) | Executes agents | Microsoft-managed |
 
 ### What you ship per agent type
@@ -179,23 +177,16 @@ flowchart LR
       WA1[Definition: YAML or visual graph]
       WA2[Optional sub-agents]
     end
-    subgraph HA[Hosted agent — preview]
-      HA1[Container image in ACR]
-      HA2[Framework code: Agent Framework, LangGraph, custom]
-    end
     PA --> F[Foundry Agent Service runtime]
     WA --> F
-    HA --> F
     F --> S[(Shared platform:<br/>Foundry project,<br/>models, Storage,<br/>Cosmos DB, AI Search)]
 ```
 
 ### Lifecycle, in one paragraph
 
-For all three: **author → version → publish → invoke → evaluate → monitor → re-publish.**
-Prompt and workflow agents are versioned through the Foundry control plane. Hosted
-agents are versioned through their container image tag, with a deploy step that
-registers the new version with Foundry. Evaluation gates from the rest of this series
-(see the
+For both: **author → version → publish → invoke → evaluate → monitor → re-publish.**
+Prompt and workflow agents are versioned through the Foundry control plane.
+Evaluation gates from the rest of this series (see the
 [pipeline overview](../01-pipeline-overview/ai-eval-pipeline-overview.md))
 sit between **publish** and **promote-to-prod**, regardless of agent type.
 
@@ -227,8 +218,8 @@ flowchart LR
 
 The evaluation series in this repo describes what runs at each gate. From a deployment
 perspective, the key point is that **the agent type does not change the gate** — a
-prompt, workflow, or hosted agent all flow through the same dev → test → prod
-progression and the same evaluator suites.
+prompt or workflow agent flows through the same dev → test → prod progression and the
+same evaluator suites.
 
 ## 5. Private networking for Foundry Agent Service
 
@@ -380,8 +371,8 @@ Once Foundry sits behind a private endpoint, **standard GitHub-hosted runners ca
 longer reach it.** Public runners on the GitHub network will get DNS resolution to the
 public-zone records, and the deny-by-default network rules on Foundry, AI Search,
 Cosmos DB, and Storage will block the connection. Any pipeline that has to publish a
-prompt or workflow agent, push a hosted-agent container to ACR, or run cloud
-evaluations against the project must originate from inside (or routed into) your VNet.
+prompt or workflow agent or run cloud evaluations against the project must originate
+from inside (or routed into) your VNet.
 
 There are three production-grade patterns for that. They are not exclusive — most
 real deployments mix them.
@@ -400,7 +391,7 @@ What you get:
 - Microsoft- and GitHub-managed runner image, no patching or capacity management.
 - Ephemeral runners — fresh VM per job, NIC torn down after the job.
 - Direct line-of-sight to private endpoints in your VNet (Foundry, AI Search, Cosmos
-  DB, Storage, ACR), subject to your NSG and private DNS configuration.
+  DB, Storage), subject to your NSG and private DNS configuration.
 - Available for the standard Ubuntu/Windows runners and the larger SKUs (currently
   2–64 vCPU).
 
@@ -504,11 +495,11 @@ flowchart LR
           B[Pattern B:<br/>Container Apps job<br/>self-hosted runner]
           C[Pattern C:<br/>VMSS / AKS<br/>self-hosted runner]
         end
-        DNS[Private DNS zones<br/>privatelink.* for Foundry,<br/>AI Search, Cosmos, Storage,<br/>and ACR]
+        DNS[Private DNS zones<br/>privatelink.* for Foundry,<br/>AI Search, Cosmos, Storage]
       end
       subgraph FVNet[Foundry VNet — peered or same VNet]
         AS[Agent subnet<br/>Microsoft.App/environments]
-        PE[Private endpoints:<br/>Foundry, AI Search,<br/>Cosmos DB, Storage, ACR]
+        PE[Private endpoints:<br/>Foundry, AI Search,<br/>Cosmos DB, Storage]
       end
     end
 
@@ -538,8 +529,6 @@ For private Foundry specifically, the workflow identity needs:
   required to publish agents (the older "Azure AI User" role is *not*
   sufficient; the **Publish Agent** action is gated on Project Manager at the
   account scope, not just the project scope).
-- **AcrPush** (or *Container Registry Repository Writer*) on the Container
-  Registry — push hosted-agent images.
 - **Role Based Access Administrator** scoped to each downstream resource the
   published agent must reach (Storage, Cosmos DB, AI Search, Key Vault, etc.).
   This is what lets the workflow grant the *new* agent identity created at
@@ -547,10 +536,9 @@ For private Foundry specifically, the workflow identity needs:
   Owner rights.
 - **Reader** on the resource group (for `azd` and template lookups).
 
-Keep these scoped to the project, registry, and the specific data resources —
-not to the subscription. Section 7 explains why the workflow identity needs
-RBAC-admin rights on the data resources but does *not* itself become the
-runtime principal.
+Keep these scoped to the project and the specific data resources — not to the
+subscription. Section 7 explains why the workflow identity needs RBAC-admin
+rights on the data resources but does *not* itself become the runtime principal.
 
 ### Practical guidance
 
@@ -583,8 +571,8 @@ agent moves from "in development" to "published."
 | Identity | What it is | Where it lives | Used for | Who manages it |
 |----------|------------|----------------|----------|----------------|
 | **Deployer principal** | A human or service principal with control-plane rights | Microsoft Entra ID | Provisioning the Foundry account, project, network, and dependent resources | Platform / cloud team |
-| **CI/CD workflow identity** | A user-assigned managed identity or Entra app with **OIDC federation** to GitHub | Microsoft Entra ID | Publishing agent definitions, pushing hosted-agent images, running cloud evaluations | Platform / DevOps team |
-| **Foundry project managed identity** | System- or user-assigned managed identity attached to the Foundry project | Microsoft Entra ID, bound to the project resource | Authenticating the agent identity *blueprint* via federated credential, pulling images from ACR | Foundry / Azure |
+| **CI/CD workflow identity** | A user-assigned managed identity or Entra app with **OIDC federation** to GitHub | Microsoft Entra ID | Publishing agent definitions and running cloud evaluations | Platform / DevOps team |
+| **Foundry project managed identity** | System- or user-assigned managed identity attached to the Foundry project | Microsoft Entra ID, bound to the project resource | Authenticating the agent identity *blueprint* via federated credential | Foundry / Azure |
 | **Agent identity blueprint** (preview) | Entra object that governs a *class* of agents and holds the OAuth credentials Foundry uses to mint agent-identity tokens | Microsoft Entra ID | Lifecycle, Conditional Access, and audit at the agent-class level | Foundry, governed by IT |
 | **Shared project agent identity** (preview) | A service principal that represents *all unpublished agents* in a project | Microsoft Entra ID | Tool calls (MCP, A2A, downstream Azure resources) for in-development agents | Foundry, RBAC by IT |
 | **Distinct (published) agent identity** (preview) | A service principal created automatically when an agent is published, bound to the agent application | Microsoft Entra ID | Tool calls for the published agent in test or production | Foundry, RBAC by IT |
@@ -687,7 +675,7 @@ A few consequences worth flagging for architects and security reviewers:
   path to create agent identity blueprints, and Foundry owns blueprint
   creation for its own agents. (Microsoft Graph / PowerShell paths exist for
   non-Foundry platforms, but they are not how you stand up identities for a
-  Foundry-hosted agent.)
+  Foundry agent.)
 - **CI/CD's job at publish time is not to create the identity — it is to
   re-assign RBAC to it.** The pipeline should call the publish API, read the
   new `agentIdentityId` and `agentIdentityBlueprint` back from the Agent
@@ -714,16 +702,15 @@ engineer or an IaC pipeline):
 | Activity | Built-in role | Scope |
 |----------|---------------|-------|
 | Create the Foundry account and project | **Azure AI Account Owner** | Subscription |
-| Provision dependent resources (Storage, Cosmos DB, AI Search, ACR, App Insights, networking) | **Contributor** (or scoped Owner) | Resource group |
+| Provision dependent resources (Storage, Cosmos DB, AI Search, App Insights, networking) | **Contributor** (or scoped Owner) | Resource group |
 | Assign RBAC across dependent resources | **Role Based Access Administrator** (or **Owner**) | Resource group |
 
 **Publishing agents** (typically run from CI/CD per release):
 
 | Activity | Built-in role | Scope |
 |----------|---------------|-------|
-| Publish prompt, workflow, or hosted agents (the **Publish Agent** action) | **Azure AI Project Manager** | Foundry **account** (resource) — not just project |
+| Publish prompt or workflow agents (the **Publish Agent** action) | **Azure AI Project Manager** | Foundry **account** (resource) — not just project |
 | Build and edit agents in the project; run cloud evaluations | **Azure AI User** | Foundry project |
-| Push hosted-agent images | **Container Registry Repository Writer** *or* **AcrPush** | Container Registry |
 | Re-assign data-plane RBAC to the *new* agent identity created at publish time | **Role Based Access Administrator** (or **Owner**) | Each downstream resource (Storage / Cosmos DB / AI Search / Key Vault / …) |
 | Look up resources for `azd` / template deploys | **Reader** | Resource group |
 
@@ -739,26 +726,24 @@ engineer or an IaC pipeline):
 
 | Activity | Built-in role | Scope |
 |----------|---------------|-------|
-| Pull hosted-agent images from ACR at runtime | **AcrPull** | Container Registry |
 | Reach BYO Storage, Cosmos DB, AI Search through private endpoints | Data-plane roles (e.g. **Storage Blob Data Contributor**, **Cosmos DB Built-in Data Contributor**, **Search Index Data Contributor**) | Each resource |
 
-The data-plane roles in the third table belong on **the agent identity** (shared
+The data-plane roles in the second table belong on **the agent identity** (shared
 project identity for in-development agents, distinct identity for each published
 agent), not on the project managed identity. The project managed identity needs
-only the credential-anchor and ACR-pull rights; everything else flows through the
-agent identity by design.
+only the credential-anchor rights; everything else flows through the agent
+identity by design.
 
 A few practical rules of thumb:
 
 - **Use OIDC federation, not secrets, for the CI/CD workflow identity.**
   Section 6 covers the runner topology; the same workflow identity should hold
-  *Azure AI Project Manager* on the Foundry account, *AcrPush* on the
-  registry, *Role Based Access Administrator* scoped to each downstream
-  resource the published agent will use, and *Reader* on the resource group —
-  and nothing else.
+  *Azure AI Project Manager* on the Foundry account, *Role Based Access
+  Administrator* scoped to each downstream resource the published agent will
+  use, and *Reader* on the resource group — and nothing else.
 - **`azd` automates only part of the model.** It assigns *Azure AI User* to the
   shared project agent identity for unpublished agents. It does **not** configure
-  Container Registry, Application Insights, or custom data-plane RBAC, and it
+  Application Insights or custom data-plane RBAC, and it
   does **not** assign anything to the *distinct* identity created when an agent
   is published. Plan to do those manually (or in your own IaC), per environment.
 - **Make publish a deliberate, scripted step.** Because publishing creates a new
@@ -808,8 +793,8 @@ Plan for:
 
 - **Foundry observability** — built-in tracing and evaluation telemetry tied to the
   project.
-- **Log Analytics** — destination for diagnostic logs from Foundry, Container Apps
-  (for hosted agents), and the dependent data resources.
+- **Log Analytics** — destination for diagnostic logs from Foundry and the dependent
+  data resources.
 - **Audit** — Foundry control-plane operations land in Azure Activity Log; data-plane
   access lands in the diagnostic logs of each resource. Sign-in and token-issuance
   events for the agent identities themselves land in Microsoft Entra sign-in logs
@@ -819,15 +804,14 @@ For continuous evaluation in production, see the rest of this series.
 
 ### 7.6 Preview features and risk posture
 
-Workflow agents, hosted agents, and the Microsoft Entra **Agent ID** framework
-are all in **preview**. For each production workload that relies on any of them,
+Workflow agents and the Microsoft Entra **Agent ID** framework are both in
+**preview**. For each production workload that relies on either of them,
 document:
 
 1. The reason a prompt agent (or a non-Foundry deployment) was insufficient.
 2. The fallback path if the preview feature is changed or withdrawn (typically
-   "collapse to a prompt agent" or "lift the framework code out of Foundry into
-   your own Container Apps", and for Agent ID, "fall back to the project managed
-   identity for tool calls").
+   "collapse to a prompt agent", and for Agent ID, "fall back to the project
+   managed identity for tool calls").
 3. The owner who tracks the Learn page and Azure update feed for breaking changes.
 
 This is light governance, not heavyweight process — but it is the difference between
@@ -837,8 +821,9 @@ a manageable preview-feature risk and a surprise rewrite.
 
 Use this as a one-page checklist for a design review.
 
-- [ ] **Agent type chosen for each workload** — prompt, workflow (preview), or hosted
-      (preview) — with a written reason.
+- [ ] **Agent type chosen for each workload** — prompt or workflow (preview) — with
+      a written reason. (Hosted agents are covered in the
+      [developer guide](./hosted-agents-developer-guide.md).)
 - [ ] **Region selected** — confirmed against model availability and, if relevant, the
       Grounding with Bing region list.
 - [ ] **Subscription and project topology decided** — project-per-env or
@@ -862,10 +847,9 @@ Use this as a one-page checklist for a design review.
       so the new distinct `agentIdentityId` gets the data-plane roles it needs.
 - [ ] **Deployer / publishing principal identified** for each environment, with
       OIDC federation, *Azure AI Project Manager* on the **Foundry account**
-      scope (publish), *AcrPush* at the registry, *Role Based Access
-      Administrator* scoped to each downstream resource the published agent
-      will use (post-publish RBAC), and *Reader* on the resource group — and
-      nothing wider.
+      scope (publish), *Role Based Access Administrator* scoped to each downstream
+      resource the published agent will use (post-publish RBAC), and *Reader* on the
+      resource group — and nothing wider.
 - [ ] **Entra Agent ID governance reviewed** — Conditional Access, Identity
       Protection, network access, and ownership policies applied to agent
       identities in the Microsoft Entra admin center.
@@ -886,6 +870,9 @@ Use this as a one-page checklist for a design review.
   deployments.
 - [Reference Architecture for Agent Evaluation](../02-ref-architecture/ai-eval-ref-architecture.md)
   — concrete reference architecture for evaluating deployed agents.
+- [Deploying Foundry Hosted Agents — A Developer's Guide](./hosted-agents-developer-guide.md)
+  — code-rich companion covering the third agent type (hosted, preview) end-to-end
+  with `azd`, the Python SDK, and REST.
 - **Future companion article (planned):** an IaC walkthrough of the private-network
   Standard Setup, with Bicep and Terraform samples, for developers and DevOps
   engineers.
@@ -894,10 +881,7 @@ Use this as a one-page checklist for a design review.
 
 - [What is Microsoft Foundry Agent Service?](https://learn.microsoft.com/azure/foundry/agents/overview)
 - [Agent development lifecycle](https://learn.microsoft.com/azure/foundry/agents/concepts/development-lifecycle)
-- [Hosted agents (preview)](https://learn.microsoft.com/azure/foundry/agents/concepts/hosted-agents)
 - [Workflow agents (preview)](https://learn.microsoft.com/azure/foundry/agents/concepts/workflow)
-- [Quickstart: Deploy your first hosted agent (azd)](https://learn.microsoft.com/azure/foundry/agents/quickstarts/quickstart-hosted-agent-azd)
-- [Create hosted agent workflows in Visual Studio Code](https://learn.microsoft.com/azure/foundry/agents/how-to/vs-code-agents-workflow-pro-code)
 - [**Set up private networking for Foundry Agent Service**](https://learn.microsoft.com/azure/ai-foundry/agents/how-to/virtual-networks) — primary source for §5
 - [Foundry Agent Service FAQ](https://learn.microsoft.com/azure/foundry/agents/faq) — virtual networking section
 - [Quotas, limits, and regional support](https://learn.microsoft.com/azure/foundry/agents/concepts/limits-quotas-regions)
@@ -905,8 +889,6 @@ Use this as a one-page checklist for a design review.
 - [Integrate Azure Container Apps with Azure Firewall](https://learn.microsoft.com/azure/container-apps/use-azure-firewall) — egress allowlist FQDNs
 - [Foundry RBAC](https://learn.microsoft.com/azure/foundry/concepts/rbac-foundry)
 - [Agent identity concepts in Microsoft Foundry](https://learn.microsoft.com/azure/foundry/agents/concepts/agent-identity) — primary source for §7.1 and §7.2
-- [Hosted agent permissions reference](https://learn.microsoft.com/azure/foundry/agents/concepts/hosted-agent-permissions) — primary source for §7.3
-- [Deploy a hosted agent](https://learn.microsoft.com/azure/foundry/agents/how-to/deploy-hosted-agent)
 - [Publish an agent](https://learn.microsoft.com/azure/foundry/agents/how-to/publish-agent)
 - [MCP server authentication](https://learn.microsoft.com/azure/foundry/agents/how-to/mcp-authentication)
 - [Agent2Agent (A2A) authentication](https://learn.microsoft.com/azure/foundry/agents/concepts/agent-to-agent-authentication)
