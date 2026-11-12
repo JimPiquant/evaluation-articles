@@ -22,11 +22,11 @@ resource aiServices 'Microsoft.CognitiveServices/accounts@2024-10-01' existing =
   name: aiServicesAccountName
 }
 
-resource modelDeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-10-01' = {
+resource modelDeployment 'Microsoft.CognitiveServices/accounts/deployments@2025-06-01' = {
   parent: aiServices
   name: deploymentName
   sku: {
-    name: 'Standard'
+    name: 'GlobalStandard'
     capacity: capacity
   }
   properties: {

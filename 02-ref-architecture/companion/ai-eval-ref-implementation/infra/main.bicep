@@ -44,12 +44,17 @@ param judgeModelCapacity int = 30
 @description('Log Analytics workspace retention in days.')
 param logRetentionDays int = 30
 
+// --- Variables ---
+
+var uniqueSuffix = uniqueString(resourceGroup().id)
+
 // --- Modules ---
 
 module foundryProject 'modules/foundry-project.bicep' = {
   name: 'foundry-project'
   params: {
     baseName: baseName
+    uniqueSuffix: uniqueSuffix
     location: location
     aiServicesSku: aiServicesSku
   }
@@ -68,6 +73,7 @@ module agentModelDeployment 'modules/model-deployment.bicep' = {
 
 module judgeModelDeployment 'modules/model-deployment.bicep' = {
   name: 'judge-model-deployment'
+  dependsOn: [agentModelDeployment]
   params: {
     aiServicesAccountName: foundryProject.outputs.aiServicesAccountName
     deploymentName: '${baseName}-judge'
