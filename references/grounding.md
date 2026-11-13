@@ -8,6 +8,15 @@ improve. [sources.json](sources.json) assigns stable IDs to primary sources.
 Plans map claims to these IDs; articles cite direct URLs so references survive
 export.
 
+The [Agent Framework Evaluation](https://learn.microsoft.com/en-us/agent-framework/agents/evaluation)
+guide (A01) complements Foundry guidance with framework-specific evaluation APIs,
+local checks, orchestration, and Foundry integration. Foundry Evaluation
+documentation remains authoritative for service behavior, evaluator availability,
+supported levels, permissions, limits, and feature status. Do not generalize
+framework-specific defaults, score thresholds, or result contracts to other
+interfaces. Pin framework code examples to the relevant language's package
+versions and source revisions.
+
 Official Foundry Agents/Projects SDK documentation is approved implementation
 grounding. Versioned maintainer samples outrank old local snippets. Architecture
 guidance supports recommendations but cannot establish an undocumented API,
@@ -41,6 +50,7 @@ quoted source titles and preserved archives. CAF and WAF are different framework
 | Projects SDK | Current `azure-ai-projects` 2.x versioned agents, Responses and Evals. A stable package includes preview capabilities; use the sample's exact dependency pin and integration notes. |
 | Companion's tested package set | Projects 2.2.0, Identity 1.25.1, OpenAI 2.29.0; import/type/mock-transport checks, not live Azure validation. See `samples/contoso-evaluation/sdk-status.json` for release-tag commits, complete pins, and installation constraints. |
 | Standalone Agents SDK | `azure-ai-agents` threads/messages/runs. Approved legacy grounding, but no mixing into the current Projects sample. |
+| Agent Framework | Independently versioned framework evaluation and Foundry integration APIs; verify the selected language and package set before reuse. The companion does not currently implement or validate this integration. |
 | Evaluation CLI | `azure.ai.evaluations`, independently versioned from `microsoft.foundry` and agent/dataset extensions. The cited CLI article labels it preview. Recipe: `evals/azure.eval.yaml`. |
 | Conversation workflow | `evaluation_level` defaults to turn. Check catalog compatibility; unsupported evaluators can be skipped. |
 | Trace/simulation/optimizer workflows | Check each linked source's preview flags, target support, region, and limits at implementation time. No series-wide GA/preview inference. |
@@ -92,6 +102,8 @@ and example thresholds as illustrative policy. Content-harm default threshold 3
 means >3 fails; a stricter policy is not a Foundry default.
 
 Before a release, review every registered source for changed meaning, not just
-HTTP success. Update impacted plans/articles/slides together. Mark unresolved
-affected articles `needs-refresh`. Keep review notes, SDK tests, output provenance,
-and publication URLs; a release is not a claim of legal compliance or zero risk.
+HTTP success. Update impacted plans/articles/slides together. Move unresolved
+affected articles to `review` and record the refresh reason in their plans; do
+not mark them `ready` until the required reviews are complete. Keep review notes,
+SDK tests, output provenance, and publication URLs; a release is not a claim of
+legal compliance or zero risk.

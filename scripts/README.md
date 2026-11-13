@@ -68,6 +68,24 @@ content hash; the commit alone is not claimed to identify uncommitted sources.
 Every Office output has its size, SHA-256 checksum, and package-check results.
 Protect or distribute the manifest alongside the files it describes.
 
+`build/` is versioned to preserve exact generated snapshots; running the same
+sources and commands does not guarantee byte-identical outputs. Keep Office
+files, required rendered assets, metadata/manifests, distributable archives,
+review previews, and approved sanitized evaluation evidence together. Publishing
+staging directories (`build/.publish-*/`) and operating-system debris are ignored;
+never add browser profiles, credentials, or unapproved customer traces.
+
+Do not rebuild just to restore or verify an existing snapshot. Verify retained
+files against their recorded checksums and inspect their packages directly.
+Historical source hashes and Git metadata describe the original generation;
+they may differ from the current checkout and must not be rewritten to imply
+regeneration. Before claiming an output is current, compare its source hashes.
+When intentionally regenerating, review the affected outputs and refresh their
+metadata, any containing archives, and associated previews in the same commit.
+The publisher does not refresh separately assembled ZIP bundles or review
+previews automatically. CI uploads candidate artifacts for review rather than
+automatically committing replacements.
+
 Relative Markdown/file links become explicit
 `<repository_url>/blob/main/<path>#<anchor>` links (`tree/main` for directories).
 They point to the maintained repository, **not invented future publication URLs**,

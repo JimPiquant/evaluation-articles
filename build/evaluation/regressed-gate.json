@@ -1,0 +1,10 @@
+{
+  "decision": "fail",
+  "failures": [
+    "tool_contract: 0.875 < 1.0; failed items: reg-ticket",
+    "fixture_context: 0.875 < 1.0; failed items: reg-ticket",
+    "expected_outcome: 0.75 < 1.0; failed items: reg-order, reg-ticket",
+    "response_assertions: 0.625 < 1.0; failed items: reg-returns, reg-order, reg-ticket",
+    "ticket_state: 0.875 < 1.0; failed items: reg-ticket"
+  ]
+}

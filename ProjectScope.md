@@ -46,8 +46,10 @@ prerequisites.
 Maintain article Markdown, reviewed plan, and curated slide Markdown together.
 Generate Word and PowerPoint using the catalog and shared templates. Releases
 include source/tool provenance and checksums; failures block publishing.
-Generated binaries are release/session artifacts, not independently maintained
-content masters.
+Generated binaries and their provenance are versioned snapshots under `build/`,
+not independently maintained content masters. Preserve exact artifacts because
+byte-identical rebuilds are not guaranteed. Refresh related metadata,
+distributable archives, and previews when intentionally replacing an output.
 
 An authored bundle remains `draft` until domain review, appropriate sample
 execution, and visual Office review. Cloud recipes require live validation in an

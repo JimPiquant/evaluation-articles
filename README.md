@@ -83,11 +83,15 @@ python3 scripts/publish.py --article E02 --format all
 python3 scripts/publish.py --format all
 ```
 
-Outputs and release metadata are under `build/`. Article Markdown produces
-Word; deliberately authored slide Markdown produces PowerPoint. Templates and
+Outputs and release metadata are versioned under `build/` to preserve the exact
+generated files; byte-identical rebuilds are not guaranteed. Article Markdown
+produces Word; deliberately authored slide Markdown produces PowerPoint.
+Markdown remains the editable source, not the Office files. Templates and
 publishing instructions are in [templates/README.md](templates/README.md).
-`generate-docx.sh` remains a compatibility entry point. CI uploads generated
-artifacts rather than committing every binary.
+`generate-docx.sh` remains a compatibility entry point. CI uploads candidate
+artifacts for review rather than automatically replacing committed snapshots.
+Check the recorded source hashes before treating a snapshot as current; retained
+artifacts may predate later source changes.
 
 ## What changed
 

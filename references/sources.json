@@ -31,6 +31,7 @@
     {"id":"F25","url":"https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/custom-evaluators","authority":"Custom evaluator types, contracts, and runtime restrictions","reviewed":"2026-11-13","revision":"b8a1b05895412b558c94a29255eecbc256bcbb8e"},
     {"id":"F26","url":"https://learn.microsoft.com/en-us/azure/foundry/how-to/evaluate-generative-ai-app","authority":"Portal target selection and evaluation flow","reviewed":"2026-11-13","revision":"bca96609718b3dcb87da6c4e71b8dd9ecb4dd444"},
     {"id":"F27","url":"https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-regions-limits-virtual-network","authority":"Region, quota, and enterprise limits; source conflict recorded","reviewed":"2026-11-13","revision":"7eba8981d50debe22b18ed8029dafced5aeea09a"},
+    {"id":"A01","url":"https://learn.microsoft.com/en-us/agent-framework/agents/evaluation","authority":"Agent Framework evaluation APIs, local checks, orchestration, and Foundry integration; complementary to Foundry service documentation","reviewed":"2026-11-13","revision":"77ccacb126bb88de7e3b0af64f530c870e9c672f"},
     {"id":"T01","url":"https://pandoc.org/MANUAL.html","authority":"Publishing formats and reference templates","reviewed":"2026-11-12"},
     {"id":"T02","url":"https://github.com/mermaid-js/mermaid-cli","authority":"Diagram renderer","reviewed":"2026-11-13"}
   ]

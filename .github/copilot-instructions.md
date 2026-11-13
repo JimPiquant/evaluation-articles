@@ -4,8 +4,9 @@
 
 This is a customer learning and publishing repository, not a production application.
 Organize guidance around **choose, create, run, interpret, manage, and optimize**
-AI evaluations in Microsoft Foundry. Deployment is supporting material, not a
-prerequisite for evaluating recorded responses.
+AI evaluations in Microsoft Foundry and with Microsoft Agent Framework.
+Deployment is supporting material, not a prerequisite for evaluating recorded
+responses. There is not an external publishing target.
 
 - `series.json` is the single catalog: stable IDs, order, audience, editorial
   status, source IDs, reviewed date, and plan/article/slide paths.
@@ -13,7 +14,8 @@ prerequisite for evaluating recorded responses.
 - `platform/` contains current deployment, identity, and tool-delivery guidance.
 - `samples/contoso-evaluation/` is the shared executable teaching scenario.
 - `references/` records sources, terminology, compatibility, and discrepancies.
-- `templates/` and `scripts/` implement publishing. `build/` is generated.
+- `templates/` and `scripts/` implement publishing. `build/` contains generated
+  snapshots retained in version control.
 - `archive/` preserves superseded content and original binary assets. It is
   explicitly non-normative: do not use its claims or code as current grounding,
   publish it through the current catalog, or silently rewrite its provenance.
@@ -23,12 +25,17 @@ prerequisite for evaluating recorded responses.
 1. Start with the [Foundry Evaluation overview](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-overview)
    and its linked Evaluation documentation for product behavior, workflows,
    permissions, supported levels, limits, and status.
-2. Official Foundry Agents/Projects SDK references, release notes, and samples
+2. Also use [Agent Framework Evaluation](https://learn.microsoft.com/en-us/agent-framework/agents/evaluation)
+   and its linked documentation for additional, complementary guidance.
+   Developers use Microsoft Agent Framework to integrate evaluation into the
+   agent development lifecycle. Use Microsoft Foundry as the authoritative
+   evaluation platform and evaluator catalog.
+3. Official Foundry Agents/Projects SDK references, release notes, and samples
    are approved grounding for implementation. Use a release tag/commit for code;
    record package versions and the exact API generation.
-3. CAF, the Azure Well-Architected Framework, and Architecture Center support
+4. CAF, the Azure Well-Architected Framework, and Architecture Center support
    architectural recommendations, not undocumented evaluation requirements.
-4. Maintainer documentation grounds external tooling. Internal research and
+5. Maintainer documentation grounds external tooling. Internal research and
    older articles are leads only, not independent authority.
 
 Consult `references/sources.json` and `references/grounding.md`. Include direct
@@ -56,14 +63,37 @@ include `title`, `subtitle`, `author`, and `date`; use level-one slide headings
 and `::: notes` for presenter notes. Write a curated narrative, not a prose dump.
 Markdown is canonical; Office files are generated, not separately edited masters.
 
+Treat topic content as reusable knowledge and presentations as curated adaptations.
+Keep technical facts, executable examples, and diagrams canonical wherever
+practical. Reuse an article body for Word and full-length blog publication rather
+than maintaining independent copies. Adapt wording and sequencing for audience
+and purpose, while preserving citations, limitations, and validation boundaries.
+Document publishing capabilities as implemented, not merely planned.
+
+Version intended `build/` deliverables with their metadata and release manifest:
+Office outputs, rendered assets, distributable archives, review previews, and
+sanitized evaluation evidence. Byte-identical rebuilds are not guaranteed.
+Preserve existing artifact bytes and provenance; do not rebuild merely to restore
+or validate a snapshot, and never edit generated files as content masters.
+Regeneration is an intentional update: review affected outputs, refresh their
+metadata and any containing archives/previews together, and commit them together.
+Historical provenance may precede current sources; do not rewrite it to imply a
+rebuild occurred. Check source hashes before claiming an artifact is current.
+Do not commit temporary publishing directories, browser profiles, credentials,
+or unapproved customer traces. CI uploads candidate artifacts for review; it does
+not automatically commit or replace the versioned snapshots.
+
 Write practitioner-to-practitioner for developers by default, with concrete,
 honestly labeled examples. Leaders/architects get decisions, tradeoffs, and
 checklists without code. Use the Contoso Support scenario consistently: knowledge
 retrieval, customer-authorized order lookup, and confirmed ticket creation.
 Separate product fact, editorial recommendation, and illustrative policy.
 
-`draft` means authored, not customer-validated or externally published. Other
-statuses: `planned`, `technical-review`, `validated`, `published`, `needs-refresh`.
+Use only the catalog statuses `planned`, `draft`, `review`, `ready`, and `published`.
+`draft` means authored, not customer-validated or externally published. `review`
+means technical/editorial review is pending or in progress. `ready` means the
+required reviews for the intended deliverable are complete, not that live Azure
+execution has been validated.
 Record publication URL separately; never claim CAF/AAC publication without it.
 
 ## Evaluation invariants
