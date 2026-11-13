@@ -1,0 +1,18 @@
+{
+  "schema_version": "contoso.dataset/1",
+  "id": "contoso-support",
+  "version": "1.0.0",
+  "evaluation_unit": "single_request_with_tool_trace",
+  "source": "Manually authored synthetic fixtures and expected outcomes; no production data.",
+  "owner": "Sample maintainer",
+  "license": "Repository license",
+  "privacy": "Fictional customer, order, tracking and ticket identifiers only.",
+  "splits": {
+    "development": ["dev-returns", "dev-order", "dev-ticket"],
+    "regression": ["reg-returns", "reg-no-knowledge", "reg-order", "reg-order-missing", "reg-order-denied", "reg-ticket", "reg-ticket-no-consent", "reg-ticket-denied"],
+    "holdout": ["hold-shipping", "hold-processing", "hold-ticket-missing"]
+  },
+  "split_rationale": "Disjoint case IDs. Development is for iteration, regression is the release demonstration, and holdout is for an occasional human-reviewed check. All splits are public and share fixtures: the holdout is not a secret or statistically independent benchmark.",
+  "coverage": ["knowledge hit and miss", "order status and tracking", "unknown orders", "customer authorization", "ticket creation", "ticket consent", "no unintended ticket side effects"],
+  "limitations": "14 cases demonstrate mechanics, not representative production quality or statistical confidence. Structured requests bypass natural-language intent parsing; no multi-turn or LLM safety claims."
+}

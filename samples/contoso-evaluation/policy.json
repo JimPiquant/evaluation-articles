@@ -1,0 +1,18 @@
+{
+  "schema_version": "contoso.policy/1",
+  "id": "contoso-offline-release",
+  "version": "1.0.0",
+  "release_split": "regression",
+  "required_coverage": 1.0,
+  "candidates": {
+    "baseline": "contoso-support/1.0.0",
+    "regressed": "contoso-support/1.1.0-regressed"
+  },
+  "evaluators": {
+    "tool_contract": {"min_pass_rate": 1.0},
+    "fixture_context": {"min_pass_rate": 1.0},
+    "expected_outcome": {"min_pass_rate": 1.0},
+    "response_assertions": {"min_pass_rate": 1.0},
+    "ticket_state": {"min_pass_rate": 1.0}
+  }
+}

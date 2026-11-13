@@ -1,0 +1,74 @@
+{
+  "reviewed_on": "2026-11-13",
+  "api_generation": "Microsoft Foundry Projects 2.x with project-scoped OpenAI Evals; recorded-output JSONL data source",
+  "tested_packages": {"azure-ai-projects": "2.2.0", "azure-identity": "1.25.1", "openai": "2.29.0"},
+  "tested_python": "3.11.14",
+  "source_revisions": {
+    "azure-ai-projects": {
+      "tag": "azure-ai-projects_2.2.0",
+      "commit": "abd51bde9db51922ad2f36433e9ed069f2a883a0",
+      "verified_ref_url": "https://api.github.com/repos/Azure/azure-sdk-for-python/git/ref/tags/azure-ai-projects_2.2.0"
+    },
+    "openai": {
+      "tag": "v2.29.0",
+      "commit": "acd0c54d8a68efeedde0e5b4e6c310eef1ce7867",
+      "verified_ref_url": "https://api.github.com/repos/openai/openai-python/git/ref/tags/v2.29.0"
+    }
+  },
+  "package_status": "Selected released, non-beta packages. This is a compatible pinned set, not a claim that these are the latest releases.",
+  "validation": {
+    "offline_fixture_evaluation": "validated",
+    "cloud_imports_types_and_mock_transport": "validated",
+    "live_cloud_service": "not-validated",
+    "provisioning_authentication_and_deployment": "not-attempted"
+  },
+  "sources": [
+    {
+      "purpose": "Exact Projects API pattern and inline source types",
+      "url": "https://github.com/Azure/azure-sdk-for-python/blob/azure-ai-projects_2.2.0/sdk/ai/azure-ai-projects/samples/evaluations/sample_evaluations_builtin_with_inline_data.py"
+    },
+    {
+      "purpose": "Groundedness mapping and deployment_name initialization parameter",
+      "url": "https://github.com/Azure/azure-sdk-for-python/blob/azure-ai-projects_2.2.0/sdk/ai/azure-ai-projects/samples/evaluations/agentic_evaluators/sample_groundedness.py"
+    },
+    {
+      "purpose": "Projects dependency constraints and release notes",
+      "url": "https://github.com/Azure/azure-sdk-for-python/blob/azure-ai-projects_2.2.0/sdk/ai/azure-ai-projects/pyproject.toml"
+    },
+    {
+      "purpose": "Projects capability-level release status",
+      "url": "https://github.com/Azure/azure-sdk-for-python/blob/azure-ai-projects_2.2.0/sdk/ai/azure-ai-projects/CHANGELOG.md"
+    },
+    {
+      "purpose": "Exact OpenAI per-item shape: datasource_item, results, passed and score",
+      "url": "https://github.com/openai/openai-python/blob/v2.29.0/src/openai/types/evals/runs/output_item_list_response.py"
+    },
+    {
+      "purpose": "Exact OpenAI run counts, criterion counts and async status shape",
+      "url": "https://github.com/openai/openai-python/blob/v2.29.0/src/openai/types/evals/run_retrieve_response.py"
+    },
+    {
+      "purpose": "Exact OpenAI pagination and output-item pass/fail status filter",
+      "url": "https://github.com/openai/openai-python/blob/v2.29.0/src/openai/resources/evals/runs/output_items.py"
+    },
+    {
+      "purpose": "Current evaluation-only prerequisites and client setup",
+      "url": "https://learn.microsoft.com/azure/foundry/observability/how-to/cloud-evaluation"
+    },
+    {
+      "purpose": "Current recorded-output workflow",
+      "url": "https://learn.microsoft.com/azure/foundry/observability/how-to/cloud-evaluation-datasets"
+    },
+    {
+      "purpose": "Current asynchronous completion, cancellation, results and pagination guidance",
+      "url": "https://learn.microsoft.com/azure/foundry/observability/how-to/cloud-evaluation-results"
+    }
+  ],
+  "limitations": [
+    "Latest release metadata exposed Projects 2.11.0/OpenAI 3.50.0, but that package set could not be installed from this environment's package mirror and public wheel endpoint. It was not validated or selected.",
+    "The current Learn introduction recommends Projects >=2.2.0. The chosen set satisfies that generation boundary; upgrade deliberately and repeat smoke/live integration checks.",
+    "The release-tagged generic sample uses model for some initialization parameters; the groundedness-specific sample uses deployment_name. This adapter follows the groundedness-specific reference.",
+    "Release samples omit canceled termination and bounded polling and sometimes delete evaluations. This implementation deliberately does not copy those behaviors.",
+    "Groundedness availability, permissions, judge deployment, regional support, service output shape and real score calibration still require a live integration check. No capability inherits a blanket GA or preview claim from package status."
+  ]
+}

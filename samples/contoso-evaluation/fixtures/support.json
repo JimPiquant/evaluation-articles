@@ -1,0 +1,22 @@
+{
+  "id": "contoso-support-fixtures/1",
+  "knowledge": [
+    {
+      "id": "KB-returns",
+      "title": "Returns",
+      "keywords": ["return", "returns", "refund"],
+      "text": "Unused items can be returned within 30 days of delivery. Keep the receipt."
+    },
+    {
+      "id": "KB-shipping",
+      "title": "Shipping",
+      "keywords": ["shipping", "delivery"],
+      "text": "Standard shipping takes 3 to 5 business days. Tracking is available after dispatch."
+    }
+  ],
+  "orders": {
+    "ORD-1001": {"customer_id": "C-001", "status": "shipped", "tracking": "TRACK-1001"},
+    "ORD-1002": {"customer_id": "C-001", "status": "processing", "tracking": null},
+    "ORD-2001": {"customer_id": "C-002", "status": "delivered", "tracking": "TRACK-2001"}
+  }
+}

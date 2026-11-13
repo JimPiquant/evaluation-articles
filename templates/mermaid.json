@@ -1,0 +1,17 @@
+{
+  "theme": "base",
+  "securityLevel": "strict",
+  "fontFamily": "Arial, sans-serif",
+  "themeVariables": {
+    "primaryColor": "#EFF4F8",
+    "primaryTextColor": "#17324D",
+    "primaryBorderColor": "#007F8B",
+    "lineColor": "#17324D",
+    "secondaryColor": "#E6F3F3",
+    "tertiaryColor": "#FFFFFF"
+  },
+  "flowchart": {
+    "htmlLabels": false,
+    "useMaxWidth": true
+  }
+}

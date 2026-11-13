@@ -1,0 +1,86 @@
+name: Validate and publish articles
+
+on:
+  pull_request:
+    paths:
+      - "README.md"
+      - "ProjectScope.md"
+      - ".github/copilot-instructions.md"
+      - "series.json"
+      - "articles/**"
+      - "platform/**"
+      - "references/**"
+      - "scripts/**"
+      - "templates/**"
+      - "generate-docx.sh"
+      - "mermaid.lua"
+      - ".github/workflows/publish.yml"
+  push:
+    branches: [main]
+    paths:
+      - "README.md"
+      - "ProjectScope.md"
+      - ".github/copilot-instructions.md"
+      - "series.json"
+      - "articles/**"
+      - "platform/**"
+      - "references/**"
+      - "scripts/**"
+      - "templates/**"
+      - "generate-docx.sh"
+      - "mermaid.lua"
+      - ".github/workflows/publish.yml"
+  workflow_dispatch:
+    inputs:
+      article:
+        description: "Optional stable article ID (empty publishes all)"
+        type: string
+        default: ""
+      format:
+        description: "Office format"
+        type: choice
+        options: [all, docx, pptx]
+        default: all
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out sources
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Check content before installing publishing tools
+        run: python3 scripts/check_content.py
+      - name: Install Office and diagram converters
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends pandoc
+          npm install --global @mermaid-js/mermaid-cli@11.12.0
+      - name: Run focused regression tests
+        run: python3 -m unittest discover -s scripts/tests -v
+      - name: Publish catalog selection
+        env:
+          ARTICLE: ${{ inputs.article }}
+          FORMAT: ${{ inputs.format || 'all' }}
+        run: |
+          args=(--format "$FORMAT" --puppeteer-config templates/puppeteer-ci.json)
+          if [[ -n "$ARTICLE" ]]; then
+            args+=(--article "$ARTICLE")
+          fi
+          python3 scripts/publish.py "${args[@]}"
+      - name: Upload only release outputs
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: evaluation-office-${{ github.sha }}
+          if-no-files-found: error
+          retention-days: 14
+          path: |
+            build/*/*.docx
+            build/*/*.pptx
+            build/*/metadata.json
+            build/release-manifest.json

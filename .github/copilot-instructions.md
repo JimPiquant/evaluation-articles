@@ -1,37 +1,117 @@
-# Copilot Instructions
+# Copilot instructions
 
-## Repository purpose
+## Purpose and structure
 
-- This repository is for writing a series of articles about AI evaluations, including guidance, best practices, tooling, and related workflows.
-- Optimize for high-quality written content and reusable guidance rather than assuming this is an application codebase.
+This is a customer learning and publishing repository, not a production application.
+Organize guidance around **choose, create, run, interpret, manage, and optimize**
+AI evaluations in Microsoft Foundry. Deployment is supporting material, not a
+prerequisite for evaluating recorded responses.
 
-## Build, test, and lint commands
+- `series.json` is the single catalog: stable IDs, order, audience, editorial
+  status, source IDs, reviewed date, and plan/article/slide paths.
+- `articles/` contains the evaluation lifecycle and specialist/capstone articles.
+- `platform/` contains current deployment, identity, and tool-delivery guidance.
+- `samples/contoso-evaluation/` is the shared executable teaching scenario.
+- `references/` records sources, terminology, compatibility, and discrepancies.
+- `templates/` and `scripts/` implement publishing. `build/` is generated.
+- `archive/` preserves superseded content and original binary assets. It is
+  explicitly non-normative: do not use its claims or code as current grounding,
+  publish it through the current catalog, or silently rewrite its provenance.
 
-- No build, test, or lint commands are defined yet.
-- There is currently no single-test or per-file validation command; check the repository again before assuming a tooling workflow has been added.
+## Grounding hierarchy
 
-## High-level architecture
+1. Start with the [Foundry Evaluation overview](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-overview)
+   and its linked Evaluation documentation for product behavior, workflows,
+   permissions, supported levels, limits, and status.
+2. Official Foundry Agents/Projects SDK references, release notes, and samples
+   are approved grounding for implementation. Use a release tag/commit for code;
+   record package versions and the exact API generation.
+3. CAF, the Azure Well-Architected Framework, and Architecture Center support
+   architectural recommendations, not undocumented evaluation requirements.
+4. Maintainer documentation grounds external tooling. Internal research and
+   older articles are leads only, not independent authority.
 
-- The main deliverables are articles, not services or libraries.
-- Each article is a single Markdown file. Its plan lives in a separate companion file (e.g. `my-article.plan.md` alongside `my-article.md`).
-- Articles cover related topics for different audiences, so terminology, recommendations, and framing around AI evaluations must stay consistent across the full set.
-- References are part of the content architecture: guidance and best-practice claims should remain traceable to the sources used while drafting. Include URLs when referencing external material.
+Consult `references/sources.json` and `references/grounding.md`. Include direct
+URLs where claims appear and source IDs in the plan/catalog. Record the actual
+verification date; do not imply that a link check verifies product behavior.
+Recheck volatile APIs and feature status before release.
 
-## Audience and tone
+Do not combine standalone `azure-ai-agents` threads/runs with versioned
+`azure-ai-projects` agents/Responses/Evals in one recipe. A stable SDK can include
+preview features. Label status per capability and interface, never by blanket
+inheritance. If sources conflict, record the discrepancy and constrain the
+recommendation; do not invent reconciliation or prescribe "latest" as a pin.
+Known discrepancies and capability-specific SDK minimums are recorded in
+`references/grounding.md`; expand that register when discovering another conflict.
 
-- Default audience: software developers who may or may not be new to using evaluations.
-- Some articles target software architects or IT leaders — these should avoid code samples and focus on strategic guidance.
-- Tone: practitioner-to-practitioner. Write as a peer sharing practical experience, not as a textbook or marketing copy.
+## Writing and planning
 
-## Key conventions
+Create or review `<slug>.plan.md` before drafting or substantially revising
+`<slug>.md` or `<slug>.slides.md`. Every plan includes Purpose, Audience, Outline,
+References, customer outcome, prerequisites, grounding boundaries, and acceptance
+criteria. Keep these three sources adjacent and register them in `series.json`.
 
-- Every article must start with a plan file (`<article-name>.plan.md`) that includes:
-  - purpose
-  - audience (specify where it differs from the default)
-  - outline (structure)
-  - references
-- Do not draft or substantially revise an article before creating or reviewing its plan file.
-- When editing an existing article, align changes to its stated audience and outline instead of rewriting the structure ad hoc.
-- More technical articles aimed at developers should include concrete code examples. Articles targeting IT leadership should not contain code samples.
-- Prefer concrete, source-backed guidance over generic commentary about AI.
-- If the repository later adds article templates, frontmatter, or validation tooling, follow those exact patterns and update this file with the concrete commands.
+Article frontmatter includes `title`, `description`, `author`, and `date`. Slides
+include `title`, `subtitle`, `author`, and `date`; use level-one slide headings
+and `::: notes` for presenter notes. Write a curated narrative, not a prose dump.
+Markdown is canonical; Office files are generated, not separately edited masters.
+
+Write practitioner-to-practitioner for developers by default, with concrete,
+honestly labeled examples. Leaders/architects get decisions, tradeoffs, and
+checklists without code. Use the Contoso Support scenario consistently: knowledge
+retrieval, customer-authorized order lookup, and confirmed ticket creation.
+Separate product fact, editorial recommendation, and illustrative policy.
+
+`draft` means authored, not customer-validated or externally published. Other
+statuses: `planned`, `technical-review`, `validated`, `published`, `needs-refresh`.
+Record publication URL separately; never claim CAF/AAC publication without it.
+
+## Evaluation invariants
+
+- Choose the evaluation unit (turn/conversation), evidence source, compatible
+  evaluators, and decision before selecting execution tooling.
+- Complete conversations require appropriate `messages` data and explicit
+  supported evaluation level. A skipped evaluator is not passing evidence.
+- Reference answers are not actual responses; groundedness needs independent
+  context. Fixture checks are not LLM-judged quality or safety evaluation.
+- Verify actual candidate attribution; no default to the requested version.
+- Gates fail closed on missing/invalid metrics, zero counts, skips/errors,
+  incomplete pagination, or incompatible result contracts.
+- Centralize sample policy and adapt real SDK results explicitly. Do not invent
+  uniform score scales or equate averages with pass rates.
+- For documented content-harm threshold 3, scores <=3 pass and >3 fail.
+  Stricter boundaries must be labeled customer policy.
+- No fixed row count guarantees confidence or safety. Explain coverage,
+  uncertainty, judge calibration, and held-out acceptance data.
+- Preserve dataset/evaluator/target/judge lineage and review evidence. Do not
+  auto-delete cloud runs, disable production routing for tests, or upload
+  sensitive traces without authorization/redaction.
+- Label local validation, SDK import checks, and live-cloud validation separately.
+  Do not call the companion a production agent or a validated Azure deployment.
+
+## Commands and validation
+
+From the repository root:
+
+```bash
+python3 scripts/check_content.py
+python3 -m unittest discover -s scripts/tests
+python3 -m unittest discover -s samples/contoso-evaluation/tests
+python3 samples/contoso-evaluation/run.py --candidate baseline --output build/evaluation/baseline.json
+python3 samples/contoso-evaluation/gate.py build/evaluation/baseline.json
+python3 scripts/publish.py --article E02 --format all
+python3 scripts/publish.py --format all
+```
+
+The regressed fixture must fail the gate. `generate-docx.sh` is a compatibility
+entry point, not a separate publishing implementation. Publishing requires
+Pandoc; Mermaid diagrams additionally require Mermaid CLI and its browser.
+Python checks and offline sample tests use the standard library. Cloud sample
+dependencies and commands are documented in its README.
+
+Run targeted checks for changed content/code and full catalog/export checks for
+publishing changes. Converter/renderer failures must return nonzero and cannot
+reuse stale assets. Output metadata records source hashes, tool versions, and
+checksums. Office ZIP integrity is not visual acceptance: inspect pages/slides
+before marking a bundle customer-ready. Never provision Azure resources merely
+to validate prose without an explicit deployment task.

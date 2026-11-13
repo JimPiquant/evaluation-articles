@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "brand": "AI EVALUATION FIELD GUIDE",
+  "font": "Arial",
+  "code_font": "Courier New",
+  "colors": {
+    "ink": "17324D",
+    "accent": "007F8B",
+    "link": "0067B8",
+    "muted": "526477",
+    "surface": "EFF4F8"
+  },
+  "word": {
+    "body_points": 11,
+    "title_points": 30,
+    "heading_points": [20, 16, 13],
+    "code_points": 9.5,
+    "margin_twips": 1440,
+    "image_max_width_inches": 6.5,
+    "image_max_height_inches": 5.75
+  },
+  "slides": {
+    "width_emu": 9144000,
+    "height_emu": 5143500,
+    "title_points": 28,
+    "cover_points": 32,
+    "body_points": 22,
+    "subtitle_points": 18,
+    "review_points": 12,
+    "cover_title_inches": [0.6, 1.0, 8.8, 1.7],
+    "cover_subtitle_inches": [0.8, 3.0, 8.4, 1.2],
+    "cover_review_inches": [0.8, 4.55, 8.4, 0.4],
+    "image_max_width_inches": 8.8,
+    "image_max_height_inches": 3.5
+  }
+}

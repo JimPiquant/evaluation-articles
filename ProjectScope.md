@@ -1,83 +1,71 @@
-# Project Scope — AI Evaluation Articles Series
+# Project scope: Foundry evaluation learning series
 
 ## Purpose
 
-This repository produces a series of practitioner-oriented articles on AI evaluation for applications built with Microsoft Foundry on Azure. The series spans strategic guidance for IT leaders through hands-on implementation guides for developers and security engineers.
+Help customers create, manage, use, and optimize evaluations for AI applications
+in Microsoft Foundry. Teach decisions and repeatable workflows, not a duplicate
+of the evaluator reference catalog. The customer journey is choose -> create ->
+run -> interpret -> manage -> optimize.
 
-The goal is to give readers a clear, end-to-end understanding of how to design, implement, and operate evaluation pipelines — from organizational strategy down to specific evaluator configuration and CI/CD integration.
+The authoritative inventory is [series.json](series.json). The customer entry
+point and reader paths are in [README.md](README.md). All current articles are
+fresh drafts with adjacent plans and curated slide narratives; drafting and local
+checks do not establish external publication or live-cloud validation.
 
-## Target publications
+## Grounding
 
-| Layer | Publication target | Audience |
-|-------|--------------------|----------|
-| Strategy | Cloud Adoption Framework (CAF) | IT leaders, architects, program managers |
-| Strategy | Well Architecture Framework (CAF) | IT leaders, architects, program managers |
-| Implementation | Azure Architecture Center (AAC) | Software developers, DevOps engineers, security engineers |
+The [Foundry Evaluation overview](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-overview)
+and linked Evaluation section are the primary authority. Official Foundry
+Agents/Projects SDK references and versioned samples additionally ground
+implementation. The [source policy](references/grounding.md) defines how to
+resolve API generations, feature status, and conflicting documentation.
 
-## Article inventory
+CAF, the Azure Well-Architected Framework (WAF), and Azure Architecture Center
+are potential publication destinations and architectural context, not claimed
+publication venues. Publication URLs remain empty until confirmed.
 
-We can change this around if required
+## Content boundaries
 
-| # | Title | Audience | Target | Status |
-|---|-------|----------|--------|--------|
-| 00 | AI Evaluation Strategy for Technical Leaders | IT leaders & architects | CAF | Draft (~85%) |
-| 01 | Building AI Evaluation Pipelines on Azure | Developers & architects | AAC | Complete |
-| 02 | Reference Architecture for Agent Evaluation | Developers & DevOps | AAC | Complete |
-| 03 | Quality and RAG Evaluators Deep Dive | Developers (RAG apps) | AAC | Planned (outline done) |
-| 04 | Agent Evaluators Deep Dive | Developers (agentic apps) | AAC | Planned (outline done) |
-| 05 | Safety Evaluations | Developers & security engineers | AAC | Planned (outline done) |
-| 06 | Red Teaming with PyRIT and Foundry | Developers & security engineers | AAC | Planned (outline done) |
-| 07 | Deploying Microsoft Foundry Agents — Guide| Architects  | AAC | WIP |
-| 08 | Deploying Microsoft Foundry Agents — Code Sample| Architects  | AAC | WIP |
-| 09 | Deploying Microsoft Foundry IQ  CICD — Guide | Architects | AAC | To Do |
-| 10 | Deploying Microsoft Foundry IQ  CICD — Code Sample| Architects | AAC | To Do |
-| 11 | Deploying Microsoft Foundry Tool CICD  — Guide | Architects | AAC | To Do |
-| 12 | Deploying Microsoft Foundry Tool CICD  — Code Sample| Architects | AAC | To Do |
+E00-E10 form the core lifecycle. E11 covers safety; E12 covers adversarial
+testing; E13 integrates the architecture. P01-P03 cover agent deployment,
+identity/networking, and tool delivery only insofar as they support evaluation.
 
-Code sample build on the existing landing zone from https://github.com/Azure/AI-Landing-Zones
+The Contoso Support scenario joins knowledge retrieval, customer-authorized
+order lookup, and confirmed ticket creation. The executable companion is an
+offline fixture harness plus an optional cloud integration, not a production
+support application. It must not claim that fixture checks establish model
+quality, groundedness, safety, or Azure deployment readiness.
 
+Dev/test/prod are cross-cutting operating contexts, not primary navigation.
+Recorded outputs do not require deploying an agent. Full agent platforms and
+landing zones are optional application architecture, not dataset-evaluation
+prerequisites.
 
+## Deliverables and acceptance
 
-## Running scenario
+Maintain article Markdown, reviewed plan, and curated slide Markdown together.
+Generate Word and PowerPoint using the catalog and shared templates. Releases
+include source/tool provenance and checksums; failures block publishing.
+Generated binaries are release/session artifacts, not independently maintained
+content masters.
 
-Articles 02–06 share a common scenario — **Contoso Support Agent** — a Microsoft Foundry Agent with search, CRM lookup, and ticketing tools. This scenario provides continuity across the deep-dive articles.
+An authored bundle remains `draft` until domain review, appropriate sample
+execution, and visual Office review. Cloud recipes require live validation in an
+authorized environment before claiming that validation. Publication status is
+separate from editorial readiness.
 
-## Cross-article consistency requirements
+## Preserved material
 
-| Concern | Convention |
-|---------|------------|
-| Product naming | "Microsoft Foundry" (not "Azure AI Foundry" or "Azure AI Studio") |
-| Preview flags | Clearly mark preview features (hosted agents, workflow agents, agent evaluators, custom evaluators, cloud evaluations) |
-| Environment model | Three-stage: **dev** (fast local feedback) → **test** (scale + CI/CD gates) → **prod** (continuous monitoring) |
-| References | Source-backed claims; include URLs to Microsoft Learn or GitHub |
-| Evaluation categories | Response quality, task completion, safety/content risk, adversarial resilience |
-| Tone | Practitioner-to-practitioner — peer sharing experience, not textbook or marketing |
+The previous numbered series, deployment guides, research, original images,
+companion, and Office documents are in [archive/](archive/README.md). They are
+superseded references, excluded from the current catalog and checks. The
+[migration map](references/migration.md) records replacement locations.
 
-## Repository conventions
+## Out of scope
 
-- Each article is a single Markdown file: `<article-name>.md`
-- Every article has a companion plan file: `<article-name>.plan.md`
-- Plan files must include: purpose, audience, outline, references
-- No article drafting before its plan file is created and reviewed
-- Diagrams use Mermaid syntax (rendered via `mermaid.lua` Pandoc filter)
-- DOCX generation via `generate-docx.sh` (Pandoc pipeline)
-
-## Companion implementation (Article 02)
-
-Located at `02-ref-architecture/companion/ai-eval-ref-implementation/`:
-
-| Component | Contents |
-|-----------|----------|
-| `src/agent/` | Agent definition and tool implementations (Python) |
-| `src/evaluation/` | Local eval, cloud eval, evaluator config, gate checks (Python) |
-| `datasets/` | Golden datasets (tiny dev set, full test set, safety probes) in JSONL |
-| `infra/` | Bicep modules for Foundry project, model deployments, monitoring |
-| `docs/` | Getting-started guide |
-
-## What is out of scope
-
-- Building a runnable application or service (this is a content repository)
-- IaC walkthrough companion article (referenced in Article 07 — deferred)
-- Evaluator SDK development or contribution
+Production support-agent implementation, automatic Azure provisioning, legal
+compliance certification, guaranteed safety, a CMS, and model/evaluator SDK
+development. Foundry IQ and unrelated platform expansions are not in this
+evaluation curriculum.
 
 
