@@ -14,6 +14,26 @@ Both runs should say `completed`. The intentionally failing candidate still comp
 
 Explore alternative splits with `--split development` or `--split holdout`. The release gate expects the complete regression split specified in `policy.json`, so it will reject those experiment reports.
 
+### `run.py` parameter reference
+
+`run.py` executes the local fixture-backed candidate, or evaluates supplied
+recordings, and writes a JSON report. Display its built-in help with:
+
+```bash
+python3 samples/contoso-evaluation/run.py --help
+```
+
+| Parameter | Meaning |
+|---|---|
+| `--candidate` | **Required.** Candidate name registered in `policy.json`, such as `baseline` or `regressed`. |
+| `--output` | **Required.** File path for the JSON evaluation report. |
+| `--split` | Optional: `development`, `regression`, or `holdout`. Defaults to the release split in `policy.json`, currently `regression`. |
+| `--records` | Optional path to a JSON array of externally collected fixture-scenario records. Evaluates those records instead of executing the local candidate. Must be a different file from `--output`. See [the application/collector boundary](#4-understand-the-applicationcollector-boundary) for the record format and an example. |
+
+Exit code **0** means evaluation completed, even if checks failed. Exit code
+**2** indicates an execution, input, or argument error. Use `gate.py` separately
+to apply the release policy; a completed evaluation is not a release pass.
+
 ## 2. Inspect the failure before using an average
 
 ```bash
@@ -78,6 +98,19 @@ The command below should exit 1 and identify failed case IDs:
 
 ```bash
 python3 samples/contoso-evaluation/gate.py build/evaluation/regressed.json
+echo $?
+```
+
+`echo $?` displays the gate's numeric exit code. Check it immediately after the
+gate; `$?` holds only the most recent command's exit code. **0** means the gate
+passed, **1** means it rejected the candidate or its evidence (expected for
+`regressed`), and **2** indicates an input, argument, or execution error.
+
+The gate prints JSON explaining the rejection. To inspect the underlying
+evaluation report as formatted JSON:
+
+```bash
+python3 -m json.tool build/evaluation/regressed.json
 ```
 
 To test that contract safely in a shell script:

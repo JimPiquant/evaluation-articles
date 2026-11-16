@@ -22,21 +22,24 @@ responses. There is not an external publishing target.
 
 ## Grounding hierarchy
 
-1. Start with the [Foundry Evaluation overview](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-overview)
+All the material in this repository should be grounded in authoritative sources.  Use this list as a hierarchy:
+
+1. Microsoft Foundry documentation, especially [Foundry Evaluation overview](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-overview)
    and its linked Evaluation documentation for product behavior, workflows,
    permissions, supported levels, limits, and status.
-2. Also use [Agent Framework Evaluation](https://learn.microsoft.com/en-us/agent-framework/agents/evaluation)
+2. [Agent Framework Evaluation](https://learn.microsoft.com/en-us/agent-framework/agents/evaluation)
    and its linked documentation for additional, complementary guidance.
    Developers use Microsoft Agent Framework to integrate evaluation into the
-   agent development lifecycle. Use Microsoft Foundry as the authoritative
-   evaluation platform and evaluator catalog.
-3. Official Foundry Agents/Projects SDK references, release notes, and samples
+   agent development lifecycle.
+3. Anthropic articles on evaluation methodologies, and best practices, including
+[Demystifying Evals for AI Agents](https://www.anthropic.com/research/demystifying-evals-for-ai-agents) (primary source),
+and [Building Strong Safety Evaluations](https://www.anthropic.com/research/building-strong-safety-evaluations),
+and [Develop Tests](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests).
+4. Official Foundry Agents/Projects SDK references, release notes, and samples
    are approved grounding for implementation. Use a release tag/commit for code;
    record package versions and the exact API generation.
-4. CAF, the Azure Well-Architected Framework, and Architecture Center support
+5. Microsoft Cloud Adoption Framework, the Azure Well-Architected Framework, and Architecture Center for support
    architectural recommendations, not undocumented evaluation requirements.
-5. Maintainer documentation grounds external tooling. Internal research and
-   older articles are leads only, not independent authority.
 
 Consult `references/sources.json` and `references/grounding.md`. Include direct
 URLs where claims appear and source IDs in the plan/catalog. Record the actual

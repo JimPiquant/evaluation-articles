@@ -29,3 +29,9 @@ F25: [custom evaluator contracts](https://learn.microsoft.com/en-us/azure/foundr
 ## Acceptance
 Business rubric example, error/skip coverage policy, correct scales, calibration,
 and clear distinction between deterministic checks and model judgment.
+
+## TODO
+- [ ] Add or review AI evaluation rubrics: confirm coverage of Contoso Support
+  outcomes, clear scoring criteria and examples, explicit scales and thresholds,
+  and calibration against human judgments. Distinguish documented evaluator
+  behavior from illustrative customer policy.
