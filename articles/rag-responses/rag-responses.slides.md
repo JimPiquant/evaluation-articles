@@ -29,9 +29,18 @@ date: "2026-11-13"
 # Separate measurements
 
 - Retrieval relevance/coverage
+- Approved source authority and freshness
 - Answer support
+- Coverage of material sub-questions
 - Query relevance
 - Business correctness and usability
+
+::: notes
+Groundedness/relevance alone do not establish that the source is authoritative
+or that the answer covers every material sub-question. Define task-specific
+criteria for those outcomes; M03 is methodology, not a Foundry evaluator contract:
+https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+:::
 
 # Add exact checks
 

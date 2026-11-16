@@ -17,6 +17,36 @@ Create a versioned dataset when you need regression testing, controlled comparis
 or stable review evidence. For a one-off production failure, direct response/trace
 evaluation may be a better start.
 
+## Design useful evaluation tasks
+
+An evaluation task (or test case) defines inputs and success criteria. Start with
+product requirements, checks you already perform manually, and observed failures.
+Write criteria clearly enough that reviewers can agree on whether a result passes.
+If a task is ambiguous or the grader rejects a valid response, the score may
+measure the test design rather than the application.
+
+For each task, consider keeping a **reference solution**: a known-working output
+that passes the task's graders. It helps check that the task is solvable and the
+graders are configured correctly. A reference solution is not the actual
+application response and is not automatically suitable as a groundedness
+reference answer.
+
+For example, replace "handle an escalation correctly" with a criterion that
+checks the requested effect and its prerequisites: after explicit customer
+confirmation, a ticket record exists for the correct customer and issue; without
+confirmation, no ticket is created. Check the persisted effect separately from
+the final message. This makes the criterion specific and observable while
+allowing valid variations in wording and tool sequence. The task-design guidance
+in [M03](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests)
+is methodology, not a Foundry schema or numeric acceptance target.
+
+Build balanced sets: include cases where a behavior should occur and cases where
+it should not. For example, test both when Contoso should look up an order and
+when it must deny access. Include realistic edge cases without letting one
+behavior or slice dominate unnoticed. These task-design recommendations follow
+[agent-evaluation methodology](https://www.anthropic.com/research/demystifying-evals-for-ai-agents);
+they are not Foundry schema requirements or a prescribed dataset size.
+
 ## Separate what happened from what should happen
 
 Keep the actual application response, its independent retrieved context, and the
@@ -45,7 +75,8 @@ Do not treat these schemas as interchangeable.
 
 ## Build coverage intentionally
 
-Start with the outcomes in your product policy. For Contoso, include ordinary
+Start with the outcomes in your product policy and failures users have reported.
+For Contoso, include ordinary
 policy questions, no-answer cases, outdated or contradictory documents, authorized
 order lookup, denied access, successful escalation, tool failure, and ambiguous
 requests.
@@ -68,6 +99,15 @@ judges and humans. Keep acceptance cases held out from prompt/rubric optimizatio
 Split by conversation or related case family, not individual turns, to avoid
 near-identical information appearing in both tuning and acceptance data.
 
+These datasets can support different evaluation purposes. **Capability
+evaluations** ask what the agent can do; use their results to find areas to
+improve. **Regression evaluations** check whether previously working behavior
+still works after a change. A capability task may later become part of a
+regression set as performance improves. Anthropic describes high initial
+headroom for capability evaluations and high pass rates for regression
+evaluations, but those are methodological observations—not Foundry defaults or
+universal thresholds. Set acceptance criteria for the risk and decision at hand.
+
 Generation APIs can have different minimum SDK versions from recorded-output
 evaluation. The current synthetic-generation guide specifies Projects SDK 2.8.0
 or later; the companion's dependency set covers its own evaluation path, not
@@ -80,8 +120,8 @@ do not overwrite a dataset behind an unchanged name. Retain enough history to
 reconstruct release decisions.
 
 The [shared sample](../../samples/contoso-evaluation/README.md) supplies a small
-fixture dataset and metadata. It is deliberately not advertised as a 100-row
-production acceptance set.
+fixture dataset and metadata to demonstrate mechanics. It is not a claim of
+representative coverage or a production acceptance set.
 
 ## Validate before paying for a run
 

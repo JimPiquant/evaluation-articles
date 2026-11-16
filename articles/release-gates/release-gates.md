@@ -22,6 +22,15 @@ for its fixture gate. Articles do not duplicate its thresholds as universal
 Foundry defaults. Cloud results require an adapter for the actual
 [service result schema](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evaluation-results).
 
+Item-level diagnostic scores or partial credit can help explain progress, but
+they do not override the release contract. If a required criterion is missing,
+skipped, errored, or below its blocking threshold, preserve that detail and block
+acceptance. An explicitly approved analytical exclusion may be useful for
+diagnosis, with its denominator disclosed; it cannot turn incomplete required
+evidence into a passing release. M01 discusses partial credit as an evaluation
+methodology option:
+[Demystifying evals for AI agents](https://www.anthropic.com/research/demystifying-evals-for-ai-agents).
+
 Missing metrics, nonfinite scores, zero scored rows, inconsistent counts, unknown
 candidate version, and truncated output must block. The
 [conversation guide](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evaluation-conversations)
@@ -61,6 +70,14 @@ Use SDK code when you need custom evidence retrieval and policy normalization.
 The [Foundry GitHub integration](https://learn.microsoft.com/en-us/azure/foundry/how-to/evaluation-github-action)
 provides an Actions path; inspect the exact action version and outputs before
 depending on its gating behavior.
+
+[Agent Framework](https://learn.microsoft.com/en-us/agent-framework/agents/evaluation)
+also provides evaluation orchestration and Foundry integration that can be used
+from an application's development workflow. Treat that as a separate,
+language- and package-version-specific implementation: verify how its
+`EvalResults` and provider outputs map to your release contract before gating.
+This series does not implement that CI integration, and framework behavior does
+not replace Foundry service contracts or the repository's offline fixture gate.
 
 The [preview evaluation CLI](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/azure-developer-cli-evaluation)
 uses a recipe in `evals/azure.eval.yaml` and supports `--fail-on`. Scaffolding

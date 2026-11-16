@@ -40,6 +40,14 @@ Point order/ticket tools at synthetic or sandbox services. Ensure generated
 interactions cannot mutate real customer records or unexpectedly charge external
 services.
 
+Treat each trial as a reproducible experiment: reset fixture state or provision a
+fresh isolated state where practical, and record environment/tool/policy versions
+that can affect outcomes. Environment fidelity should match the question; a
+sandbox can validate behavior but is not automatically representative of
+production. Do not confuse isolation guidance with a Foundry deployment
+requirement. This follows
+[M01's trial methodology](https://www.anthropic.com/research/demystifying-evals-for-ai-agents).
+
 Mixed canary traffic is useful for operational rollout, but not automatically
 clean candidate-comparison data. Preserve actual served version. Missing version
 metadata is an evidence problem, not permission to substitute the desired version.

@@ -15,6 +15,21 @@ The [Foundry overview](https://learn.microsoft.com/en-us/azure/foundry/concepts/
 separates what you evaluate from how you run the evaluation. Keep those choices
 independent.
 
+## Define the task and evaluation purpose
+
+A **task** (or test case) is one test with defined inputs and success criteria.
+Each attempt at a task is a **trial**; repeat trials when you need to understand
+variation in agent behavior. This terminology follows
+[agent-evaluation methodology](https://www.anthropic.com/research/demystifying-evals-for-ai-agents);
+it is not a Foundry request schema.
+
+Choose the purpose separately from the evaluation unit. **Capability
+evaluations** ask what an agent can do and help identify areas to improve.
+**Regression evaluations** check whether behavior that worked before still works
+after a change. The same task may contribute to either purpose at different
+stages, but the result has meaning only relative to the intended decision.
+These purposes do not prescribe a universal pass threshold.
+
 ## Choose the evaluation unit
 
 A turn-level evaluation asks whether an individual response is useful, relevant,
@@ -36,12 +51,17 @@ right semantics.
 
 | Evidence | Good starting use | Important boundary |
 |---|---|---|
-| Recorded query/response/context | Diagnose known output or compare recorded candidates | Reference answer is not the response |
-| Target-generated response | Compare a model/agent against fixed inputs | Verify the actual served candidate and isolate effects |
+| Precomputed responses | Diagnose or compare answers already produced and saved | The reference answer is not the response |
+| Responses generated at run time | Evaluate responses produced by invoking a model or agent on test inputs | Verify the actual target/version and isolate effects |
 | Completed conversation | Assess a known interaction | Preserve tool messages, definitions, and results |
 | Simulation seeds | Explore multi-turn behavior before release | Generated users may not represent real users |
 | Production responses/traces | Investigate actual failures and operational trends | Requires authorized access, tracing, retention, and redaction |
 | Synthetic test data | Broaden scenario coverage | Validate its labels, realism, and duplication |
+
+Foundry documents workflows for [evaluating precomputed responses](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evaluation-datasets)
+and [evaluating responses generated at run time](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evaluation-targets).
+These are different evidence-generation choices, not synonyms for capability
+and regression evaluations.
 
 The [dataset overview](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluation-datasets)
 explains that reusable datasets are not always required; existing responses or
@@ -50,8 +70,13 @@ candidate comparison matters, not as a mandatory ritual for every diagnosis.
 
 ## Select criteria before execution tooling
 
-Choose a business rubric for domain-specific outcomes, appropriate built-in
-quality and safety checks, and deterministic assertions for exact effects.
+Choose grading methods for the task: deterministic checks for exact effects,
+compatible Foundry evaluators, and human review where interpretation or
+calibration needs it. In agent-evaluation methodology, a **grader** is logic
+that scores an aspect of performance and may be code-based, model-based, or
+human. Foundry uses **evaluator** for its supported interfaces; the terms are
+related, not interchangeable API names. Choose a business rubric for
+domain-specific outcomes and appropriate built-in quality and safety evaluators.
 Check [supported evaluator levels and inputs](https://learn.microsoft.com/en-us/azure/foundry/concepts/built-in-evaluators).
 Do not enable the entire catalog by default: incompatible or irrelevant scoring
 adds cost and can hide what matters.
@@ -61,6 +86,14 @@ quality, and a rubric covering correct escalation and communication. A RAG answe
 needs independent retrieved evidence. Coherence alone answers neither question.
 
 ## Write the evaluation contract
+
+Make success observable rather than aspirational. For a Contoso ticket task,
+"help the customer" is too vague; a testable criterion is: *after the customer
+confirms escalation, the ticket record exists for that customer and issue, and
+the final response does not claim creation without the returned record*. This
+captures both a required effect and truthful communication. M03 recommends
+[specific, task-relevant criteria](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests);
+its examples are methodology, not Foundry request requirements.
 
 This local JSON illustrates a decision artifact, **not a Foundry request schema**:
 
@@ -78,6 +111,7 @@ This local JSON illustrates a decision artifact, **not a Foundry request schema*
 
 Agree this contract before tuning. The actual SDK schema, registered evaluator
 names, and result mapping depend on the chosen surface and version.
+See [task design](../datasets/datasets.md) for turning a goal into a test case.
 
 ## Choose how to run
 

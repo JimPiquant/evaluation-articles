@@ -38,8 +38,22 @@ Responsibility allocation is a recommendation, not a Foundry role definition.
 
 - Exact tests for contracts and effects
 - Model judges for open-ended qualities
-- People for calibration and disagreement
-- Production traces for operational feedback
+- Human review to inspect and calibrate
+- Monitoring, user feedback, and trace review
+
+::: notes
+Automated evaluations complement production monitoring, user feedback, manual
+transcript review, and systematic human evaluation. Each provides a different
+signal; none is a complete substitute for the others.
+Methodology: https://www.anthropic.com/research/demystifying-evals-for-ai-agents
+:::
+
+# Fund two evaluation purposes
+
+- Capability: what can the agent do?
+- Regression: does prior behavior still work?
+- Assign owners to maintain tasks and graders
+- No universal pass threshold
 
 # Set acceptance before tuning
 
@@ -58,6 +72,7 @@ Responsibility allocation is a recommendation, not a Foundry role definition.
 # Launch-readiness discussion
 
 - Can we explain one pass and one failure?
+- Can we distinguish agent failure from test/grader failure?
 - Does missing evidence block release?
 - Are exceptions and rollback owned?
 - Can we reconstruct the decision later?

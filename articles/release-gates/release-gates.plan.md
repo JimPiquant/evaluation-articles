@@ -9,7 +9,8 @@ Developers and CI/CD engineers.
 
 ## Outline
 1. Separate successful evaluation execution from candidate acceptance.
-2. Centralize policy and verify normalized result shape.
+2. Centralize policy and verify normalized result shape; distinguish diagnostic
+   item-level/partial-credit analysis from fail-closed release acceptance.
 3. Demonstrate offline good/bad gates.
 4. Map the workflow to Foundry SDK, Actions, or preview CLI.
 5. Secure identity and preserve evidence.
@@ -26,6 +27,10 @@ F12: [Actions](https://learn.microsoft.com/en-us/azure/foundry/how-to/evaluation
 F13: [CLI](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/azure-developer-cli-evaluation).
 F15: [permissions](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluation-permissions).
 F24: [Azure DevOps extension](https://learn.microsoft.com/en-us/azure/foundry/how-to/evaluation-azure-devops).
+M01: [agent-evaluation methodology](https://www.anthropic.com/research/demystifying-evals-for-ai-agents).
+A01: [Agent Framework evaluation](https://learn.microsoft.com/en-us/agent-framework/agents/evaluation).
 
 ## Acceptance
 Runnable CLI gate, explicit negative test, missing evidence fails, persisted results.
+Analytical exclusions or partial credit never convert missing/errored required
+evidence into a passing release decision.

@@ -25,6 +25,7 @@ date: "2026-11-13"
 - Policy/document freshness
 - Denied access and no-answer cases
 - Tool and operating failures
+- Task, grader, or environment defect?
 
 # Compare like with like
 
@@ -32,6 +33,19 @@ date: "2026-11-13"
 - Paired baseline/candidate evidence
 - Record target/data/evaluator/judge changes
 - Repeat when nondeterminism matters
+
+# Repeated trials answer different questions
+
+- `pass@k`: at least one success in k attempts
+- `pass^k`: success in every attempt
+- State trial conditions and aggregation
+- Neither is an ordinary pass rate or coverage proof
+
+::: notes
+These M01 metrics describe repeated-trial consistency, not a Foundry result
+contract:
+https://www.anthropic.com/research/demystifying-evals-for-ai-agents
+:::
 
 # Make uncertainty visible
 

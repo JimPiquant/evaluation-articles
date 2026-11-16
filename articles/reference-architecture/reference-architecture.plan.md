@@ -11,7 +11,8 @@ Architects and application/platform owners. No code in article or slides.
 ## Outline
 1. Choose minimum architecture for the evidence source.
 2. Trace immutable lineage through datasets, execution, and decisions.
-3. Separate app runtime/tool effects from judging and policy.
+3. Separate the agent harness, evaluation harness, app runtime/tool effects,
+   judging, and policy; show where clean trial state and effect verification sit.
 4. Secure identities, networks, and production traces.
 5. Present offline sample versus cloud integration versus conceptual operations.
 6. Review failure modes and deployment-readiness criteria.
@@ -27,6 +28,11 @@ F09/F14: [results](https://learn.microsoft.com/en-us/azure/foundry/observability
 F15/F16: [permissions](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluation-permissions),
 [networking](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-virtual-network).
 S01: [SDK](https://learn.microsoft.com/en-us/python/api/overview/azure/ai-projects-readme?view=azure-python).
+M01: [agent-evaluation methodology](https://www.anthropic.com/research/demystifying-evals-for-ai-agents).
+A01: [Agent Framework evaluation](https://learn.microsoft.com/en-us/agent-framework/agents/evaluation).
 
 ## Acceptance
 Conceptual diagram, truthful implementation table, no deployment/compliance guarantees.
+Diagram makes harness boundaries and isolation visible without requiring a
+deployed target for recorded-output evaluation. Agent Framework is an optional,
+version-specific integration, not part of the current companion.

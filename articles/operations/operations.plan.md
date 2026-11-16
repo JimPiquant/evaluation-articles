@@ -11,8 +11,10 @@ Platform engineers, application operators, and data stewards.
 1. Distinguish scheduled regression runs from live-traffic sampling.
 2. Configure identities, tracing, networking, and budgets.
 3. Operate asynchronous runs and incomplete evidence.
-4. Govern dataset/evaluator/run retention and exports.
-5. Respond to drift and refresh trace-derived datasets.
+4. Govern dataset/evaluator/run retention and exports, including grader and
+   rubric version ownership.
+5. Detect grader drift and capability-suite saturation; refresh trace-derived
+   datasets and preserve held-out acceptance.
 6. Decommission and audit.
 
 ## Prerequisites and boundaries
@@ -27,6 +29,10 @@ F14: [monitoring](https://learn.microsoft.com/en-us/azure/foundry/observability/
 F15/F16: [permissions](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluation-permissions),
 [networking](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-virtual-network).
 F27: [regions and rate limits](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-regions-limits-virtual-network).
+M01: [agent-evaluation methodology](https://www.anthropic.com/research/demystifying-evals-for-ai-agents).
+M02: [safety-evaluation methodology](https://www.anthropic.com/research/building-strong-safety-evaluations).
 
 ## Acceptance
 Actionable runbook, privacy/budget controls, cancellation/retry policy, retention ownership.
+Include suite/grader ownership, drift review, saturation signals, and safe
+replenishment of held-out data; do not prescribe universal cadence or sizes.

@@ -30,8 +30,16 @@ date: "2026-11-13"
 
 - Separate target or supported version selector
 - Synthetic customers and sandbox services
+- Reset trial state; record environment/tool/policy versions
+- Match environment fidelity to the decision
 - No mixed-canary provenance assumptions
 - No production-routing toggles for synthetic tests
+
+::: notes
+Isolation supports repeatability but does not establish representativeness or
+constitute a Foundry deployment requirement. M01 methodology:
+https://www.anthropic.com/research/demystifying-evals-for-ai-agents
+:::
 
 # Verify before judging
 

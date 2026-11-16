@@ -45,6 +45,19 @@ https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/r
 - Enriched test rates are not prevalence
 - Zero observed defects is not zero risk
 
+# Measure the intended safety construct
+
+- State the behavior or harm being measured
+- Pair risk cases with benign and ambiguous controls
+- Refusal alone is not safety
+- Inspect tool effects and grader disagreement
+
+::: notes
+Construct validity and realistic controls are M02 methodology. They do not
+change Foundry score semantics:
+https://www.anthropic.com/research/building-strong-safety-evaluations
+:::
+
 # Review safely
 
 - Controlled access to sensitive results

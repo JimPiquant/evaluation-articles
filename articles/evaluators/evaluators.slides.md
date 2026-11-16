@@ -12,6 +12,27 @@ date: "2026-11-13"
 - Did the action actually complete?
 - Was the outcome acceptably safe?
 
+# Choose a grading method
+
+- Code-based: explicit, repeatable checks
+- Model-based: judge nuanced responses with criteria
+- Human: expert review and calibration
+- Combine only when each adds distinct evidence
+
+::: notes
+These are Anthropic's agent-evaluation methodology categories. Code graders are
+fast and reproducible but can be brittle; model graders handle nuance but need
+calibration; human graders provide expert review but require time. Foundry
+evaluator interfaces and custom-evaluator types have separate contracts.
+https://www.anthropic.com/research/demystifying-evals-for-ai-agents
+https://learn.microsoft.com/en-us/azure/foundry/concepts/built-in-evaluators
+
+For coding-agent evaluations, Anthropic describes unit tests for correctness
+plus an LLM rubric for overall code quality, adding other graders only as
+needed. This is a context-specific methodology example, not a Foundry
+requirement.
+:::
+
 # Start with a business rubric
 
 - Stable dimension IDs
@@ -48,9 +69,17 @@ https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/c
 # Calibrate before release gates
 
 - Blinded acceptable/failed/ambiguous cases
+- Known-good and known-bad grader checks
 - Independent reviewer judgments
-- Inspect disagreements by slice
+- Inspect task/grader disagreements by slice
 - Version rubric and judge settings
+
+::: notes
+Check that graders measure the intended construct; task, grader, and environment
+defects can look like candidate failures. Recheck bias and calibration when the
+judge, rubric, or mapping changes. M02 methodology:
+https://www.anthropic.com/research/building-strong-safety-evaluations
+:::
 
 # Compatibility is part of quality
 

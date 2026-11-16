@@ -22,6 +22,17 @@ Capture user/assistant messages, tool definitions, tool calls and arguments,
 tool results, final response, actual target version, and independently verified
 outcome. Tool-call intent and tool execution are different facts.
 
+The **agent harness** is the runtime and tools that let the model act. The
+**evaluation harness** sets up tasks and trials, records the transcript and
+outcome, applies graders, and aggregates evidence. Keep their responsibilities
+separate so an agent's own success claim is not its grader. For repeatable trials,
+start from a known environment state where practical, reset fixture data, and
+record relevant tool, policy, and environment versions. Match the environment to
+the decision being studied; isolation improves reproducibility but does not by
+itself make results representative. This distinction follows
+[M01's agent-evaluation methodology](https://www.anthropic.com/research/demystifying-evals-for-ai-agents),
+not a Foundry service requirement.
+
 For Contoso, "your ticket has been created" is a communication claim. A returned
 ticket identifier and persisted fixture/service record establish the effect.
 A denied order lookup should not become a success because the assistant
@@ -96,6 +107,17 @@ The [offline companion](../../samples/contoso-evaluation/README.md) demonstrates
 working fixture effects and fail-closed evidence, not generative conversation
 quality. Use cloud-compatible captured messages and current target integration
 when adding judge/simulation evaluation.
+
+## Agent Framework as a separate integration path
+
+[Microsoft Agent Framework evaluation](https://learn.microsoft.com/en-us/agent-framework/agents/evaluation)
+adds framework APIs for local checks, custom evaluators, orchestration, and
+Microsoft Foundry evaluators. Treat it as an optional implementation path beside
+the Foundry workflows above, not as the companion's current implementation.
+Choose the language-specific package and version, then verify its API and result
+contract before adapting examples; framework defaults do not redefine Foundry
+service behavior. The series' fixture does not implement or validate this
+integration.
 
 Continue with [results](../results/results.md) and
 [tool delivery](../../platform/tools/tools.md).

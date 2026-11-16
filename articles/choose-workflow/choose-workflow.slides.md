@@ -12,6 +12,19 @@ date: "2026-11-13"
 - Approve release
 - Detect operational drift
 
+# Define task and purpose
+
+- Task: test inputs and success criteria
+- Trial: one attempt at a task
+- Capability: what can the agent do?
+- Regression: does prior behavior still work?
+
+::: notes
+Task and trial are agent-evaluation methodology terms. Capability and regression
+describe different evaluation purposes, not evaluation units or execution tools.
+Source: https://www.anthropic.com/research/demystifying-evals-for-ai-agents
+:::
+
 # Choose the unit
 
 - Turn: one response in context
@@ -25,17 +38,32 @@ https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evalu
 
 # Choose the source
 
-- Recorded output or completed messages
-- Newly invoked target
+- Precomputed responses
+- Responses generated at run time
+- Completed conversation data
 - Production response/trace
 - Synthetic data or simulated user
+
+::: notes
+Foundry documents evaluating precomputed responses and evaluating responses
+generated at run time as distinct workflows:
+https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evaluation-datasets
+https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evaluation-targets
+:::
 
 # Match criteria to outcomes
 
 - Business rubric
-- Compatible quality/process checks
-- Safety evidence
+- Compatible Foundry evaluators
+- Deterministic checks and human review
 - Exact tool-effect assertions
+
+::: notes
+Anthropic uses grader for scoring logic that may be code-based, model-based, or
+human. Foundry's evaluator is a product interface. These terms are related but
+not interchangeable API names.
+Methodology: https://www.anthropic.com/research/demystifying-evals-for-ai-agents
+:::
 
 # Choose the execution surface
 
@@ -52,10 +80,19 @@ https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/azure-devel
 # Write the evaluation contract
 
 - Decision, unit, source
+- Observable criterion: confirmed ticket has the right customer and issue
 - Observed candidate identity
 - Required evidence
 - Missing/skipped results block
 - Held-out data and policy owner
+
+::: notes
+Make success concrete: a ticket is created only after confirmation, belongs to
+the right customer and issue, and is not claimed without an observed record.
+M03 recommends task-specific criteria; its examples are not Foundry request
+requirements:
+https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+:::
 
 # Avoid the false shortcuts
 

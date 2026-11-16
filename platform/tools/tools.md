@@ -46,6 +46,15 @@ not an unused `TOOL_ENDPOINT_URL` variable or a model deployment.
 Check input validation, customer authorization, output schema, effect correctness,
 idempotency where applicable, timeouts, error handling, and compatibility. Test
 denied or invalid operations without creating unintended external effects.
+Define observable success criteria for each required effect rather than a vague
+"tool works" label; see
+[M03's task-specific test guidance](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests).
+Assert required process steps such as consent when policy requires them, but do
+not reject a valid solution merely for using a different incidental tool order.
+The grader should enforce the intended outcome and safety constraints, not an
+unnecessary transcript template. This is M01's methodology guidance, not a
+Foundry API rule:
+[Demystifying evals for AI agents](https://www.anthropic.com/research/demystifying-evals-for-ai-agents).
 
 ## Add process and interaction evaluation
 

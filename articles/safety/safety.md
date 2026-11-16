@@ -53,10 +53,16 @@ score range or default to unrelated risk evaluators.
 
 ## Build meaningful coverage
 
-Include expected benign behavior, ambiguous requests, language/population slices,
-tool errors, and critical policy boundaries using approved safe data. Review
-labels and references. Distinguish diagnostic enriched test sets from representative
-production sampling.
+First state the safety **construct**: the specific behavior or harm the
+evaluation is intended to measure. A refusal rate alone is not a safety measure:
+it can reward refusing benign requests while missing unsafe tool effects or
+unsupported claims. Pair risk cases with benign requests that should be answered,
+ambiguous requests that call for clarification, and relevant language/population
+slices. Include tool errors and critical policy boundaries using approved safe
+data. Review labels and references. Distinguish diagnostic enriched test sets
+from representative production sampling. This construct-validity framing follows
+[M02](https://www.anthropic.com/research/building-strong-safety-evaluations);
+it does not alter Foundry evaluator scales or thresholds.
 
 Report scored, skipped, errored, and excluded cases for every required risk.
 Missing or unsupported evidence blocks acceptance; it cannot count as zero defects.

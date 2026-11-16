@@ -39,6 +39,19 @@ https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-regions-limi
 - Adversarial discovery
 - Exact control/effect tests
 
+# Design interpretable scenarios
+
+- State the risk hypothesis and expected behavior
+- Use realistic multi-turn context where relevant
+- Include benign/ambiguous controls
+- Record limits before interpreting results
+
+::: notes
+Scenario realism and construct validity are M02 methodology; retain Foundry's
+documented support and authorization limits:
+https://www.anthropic.com/research/building-strong-safety-evaluations
+:::
+
 # Protect the environment
 
 - No real customer mutations

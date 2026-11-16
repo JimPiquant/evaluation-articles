@@ -50,9 +50,24 @@ date: "2026-11-13"
 # Close the learning loop
 
 - Review drift by slice
+- Recheck grader calibration and disagreements
 - Assign targeted fixes
 - Replenish held-out evidence
 - Track full cost and stop conditions
+
+# Maintain useful suites
+
+- Own tasks, rubrics, judges, and acceptance data
+- Keep saturated capability cases as regression checks
+- Add reviewed cases for new gaps
+- No universal refresh cadence or row count
+
+::: notes
+Suite-maintenance practices are grounded in M01/M02 methodology, not a Foundry
+schedule requirement:
+https://www.anthropic.com/research/demystifying-evals-for-ai-agents
+https://www.anthropic.com/research/building-strong-safety-evaluations
+:::
 
 # Grounding and next path
 

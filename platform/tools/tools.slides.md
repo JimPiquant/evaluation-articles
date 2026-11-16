@@ -25,6 +25,13 @@ date: "2026-11-13"
 - Input and output schema
 - Allowed and denied operations
 - Timeouts, errors, repeated calls
+- Enforce required consent, not incidental tool order
+
+::: notes
+Make process checks reflect actual policy. Accept valid alternative paths unless
+the ordered step is itself a requirement. M01 methodology:
+https://www.anthropic.com/research/demystifying-evals-for-ai-agents
+:::
 
 # Use the fixture harness honestly
 

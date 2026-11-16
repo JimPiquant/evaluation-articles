@@ -46,7 +46,7 @@ required thresholds, or proof that this repository's sample implements them.
 
 | Source | Use for | Boundary |
 |---|---|---|
-| M01: [Demystifying evals for AI agents](https://www.anthropic.com/research/demystifying-evals-for-ai-agents) | Task/trial/grader terminology, transcript and outcome evidence, grader selection, capability versus regression evals, repeated trials, and suite maintenance | Primary agent-evaluation methodology source; its illustrative schemas and metrics are not Foundry request or result contracts |
+| M01: [Demystifying evals for AI agents](https://www.anthropic.com/research/demystifying-evals-for-ai-agents) | Task/trial/grader terminology, transcript and outcome evidence, grader selection, capability versus regression evals, repeated trials, suite maintenance, and the coding-agent example pairing unit tests for correctness with an LLM rubric for overall code quality | Primary agent-evaluation methodology source; its illustrative schemas and metrics are not Foundry request or result contracts |
 | M02: [Building strong safety evaluations](https://www.anthropic.com/research/building-strong-safety-evaluations) | Construct validity, realistic and balanced safety scenarios, human calibration, preregistration, uncertainty, and reproducible reporting | Anthropic's safety methodology and internal practices, not Foundry risk categories, thresholds, permissions, or operational requirements |
 | M03: [Define success criteria and build evaluations](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests) | Specific, measurable, achievable, relevant success criteria; task-specific tests, edge cases, and grading examples | The instructions call this link "Develop Tests"; use the page's actual title when citing it. Claude API examples and illustrative numeric targets are not portable Foundry recipes |
 
@@ -181,6 +181,12 @@ sources define one shared product contract:
   prescription. For other applications, justify process constraints by actual
   requirements, such as authorization and consent, while allowing valid
   alternative solutions.
+- **Coding-agent grader combination (M01).** M01 presents unit tests for
+  correctness plus an LLM rubric for overall code quality as a practical pattern
+  for coding-agent evaluations, with additional graders and metrics as needed.
+  Treat this as context-specific methodology, not a universal combination or a
+  Foundry requirement. Choose graders for the task and verify any Foundry
+  evaluator inputs, result contract, and score semantics separately.
 - **Safety measures and environment (M02).** Risk-specific rubrics, harmless or
   appropriate response rates, and atomic binary criteria are methodological
   choices, not replacements for Foundry's documented score scales and thresholds.

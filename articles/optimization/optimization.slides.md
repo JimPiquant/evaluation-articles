@@ -22,8 +22,16 @@ date: "2026-11-13"
 
 - Baseline and candidate change
 - Data/evaluator/judge versions
+- Keep task, grader, and environment fixed for attribution
+- Label measurement/design changes separately
 - Success and safety constraints
 - Held-out acceptance data
+
+::: notes
+If task, judge, or environment changes, do not attribute score movement solely
+to the application. Acceptance data used for tuning is no longer held out.
+Task-specific success criteria: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+:::
 
 # Prompt Optimizer
 

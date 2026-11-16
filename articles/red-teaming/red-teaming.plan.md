@@ -8,7 +8,8 @@ Outcome: scoped test charter, protected environment, finding triage, and regress
 Developers and authorized safety reviewers.
 
 ## Outline
-1. Define authorized targets, risks, and stop conditions.
+1. Define authorized targets, risks, and stop conditions; design realistic
+   multi-turn scenarios around explicit risk hypotheses and benign controls.
 2. Use current Foundry workflow and supported limits.
 3. Separate simulation, ordinary safety evaluation, and adversarial search.
 4. Execute only in an isolated sandbox and preserve lineage.
@@ -24,6 +25,9 @@ F01: [overview](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluat
 F08: [safety](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/risk-safety-evaluators).
 F21: [Foundry red teaming](https://learn.microsoft.com/en-us/azure/foundry/concepts/ai-red-teaming-agent).
 F27: [region/limit reference](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-regions-limits-virtual-network).
+M02: [safety-evaluation methodology](https://www.anthropic.com/research/building-strong-safety-evaluations).
 
 ## Acceptance
 Permission, target/version attribution, sandbox side effects, stop/triage checklist.
+Scenario rationale, expected behavior, benign controls, evidence, and limitations
+are recorded; no claim that adversarial probing exhausts risk.

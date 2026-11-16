@@ -25,6 +25,13 @@ date: "2026-11-13"
 - Required skips/errors
 - Unknown version or incomplete pages
 
+# Diagnose partial credit; gate required evidence
+
+- Partial scores explain progress
+- Required missing/error/skip still blocks
+- Disclose approved analytical exclusions
+- Never turn incomplete coverage into a pass
+
 # Prove the negative case
 
 - Baseline generation succeeds
@@ -40,9 +47,16 @@ The root evaluation CI workflow exercises the offline fixture path.
 # Choose cloud execution deliberately
 
 - SDK with explicit result adapter
+- Agent Framework orchestration: verify result-to-policy mapping
 - Foundry evaluation Action
 - Preview CLI recipe and fail-on policy
 - Equivalent evidence contract in Azure DevOps
+
+::: notes
+Agent Framework is a separate, language/package-specific integration and is not
+implemented by the local fixture:
+https://learn.microsoft.com/en-us/agent-framework/agents/evaluation
+:::
 
 # Protect the pipeline
 

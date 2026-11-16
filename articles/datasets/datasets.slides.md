@@ -12,6 +12,22 @@ date: "2026-11-13"
 - Reproducible versions
 - Approved handling
 
+# Design a task that measures success
+
+- Start with a product outcome or observed failure
+- Specify inputs and unambiguous success criteria
+- Ticket exists only after consent; correct customer and issue
+- Confirm a reference solution passes its graders
+- Test when behavior should and should not occur
+
+::: notes
+These are task-design recommendations, not Foundry schema requirements or a
+fixed dataset-size rule.
+Source: https://www.anthropic.com/research/demystifying-evals-for-ai-agents
+Task-specific measurable criteria are also described in:
+https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+:::
+
 # Choose the right row
 
 - Query/response/context for recorded turns
@@ -39,6 +55,20 @@ date: "2026-11-13"
 - Calibration for judge/human alignment
 - Acceptance held out
 - Split related conversations as a group
+
+# Support capability and regression evaluations
+
+- Capability: identify what the agent can do and improve
+- Regression: check behavior that worked before still works
+- A capability task may later join the regression set
+- Set thresholds for the decision; no universal rates
+
+::: notes
+Anthropic describes capability evaluations as having room to improve and
+regression evaluations as checking for backsliding. Its example pass-rate
+expectations are not Foundry defaults or universal acceptance thresholds.
+Source: https://www.anthropic.com/research/demystifying-evals-for-ai-agents
+:::
 
 ::: notes
 Avoid near-duplicate leakage across splits and record the sampling design.

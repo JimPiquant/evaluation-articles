@@ -22,16 +22,26 @@ This is a conceptual flow, not a diagram of provisioned resources:
 
 ```mermaid
 flowchart TD
-    A[Approved versioned evidence] --> B[Recorded output or isolated target]
-    B --> C[Compatible evaluation and results]
-    C --> D[Human review and release policy]
-    D --> E[Release and telemetry feedback]
-    E --> A
+    A[Approved task and trial setup] --> B[Evaluation harness]
+    B --> C[Agent harness: model/runtime and tools]
+    C --> D[Transcript and observed outcome]
+    D --> B
+    B --> E[Compatible graders and result evidence]
+    E --> F[Human review and release policy]
+    F --> G[Release and telemetry feedback]
+    G --> A
 ```
 
-Every arrow carries lineage. Dataset and policy versions, actual application/model/
-tool versions, evaluator/rubric/judge settings, and evaluation/run identifiers
-must be sufficient to explain the decision later.
+The **agent harness** is the runtime and tools that let the model act; the
+**evaluation harness** sets up trials, captures evidence, applies graders, and
+aggregates results. A recorded-response workflow can start at the evidence
+capture point without invoking an agent harness. Keep responsibilities distinct.
+Every arrow carries lineage: task/environment setup, dataset and policy versions,
+actual application/model/tool versions, evaluator/rubric/judge settings, and
+evaluation/run identifiers must be sufficient to explain the decision later.
+This harness distinction follows
+[M01](https://www.anthropic.com/research/demystifying-evals-for-ai-agents);
+it is a methodology model, not a required Azure topology.
 
 ## Separate runtime, evaluation, and policy
 
@@ -44,9 +54,12 @@ not an independent effect. A completed run is not acceptance. These distinctions
 prevent the most misleading "end-to-end" samples.
 
 The [Projects SDK](https://learn.microsoft.com/en-us/python/api/overview/azure/ai-projects-readme?view=azure-python)
-grounds current agent/Evals integration. Keep an explicitly versioned
-compatibility boundary rather than mixing legacy thread/run APIs with current
-versioned agents.
+grounds current agent/Evals integration. The separate
+[Agent Framework evaluation APIs](https://learn.microsoft.com/en-us/agent-framework/agents/evaluation)
+are another implementation option, with local checks and Foundry integration;
+pin and validate the selected language/package independently. Keep an explicitly
+versioned compatibility boundary rather than mixing legacy thread/run APIs with
+current versioned agents.
 
 ## Select infrastructure by workflow
 
@@ -92,6 +105,7 @@ requires real connected telemetry, not just a workspace-shaped box in a diagram.
 
 - The unit, source, and decision are explicit.
 - Runtime effects are isolated and independently observed.
+- Trial environment and harness responsibilities match the evidence source.
 - Required evaluator coverage and actual candidate provenance are enforced.
 - Caller, project, and runtime identities have separately justified access.
 - Dataset/evaluator/judge/policy lineage and retention are documented.

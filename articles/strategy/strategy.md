@@ -51,6 +51,21 @@ Use [human evaluation](https://learn.microsoft.com/en-us/azure/foundry/observabi
 to inspect disagreement and edge cases rather than treating the judge as the final
 authority. Budget expert time as part of the evaluation service.
 
+Automated evaluations are one part of a broader way to understand agent
+performance. Combine them, as appropriate, with production monitoring, user
+feedback, manual transcript review, and systematic human evaluation. Each gives
+a different signal; none is a complete substitute for the others. This
+multi-method approach follows [agent-evaluation methodology](https://www.anthropic.com/research/demystifying-evals-for-ai-agents),
+not a Foundry service requirement.
+
+Plan for two distinct evaluation purposes. **Capability evaluations** ask what
+the agent can do and help identify where it needs to improve. **Regression
+evaluations** check whether behavior that worked before still works after a
+change. A capability evaluation can become useful regression evidence as the
+agent improves, but that does not make the purposes or acceptance thresholds
+interchangeable. Assign an owner to review tasks, graders, and results so the
+suite remains meaningful as the product changes.
+
 ## Establish a release policy before tuning
 
 Agree what is blocking, what is advisory, and what evidence is mandatory. A
@@ -81,8 +96,13 @@ by [evaluation workflows](https://learn.microsoft.com/en-us/azure/foundry/observ
 
 ## Adopt a controlled learning loop
 
-Start with a useful baseline, a few understood failures, and a transparent result
-report. Expand coverage as real failure patterns appear. For each improvement,
+Practice eval-driven development: define intended behavior with tasks, run
+evaluations during development, and improve the application against observed
+failures. Start with a useful baseline, a few understood failures, and a
+transparent result report. Expand coverage as real failure patterns appear.
+Read failed transcripts
+or traces to distinguish an application failure from an ambiguous task, a
+misconfigured grader, or an environment problem. For each improvement,
 record what changed in the application, data, evaluator, and judge. If several
 change together, do not attribute the gain to one of them.
 

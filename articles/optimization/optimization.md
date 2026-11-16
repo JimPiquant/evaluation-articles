@@ -20,6 +20,18 @@ Record baseline target/configuration, dataset split/version, evaluator/rubric
 version, judge settings, candidate change, success criteria, safety constraints,
 and latency/cost boundaries. Keep the acceptance set held out from tuning.
 
+State the hypothesis and intended application change before running. Keep the
+task set, rubric, judge, environment, and other relevant settings fixed when you
+want to attribute a difference to that change. If the task, grader, or environment
+also changes, label it as a measurement/design change or a combined experiment;
+do not claim the score movement proves application improvement. If acceptance
+failures inform later tuning, that evidence is no longer held out; create a
+reviewed replacement acceptance version. Success criteria should be specific to
+the task, as described in
+[M03](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests).
+The task/trial distinction and controlled evidence lineage follow
+[M01's agent-evaluation methodology](https://www.anthropic.com/research/demystifying-evals-for-ai-agents).
+
 The [rubric](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rubric-evaluators)
 should express the actual outcome. A changed rubric can raise scores without
 improving the application; treat that as a separate measurement experiment.

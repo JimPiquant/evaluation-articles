@@ -89,6 +89,17 @@ Review operational failure slices with domain experts. Promote approved cases
 into development/calibration data; periodically replenish held-out acceptance
 without contaminating it with routine tuning.
 
+Own the suite as well as the run: assign maintainers for tasks, rubrics, judges,
+and acceptance data. Recheck grader calibration when prompts, judge deployments,
+or policy change, and investigate drift in human-versus-judge disagreements.
+When a capability suite becomes easy for the candidate, keep useful tasks as
+regression checks and add reviewed cases that expose new capability gaps. Do not
+let acceptance data become routine tuning data; replenish it through an approved,
+versioned process. These are suite-maintenance practices from
+[M01](https://www.anthropic.com/research/demystifying-evals-for-ai-agents) and
+[M02](https://www.anthropic.com/research/building-strong-safety-evaluations),
+not prescribed Foundry schedules or dataset sizes.
+
 Budget the complete loop: application calls, tool effects, judge calls, simulation,
 generation, telemetry, storage, and human review. Expose absent cost fields as
 unknown, not zero. Use risk-based suites and cadence to reduce cost without

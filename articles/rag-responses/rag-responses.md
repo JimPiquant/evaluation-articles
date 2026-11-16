@@ -51,6 +51,12 @@ near-matches require interpretation.
 Groundedness measures support from supplied context, not independent factual
 truth. Relevance measures responsiveness, not guaranteed correctness. Use a
 business rubric and outcome checks to cover what each built-in leaves out.
+When policy authority or answer completeness matters, define those as separate
+task-specific criteria: for example, require the effective approved policy
+version and check that every material sub-question is addressed. A relevance or
+groundedness score alone does not establish source authority or coverage.
+See [M03's success-criteria guidance](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests)
+for methodology; this is not a Foundry evaluator contract.
 
 ## Add exact checks where they help
 

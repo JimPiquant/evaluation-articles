@@ -52,12 +52,36 @@ https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evalu
 - Bound generated interactions
 - No production-routing toggles for tests
 
+# Keep the two harnesses distinct
+
+- Agent harness: runtime and tools let the model act
+- Evaluation harness: tasks, trials, evidence, graders, aggregation
+- Reset state and capture environment lineage
+- Isolation improves reproducibility, not representativeness by itself
+
+::: notes
+These are M01 methodology distinctions, not Foundry service requirements:
+https://www.anthropic.com/research/demystifying-evals-for-ai-agents
+:::
+
 # Inspect the failed process
 
 - Intent or information gathering?
 - Wrong tool or invalid parameters?
 - Ignored error or false confirmation?
 - Missing observed candidate attribution?
+
+# Optional Agent Framework path
+
+- Local checks and custom evaluators
+- Foundry evaluator integration
+- Select language and package version
+- Not implemented by the Contoso fixture
+
+::: notes
+Agent Framework APIs complement, but do not redefine, Foundry service contracts:
+https://learn.microsoft.com/en-us/agent-framework/agents/evaluation
+:::
 
 # Grounding and next path
 

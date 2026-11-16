@@ -22,8 +22,42 @@ Do not turn on every available metric and hope the averages explain quality.
 | Was the interaction safe? | Appropriate supported safety checks and human review |
 | Was the experience useful across turns? | Conversation-level quality, completion, and satisfaction |
 
-Use deterministic checks for exact values and effects. Use model judgment for
-open-ended qualities. Retain human review for calibration and disputed decisions.
+Match evidence to the decision: exact values and observed effects need explicit
+checks; ambiguous or disputed cases may need expert review.
+
+## Choose a grading method
+
+Anthropic's [agent-evaluation methodology](https://www.anthropic.com/research/demystifying-evals-for-ai-agents)
+describes three grader categories. A **grader** is logic that scores an aspect
+of a task; one task can use more than one grader.
+
+| Grader category | What it does | Example | Strengths and limits |
+|---|---|---|---|
+| **Code-based** | Applies executable checks to a response, transcript, or outcome | Check that the ticket record exists, a required field matches, or a tool call used the authorized customer ID | Fast, reproducible, and easy to debug for explicit conditions; can be brittle to valid variations and misses qualities that need interpretation |
+| **Model-based** | Uses a model to judge an output against instructions, often a rubric | Judge whether a support response is clear, appropriately escalates, and is supported by retrieved context | Handles nuanced or free-form responses; can be nondeterministic and costly, and must be calibrated against human judgments |
+| **Human** | Has a person assess a response, transcript, or outcome against defined criteria | A subject-matter expert reviews borderline policy answers and explains a disagreement with the judge | Supports expert and contextual judgment and helps calibrate model-based graders; takes time and does not scale as easily |
+
+Select the simplest method that measures the intended outcome. Combine methods
+when they provide distinct evidence—for example, a model-based rubric for
+communication quality, code-based verification of ticket creation, and human
+review of ambiguous cases. A grader can assess a response or a final outcome;
+the success claim in the response is not proof that the outcome occurred.
+M01 describes binary, weighted, and hybrid combinations as design options, not
+as universal acceptance rules.
+
+These are methodology categories, not names for Foundry API types. Foundry
+documentation calls its supported interfaces **evaluators** and defines their
+inputs, levels, outputs, and scales per evaluator. A Foundry built-in evaluator
+may use model judgment, while a custom evaluator has its own documented
+implementation contract. Check those contracts rather than assuming every
+grader category maps to an equivalent Foundry feature.
+
+For a **coding-agent evaluation**, M01 gives a concrete pattern: use unit tests
+to verify code correctness, then use an LLM rubric to assess overall code
+quality. Add other graders or metrics only when they answer a needed question.
+This is Anthropic's coding-agent methodology example, not a Foundry requirement
+or a prescribed combination for every task. For Foundry, select supported
+evaluators and validate their specific input and result contracts.
 
 ## Express quality with a business rubric
 
@@ -74,6 +108,15 @@ they may expose policy ambiguity rather than judge failure. Recheck alignment
 by language, task type, and difficult slice. The
 [human evaluation workflow](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/human-evaluation)
 provides a managed review path.
+
+Test whether the grader measures the intended construct: include known-good
+responses it should accept, known-bad responses it should reject, and borderline
+cases that need human review. A failed task can expose a flawed criterion or
+environment as well as an application defect. Compare disagreements across
+relevant groups, such as task type or language, and recheck calibration when the
+rubric, judge, or input mapping changes. M02's safety-evaluation guidance on
+[grader calibration and construct validity](https://www.anthropic.com/research/building-strong-safety-evaluations)
+is methodology, not a Foundry evaluator contract.
 
 Version the rubric, judge deployment/settings, and mapping. A judge change is a
 measurement change, not automatically an application improvement.

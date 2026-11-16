@@ -53,6 +53,13 @@ Group failures by task, language, document freshness, authorization boundary,
 tool, latency band, and operating condition. Distinguish an improvement on common
 cases from a regression on critical rare cases.
 
+When a result surprises you, check three sources before attributing it to the
+candidate: Was the task solvable and its success criterion valid? Did the grader
+agree with independent review on known-good, known-bad, and ambiguous cases? Did
+the trial run in the intended environment with the expected tools and state?
+Preserve these as distinct failure hypotheses; a broken grader or fixture is not
+an application regression.
+
 ## Compare like with like
 
 Pair baseline and candidate on the same cases and measurement configuration.
@@ -68,6 +75,18 @@ the failure coverage and effect you need to detect, not an arbitrary row count.
 For a simple independent binary-event model, zero failures in a small sample still
 leaves meaningful uncertainty; correlated synthetic or repeated cases weaken
 that model further. Do not promise zero risk from zero observed defects.
+
+For repeated attempts on the same task, M01 distinguishes `pass@k`—at least one
+success among *k* attempts—from `pass^k`—success on every attempt. The first asks
+whether the agent can succeed within the allowed attempts; the second asks
+whether it succeeds consistently across them. State the task, trial conditions,
+and aggregation protocol. These statistics answer different questions and are
+not the ordinary per-item pass rate, an evaluator average, or proof of coverage.
+They are methodology from
+[M01](https://www.anthropic.com/research/demystifying-evals-for-ai-agents),
+not a Foundry result contract. Safety reports should also explain the measured
+construct and uncertainty, consistent with
+[M02](https://www.anthropic.com/research/building-strong-safety-evaluations).
 
 For [model-selection benchmarking](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/benchmark-evaluations),
 the portal provides predefined dataset/evaluation packages and separates target
