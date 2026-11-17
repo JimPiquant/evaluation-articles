@@ -89,8 +89,8 @@ https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/azure-devel
 ::: notes
 Make success concrete: a ticket is created only after confirmation, belongs to
 the right customer and issue, and is not claimed without an observed record.
-M03 recommends task-specific criteria; its examples are not Foundry request
-requirements:
+“Define success criteria and build evaluations” recommends task-specific
+criteria; its examples are not Foundry request requirements:
 https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 :::
 

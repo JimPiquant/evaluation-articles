@@ -76,17 +76,17 @@ For a simple independent binary-event model, zero failures in a small sample sti
 leaves meaningful uncertainty; correlated synthetic or repeated cases weaken
 that model further. Do not promise zero risk from zero observed defects.
 
-For repeated attempts on the same task, M01 distinguishes `pass@k`—at least one
+For repeated attempts on the same task, [“Demystifying evals for AI agents”](https://www.anthropic.com/research/demystifying-evals-for-ai-agents)
+distinguishes `pass@k`—at least one
 success among *k* attempts—from `pass^k`—success on every attempt. The first asks
 whether the agent can succeed within the allowed attempts; the second asks
 whether it succeeds consistently across them. State the task, trial conditions,
 and aggregation protocol. These statistics answer different questions and are
 not the ordinary per-item pass rate, an evaluator average, or proof of coverage.
-They are methodology from
-[M01](https://www.anthropic.com/research/demystifying-evals-for-ai-agents),
+They are methodology from [“Demystifying evals for AI agents”](https://www.anthropic.com/research/demystifying-evals-for-ai-agents),
 not a Foundry result contract. Safety reports should also explain the measured
 construct and uncertainty, consistent with
-[M02](https://www.anthropic.com/research/building-strong-safety-evaluations).
+[“Building strong safety evaluations”](https://www.anthropic.com/research/building-strong-safety-evaluations).
 
 For [model-selection benchmarking](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/benchmark-evaluations),
 the portal provides predefined dataset/evaluation packages and separates target

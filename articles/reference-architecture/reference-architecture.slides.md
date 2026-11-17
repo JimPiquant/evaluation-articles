@@ -30,7 +30,8 @@ flowchart LR
 Conceptual flow only; no claim that Azure resources are provisioned. The agent
 harness lets the model act; the evaluation harness sets up trials, captures and
 grades evidence. Recorded-response evaluation need not invoke an agent harness.
-M01 methodology: https://www.anthropic.com/research/demystifying-evals-for-ai-agents
+This harness distinction follows “Demystifying evals for AI agents”:
+https://www.anthropic.com/research/demystifying-evals-for-ai-agents
 :::
 
 # Separate responsibilities

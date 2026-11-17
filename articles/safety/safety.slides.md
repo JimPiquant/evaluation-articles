@@ -53,8 +53,8 @@ https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/r
 - Inspect tool effects and grader disagreement
 
 ::: notes
-Construct validity and realistic controls are M02 methodology. They do not
-change Foundry score semantics:
+Construct validity and realistic controls follow “Building strong safety
+evaluations.” They do not change Foundry score semantics:
 https://www.anthropic.com/research/building-strong-safety-evaluations
 :::
 

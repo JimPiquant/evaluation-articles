@@ -55,7 +55,7 @@ When policy authority or answer completeness matters, define those as separate
 task-specific criteria: for example, require the effective approved policy
 version and check that every material sub-question is addressed. A relevance or
 groundedness score alone does not establish source authority or coverage.
-See [M03's success-criteria guidance](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests)
+See [“Define success criteria and build evaluations”](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests)
 for methodology; this is not a Foundry evaluator contract.
 
 ## Add exact checks where they help

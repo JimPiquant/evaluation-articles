@@ -42,8 +42,8 @@ date: "2026-11-13"
 - Neither is an ordinary pass rate or coverage proof
 
 ::: notes
-These M01 metrics describe repeated-trial consistency, not a Foundry result
-contract:
+These metrics from “Demystifying evals for AI agents” describe repeated-trial
+consistency, not a Foundry result contract:
 https://www.anthropic.com/research/demystifying-evals-for-ai-agents
 :::
 

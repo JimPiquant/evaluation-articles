@@ -40,7 +40,7 @@ Every arrow carries lineage: task/environment setup, dataset and policy versions
 actual application/model/tool versions, evaluator/rubric/judge settings, and
 evaluation/run identifiers must be sufficient to explain the decision later.
 This harness distinction follows
-[M01](https://www.anthropic.com/research/demystifying-evals-for-ai-agents);
+[“Demystifying evals for AI agents”](https://www.anthropic.com/research/demystifying-evals-for-ai-agents);
 it is a methodology model, not a required Azure topology.
 
 ## Separate runtime, evaluation, and policy

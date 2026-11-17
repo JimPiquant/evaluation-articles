@@ -37,7 +37,7 @@ confirmation, a ticket record exists for the correct customer and issue; without
 confirmation, no ticket is created. Check the persisted effect separately from
 the final message. This makes the criterion specific and observable while
 allowing valid variations in wording and tool sequence. The task-design guidance
-in [M03](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests)
+in [“Define success criteria and build evaluations”](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests)
 is methodology, not a Foundry schema or numeric acceptance target.
 
 Build balanced sets: include cases where a behavior should occur and cases where

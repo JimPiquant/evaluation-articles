@@ -38,7 +38,8 @@ date: "2026-11-13"
 ::: notes
 Groundedness/relevance alone do not establish that the source is authoritative
 or that the answer covers every material sub-question. Define task-specific
-criteria for those outcomes; M03 is methodology, not a Foundry evaluator contract:
+criteria for those outcomes. “Define success criteria and build evaluations”
+is methodology, not a Foundry evaluator contract:
 https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 :::
 

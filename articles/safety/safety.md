@@ -61,7 +61,7 @@ ambiguous requests that call for clarification, and relevant language/population
 slices. Include tool errors and critical policy boundaries using approved safe
 data. Review labels and references. Distinguish diagnostic enriched test sets
 from representative production sampling. This construct-validity framing follows
-[M02](https://www.anthropic.com/research/building-strong-safety-evaluations);
+[“Building strong safety evaluations”](https://www.anthropic.com/research/building-strong-safety-evaluations);
 it does not alter Foundry evaluator scales or thresholds.
 
 Report scored, skipped, errored, and excluded cases for every required risk.

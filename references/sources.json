@@ -37,6 +37,7 @@
     {"id":"M01","url":"https://www.anthropic.com/research/demystifying-evals-for-ai-agents","authority":"Primary agent-evaluation methodology source: tasks, trials, graders, transcripts, outcomes, harnesses, calibration, and suite maintenance; not Foundry API authority","reviewed":"2026-11-16"},
     {"id":"M02","url":"https://www.anthropic.com/research/building-strong-safety-evaluations","authority":"Safety-evaluation methodology: construct validity, realistic scenarios, grader calibration, preregistration, uncertainty, and reproducible reporting; not Foundry safety thresholds or platform requirements","reviewed":"2026-11-16"},
     {"id":"M03","url":"https://platform.claude.com/docs/en/test-and-evaluate/develop-tests","authority":"Define success criteria and build evaluations: task-specific criteria, edge cases, and grading examples; Claude-specific code and illustrative targets are not Foundry contracts","reviewed":"2026-11-16"},
+    {"id":"M04","url":"https://developers.google.com/machine-learning","authority":"Google ML learning-resource directory covering foundational concepts, problem framing, project management, practical guides, and responsible AI; supplementary educational grounding, not agent-evaluation methodology or Foundry product authority","reviewed":"2026-11-17"},
     {"id":"T01","url":"https://pandoc.org/MANUAL.html","authority":"Publishing formats and reference templates","reviewed":"2026-11-12"},
     {"id":"T02","url":"https://github.com/mermaid-js/mermaid-cli","authority":"Diagram renderer","reviewed":"2026-11-13"}
   ]

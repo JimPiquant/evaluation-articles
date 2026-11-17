@@ -47,7 +47,8 @@ https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-regions-limi
 - Record limits before interpreting results
 
 ::: notes
-Scenario realism and construct validity are M02 methodology; retain Foundry's
+Scenario realism and construct validity follow “Building strong safety
+evaluations”; retain Foundry's
 documented support and authorization limits:
 https://www.anthropic.com/research/building-strong-safety-evaluations
 :::

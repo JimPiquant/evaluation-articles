@@ -26,7 +26,9 @@ sources and constrain recommendations rather than inventing a reconciliation.
 The [Evaluation overview](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-overview)
 owns the workflow: choose what to evaluate, select evaluators, run, review and
 improve. [sources.json](sources.json) assigns stable IDs to primary sources.
-Plans map claims to these IDs; articles cite direct URLs so references survive
+Plans and the catalog map claims to these IDs. Reader-facing articles and slides
+refer to sources by their linked article or documentation-section titles, not
+the IDs, and include direct URLs so citations remain meaningful and survive
 export.
 
 The [Agent Framework Evaluation](https://learn.microsoft.com/en-us/agent-framework/agents/evaluation)
@@ -50,6 +52,15 @@ required thresholds, or proof that this repository's sample implements them.
 | M02: [Building strong safety evaluations](https://www.anthropic.com/research/building-strong-safety-evaluations) | Construct validity, realistic and balanced safety scenarios, human calibration, preregistration, uncertainty, and reproducible reporting | Anthropic's safety methodology and internal practices, not Foundry risk categories, thresholds, permissions, or operational requirements |
 | M03: [Define success criteria and build evaluations](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests) | Specific, measurable, achievable, relevant success criteria; task-specific tests, edge cases, and grading examples | The instructions call this link "Develop Tests"; use the page's actual title when citing it. Claude API examples and illustrative numeric targets are not portable Foundry recipes |
 
+### Supplementary ML learning resource
+
+M04, [Google Machine Learning](https://developers.google.com/machine-learning),
+is a directory of foundational and advanced courses and guides on machine
+learning concepts, problem framing, project management, and related practice.
+Use it for general ML education when relevant; it is not a primary source for
+agent-evaluation methodology and does not establish Foundry behavior, evaluators,
+schemas, or APIs.
+
 Official Foundry Agents/Projects SDK documentation is approved implementation
 grounding. Versioned maintainer samples outrank old local snippets. Architecture
 guidance supports recommendations but cannot establish an undocumented API,
@@ -60,8 +71,8 @@ Pandoc (T01) and Mermaid CLI (T02). Internal research, older articles, and archi
 material are discovery leads, not independent authority for current claims.
 
 Review dates describe content inspection, not just HTTP success or Azure
-execution. M01-M03 were inspected on November 16, 2026; existing source dates and
-revisions remain unchanged. No immutable revision is recorded for these three
+execution. M01-M03 were inspected on November 16, 2026; M04's resource directory
+was inspected on November 17, 2026. No immutable revision is recorded for these
 web pages; recheck their content before release. Adding them does not establish
 that existing articles have been reviewed against them. Recheck applicability,
 API surface, status, and parameters before a release.
@@ -206,10 +217,10 @@ Label product behavior through a source, organizational advice as a recommendati
 and example thresholds as illustrative policy. Content-harm default threshold 3
 means >3 fails; a stricter policy is not a Foundry default.
 
-For methodology claims, cite M01-M03 where the recommendation appears, retain
-their established terminology, and explain its applicability to the chosen
-evaluation unit and decision. Register the source IDs in the affected plan and
-catalog entry when adopting that guidance. A source's illustrative YAML or
+For methodology claims, cite sources by their linked article or section titles
+where the recommendation appears, retain established terminology, and explain
+applicability to the chosen evaluation unit and decision. Register source IDs in
+the affected plan and catalog entry when adopting that guidance. A source's illustrative YAML or
 numeric target is not an implemented sample feature, an SDK schema, or a safety
 guarantee. Report grader calibration against human judgments, relevant
 configuration and lineage, and uncertainty appropriate to the claim.

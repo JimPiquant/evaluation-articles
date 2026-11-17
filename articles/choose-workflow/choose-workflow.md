@@ -91,8 +91,9 @@ Make success observable rather than aspirational. For a Contoso ticket task,
 "help the customer" is too vague; a testable criterion is: *after the customer
 confirms escalation, the ticket record exists for that customer and issue, and
 the final response does not claim creation without the returned record*. This
-captures both a required effect and truthful communication. M03 recommends
-[specific, task-relevant criteria](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests);
+captures both a required effect and truthful communication. [“Define success
+criteria and build evaluations”](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests)
+recommends specific, task-relevant criteria;
 its examples are methodology, not Foundry request requirements.
 
 This local JSON illustrates a decision artifact, **not a Foundry request schema**:

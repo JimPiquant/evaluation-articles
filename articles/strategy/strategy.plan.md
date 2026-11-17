@@ -8,25 +8,32 @@ Outcome: leaders can assign owners, fund evidence collection, and approve a rele
 IT leaders, product owners, and architects. No code in article or slides.
 
 ## Outline
-1. Decide which customer outcomes matter.
-2. Allocate product, engineering, safety, and platform ownership.
-3. Separate quality, safety, reliability, and operational evidence.
-4. Combine automated evaluations with production monitoring, user feedback,
-   manual transcript review, and systematic human evaluation as appropriate.
-5. Distinguish capability evaluations from regression evaluations and assign
-   owners for suite maintenance.
-6. Establish calibrated acceptance, escalation, and budget policies.
-7. Adopt an evaluation-driven learning loop with trace feedback and held-out
-   validation.
-8. Use a launch-readiness checklist.
+1. Explain why evaluation should begin early and how it prevents reactive,
+   production-only learning.
+2. Build an initial task set from manual checks, user feedback, and observed
+   failures; prioritize by customer impact.
+3. Make tasks unambiguous and solvable; use reference solutions to check task
+   and grader configuration.
+4. Balance tasks for behaviors that should and should not occur.
+5. Provide a stable, isolated environment and independently verified outcomes.
+6. Select graders deliberately; use partial credit for diagnosis without
+   weakening required release policy, and calibrate model judgments with people.
+7. Review transcripts and grades to identify agent, task, grader, and harness
+   failures.
+8. Watch capability suites for saturation while retaining useful regression
+   coverage.
+9. Establish suite ownership, eval-driven development, holistic evidence,
+   operating budget, and a leadership launch checklist.
 
 ## Prerequisites and boundaries
 No deployed agent required. Contoso Support is illustrative, not a production design.
 Avoid compliance guarantees, universal sample sizes, and assumed evaluator defaults.
-Use M01 for evaluation methodology, not Foundry service behavior. No single
-evaluation method provides a complete picture; no fixed task count guarantees
-confidence. Capability and regression evaluations have different purposes and
-do not imply universal pass thresholds.
+Adapt M01's zero-to-one roadmap for a leadership audience; do not copy its
+illustrative task counts or imply the sequence is a Foundry requirement. Use M01
+for evaluation methodology, not Foundry service behavior. No single evaluation
+method provides a complete picture; no fixed task count guarantees confidence.
+Capability and regression evaluations have different purposes and do not imply
+universal pass thresholds.
 
 ## References
 F01: [workflow model](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-overview).
@@ -35,7 +42,9 @@ F15: [permissions](https://learn.microsoft.com/en-us/azure/foundry/observability
 M01: [agent-evaluation methodology](https://www.anthropic.com/research/demystifying-evals-for-ai-agents).
 
 ## Acceptance
-Concrete owner/decision table, multi-method learning loop, separate capability
-and regression purposes, explicit suite ownership, separate recommendation
-versus product fact, no code, source-backed claims, and a leadership slide
-narrative. Editorial state: draft.
+The article follows M01's steps in order, distinguishes methodology from
+Foundry-supported workflows, includes customer outcomes and accountable owners,
+balanced tasks, harness/grader/transcript review, suite saturation and ownership,
+complementary evidence methods, and a leadership checklist. No code, fixed task
+count, universal threshold, or conflation of partial credit with gate acceptance.
+The slide narrative accurately summarizes the roadmap. Editorial state: draft.

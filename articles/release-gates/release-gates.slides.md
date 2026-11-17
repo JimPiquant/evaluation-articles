@@ -32,6 +32,12 @@ date: "2026-11-13"
 - Disclose approved analytical exclusions
 - Never turn incomplete coverage into a pass
 
+::: notes
+The distinction between diagnostic partial credit and the local release policy
+is grounded in “Demystifying evals for AI agents”:
+https://www.anthropic.com/research/demystifying-evals-for-ai-agents
+:::
+
 # Prove the negative case
 
 - Baseline generation succeeds

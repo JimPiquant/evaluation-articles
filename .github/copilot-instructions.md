@@ -41,8 +41,10 @@ and [Develop Tests](https://platform.claude.com/docs/en/test-and-evaluate/develo
 5. Microsoft Cloud Adoption Framework, the Azure Well-Architected Framework, and Architecture Center for support
    architectural recommendations, not undocumented evaluation requirements.
 
-Consult `references/sources.json` and `references/grounding.md`. Include direct
-URLs where claims appear and source IDs in the plan/catalog. Record the actual
+Consult `references/sources.json` and `references/grounding.md`. In reader-facing
+articles and slides, refer to grounding sources by their linked article title or
+documentation section title, not by source ID. Reserve source IDs for plans and
+the catalog. Include direct URLs where claims appear. Record the actual
 verification date; do not imply that a link check verifies product behavior.
 Recheck volatile APIs and feature status before release.
 

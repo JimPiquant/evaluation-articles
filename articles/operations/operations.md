@@ -96,8 +96,8 @@ When a capability suite becomes easy for the candidate, keep useful tasks as
 regression checks and add reviewed cases that expose new capability gaps. Do not
 let acceptance data become routine tuning data; replenish it through an approved,
 versioned process. These are suite-maintenance practices from
-[M01](https://www.anthropic.com/research/demystifying-evals-for-ai-agents) and
-[M02](https://www.anthropic.com/research/building-strong-safety-evaluations),
+[“Demystifying evals for AI agents”](https://www.anthropic.com/research/demystifying-evals-for-ai-agents) and
+[“Building strong safety evaluations”](https://www.anthropic.com/research/building-strong-safety-evaluations),
 not prescribed Foundry schedules or dataset sizes.
 
 Budget the complete loop: application calls, tool effects, judge calls, simulation,

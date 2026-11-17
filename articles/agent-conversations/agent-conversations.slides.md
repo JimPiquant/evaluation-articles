@@ -60,7 +60,8 @@ https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evalu
 - Isolation improves reproducibility, not representativeness by itself
 
 ::: notes
-These are M01 methodology distinctions, not Foundry service requirements:
+These are methodology distinctions from “Demystifying evals for AI agents,”
+not Foundry service requirements:
 https://www.anthropic.com/research/demystifying-evals-for-ai-agents
 :::
 

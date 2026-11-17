@@ -27,9 +27,8 @@ they do not override the release contract. If a required criterion is missing,
 skipped, errored, or below its blocking threshold, preserve that detail and block
 acceptance. An explicitly approved analytical exclusion may be useful for
 diagnosis, with its denominator disclosed; it cannot turn incomplete required
-evidence into a passing release. M01 discusses partial credit as an evaluation
-methodology option:
-[Demystifying evals for AI agents](https://www.anthropic.com/research/demystifying-evals-for-ai-agents).
+evidence into a passing release. [“Demystifying evals for AI agents”](https://www.anthropic.com/research/demystifying-evals-for-ai-agents)
+discusses partial credit as an evaluation methodology option.
 
 Missing metrics, nonfinite scores, zero scored rows, inconsistent counts, unknown
 candidate version, and truncated output must block. The

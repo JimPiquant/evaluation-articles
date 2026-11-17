@@ -45,8 +45,8 @@ fresh isolated state where practical, and record environment/tool/policy version
 that can affect outcomes. Environment fidelity should match the question; a
 sandbox can validate behavior but is not automatically representative of
 production. Do not confuse isolation guidance with a Foundry deployment
-requirement. This follows
-[M01's trial methodology](https://www.anthropic.com/research/demystifying-evals-for-ai-agents).
+requirement. This follows the trial guidance in
+[“Demystifying evals for AI agents”](https://www.anthropic.com/research/demystifying-evals-for-ai-agents).
 
 Mixed canary traffic is useful for operational rollout, but not automatically
 clean candidate-comparison data. Preserve actual served version. Missing version

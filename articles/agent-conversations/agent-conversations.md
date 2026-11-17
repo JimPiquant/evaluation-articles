@@ -30,7 +30,7 @@ start from a known environment state where practical, reset fixture data, and
 record relevant tool, policy, and environment versions. Match the environment to
 the decision being studied; isolation improves reproducibility but does not by
 itself make results representative. This distinction follows
-[M01's agent-evaluation methodology](https://www.anthropic.com/research/demystifying-evals-for-ai-agents),
+[“Demystifying evals for AI agents”](https://www.anthropic.com/research/demystifying-evals-for-ai-agents),
 not a Foundry service requirement.
 
 For Contoso, "your ticket has been created" is a communication claim. A returned

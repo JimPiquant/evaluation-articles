@@ -63,8 +63,8 @@ date: "2026-11-13"
 - No universal refresh cadence or row count
 
 ::: notes
-Suite-maintenance practices are grounded in M01/M02 methodology, not a Foundry
-schedule requirement:
+Suite-maintenance practices are grounded in “Demystifying evals for AI agents”
+and “Building strong safety evaluations,” not a Foundry schedule requirement:
 https://www.anthropic.com/research/demystifying-evals-for-ai-agents
 https://www.anthropic.com/research/building-strong-safety-evaluations
 :::

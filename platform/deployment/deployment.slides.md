@@ -37,7 +37,7 @@ date: "2026-11-13"
 
 ::: notes
 Isolation supports repeatability but does not establish representativeness or
-constitute a Foundry deployment requirement. M01 methodology:
+constitute a Foundry deployment requirement. See “Demystifying evals for AI agents”:
 https://www.anthropic.com/research/demystifying-evals-for-ai-agents
 :::
 

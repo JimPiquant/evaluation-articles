@@ -77,7 +77,7 @@ https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/c
 ::: notes
 Check that graders measure the intended construct; task, grader, and environment
 defects can look like candidate failures. Recheck bias and calibration when the
-judge, rubric, or mapping changes. M02 methodology:
+judge, rubric, or mapping changes. See “Building strong safety evaluations”:
 https://www.anthropic.com/research/building-strong-safety-evaluations
 :::
 

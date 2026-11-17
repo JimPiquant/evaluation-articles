@@ -78,7 +78,7 @@ count as evidence. Include realistic multi-turn context where the risk depends
 on the interaction, plus benign or ambiguous controls that should not trigger
 the same finding. Record expected behavior, test conditions, and important
 limitations before interpreting a result. This follows
-[M02's safety-evaluation methodology](https://www.anthropic.com/research/building-strong-safety-evaluations);
+[“Building strong safety evaluations”](https://www.anthropic.com/research/building-strong-safety-evaluations);
 it does not replace Foundry's documented supported risk categories, authorization,
 or execution limits.
 
