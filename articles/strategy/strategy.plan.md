@@ -37,6 +37,8 @@ universal pass thresholds.
 
 ## References
 F01: [workflow model](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-overview).
+F07: [rubric evaluators](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rubric-evaluators);
+recommendation and scoring options checked in documentation on 2026-11-18.
 F11: [human review](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/human-evaluation).
 F15: [permissions](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluation-permissions).
 M01: [agent-evaluation methodology](https://www.anthropic.com/research/demystifying-evals-for-ai-agents).

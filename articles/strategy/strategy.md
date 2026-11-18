@@ -86,12 +86,15 @@ identifies these categories:
 * Rubric
 * Custom 
 
-While Anthropic uses:
-* Model
+While Anthropic uses grading method:
+* Model 
 * Code
 * Human
 
-Or you could categorize by the application's architecure:
+As well as: 
+* Capability (quality) vs regression
+
+Or you could categorize by the applicability to an application architecture:
 * Chat bot
 * RAG
 * Agent
@@ -158,35 +161,42 @@ stable and isolate trials from leftover state, shared data, or resource problems
 where practical. Use a target and tools that represent the behavior being
 evaluated, while preventing test runs from mutating real customer records.
 
-### Step 5: Choose graders for the question
+### Step 5: Choose graders with care
 
-A **grader** is scoring logic for an aspect of the task. The article
-[“Demystifying evals for AI agents”](https://www.anthropic.com/research/demystifying-evals-for-ai-agents)
-describes code-based, model-based, and human graders.  Cost and effort increases for each
-cataegory.  Microsoft Foundry supports all 3 types.
+A **grader** is scoring logic, or checker, for an aspect of the task, and can be 
+categorized as code-based, model-based, or human graders.  
+Cost and effort increases for each category.  
+Microsoft Foundry supports all 3 types of graders and workflows.
 
-Use deterministic checks where a condition is exact, such as whether a ticket
-was created for the correct customer. Use a model-based grader when judgment
-requires interpreting open-ended language. Use human review for expert
-assessment, ambiguous cases, and calibration. A task can combine methods when
-each provides distinct evidence.
+Use code-based (deterministic) graders where a condition is exact, such as
+whether a ticket was created for the correct customer. Use a model-based grader,
+for example, an LLM judging a response against a rubric, when judgment requires
+interpreting open-ended language. Use human review for expert assessment,
+ambiguous cases, and test calibration. A task can combine methods when each
+provides distinct evidence.
 
-💡A Microsoft [recommended strategy](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rubric-evaluators)
-is to use a rubric evaluator as the primary measure of agent quality. A rubric
-evaluator is a not a single test, but is instead a **set** of criteria with **weights** 
-to determine the relative importance for each test. Anthropic similarly recommends using
-deterministic graders alongside of LLM graders.  
+A reference answer can support either method: code can check whether a returned
+refund amount matches the expected amount, while an LLM can judge whether an
+explanation conveys the same policy as the reference answer.
+
+💡 Microsoft recommends using [rubric evaluators](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rubric-evaluators)
+as the primary measure of domain-specific agent quality and policy adherence,
+alongside built-in checks for concerns such as groundedness and tool-use
+accuracy. A quality rubric can use ratings that you optionally weight or a
+pass/fail checklist.
 
 For model graders, use clear criteria, compare judgments with independent human
 review, and revisit disagreements. Let a grader report that evidence is
-insufficient rather than forcing a guess. Partial credit can help diagnose
-progress on a multi-part task. Teams can choose binary, weighted, or hybrid
+insufficient rather than forcing a guess by giving it a way out. Partial 
+credit using rubric weighting can help 
+track progress on a multi-part task. Teams can choose binary, weighted, or hybrid
 scoring according to the decision; the release policy must still define which
 outcomes and evidence are required to pass. 
 
-Avoid requiring a particular sequence of tool calls unless the sequence itself
-is required by policy—for example, obtaining consent before an action. Grade the
-intended outcome and necessary constraints, allowing valid alternative paths.
+Avoid testing for a particular sequence of tool calls unless the sequence itself
+is required by policy, e.g. obtaining consent before an action. Grade the
+intended outcome and necessary constraints, allowing the solution to take
+valid alternative paths.
 
 ## Maintain and use the eval long-term
 ### Step 6: Read transcripts and grades
@@ -202,9 +212,7 @@ to justify a product decision.
 Capability evaluations ask what the agent can do and where it should improve.
 When the agent reliably passes the current capability tasks, those tasks may
 stop providing a useful signal of further improvement. Keep useful cases as
-regression evaluations—checks that
-previously working behavior still works—and add reviewed tasks that reveal new
-gaps. Do not treat either purpose as prescribing a universal pass threshold.
+regression evaluations and add reviewed tasks that reveal new gaps.
 
 ### Step 8: Maintain the suite as product work
 
@@ -227,12 +235,11 @@ complete substitute for production monitoring, user feedback, A/B tests, manual
 transcript review, or systematic human evaluation. Each offers a different
 signal: automated tasks support repeatable checks before release; production
 signals reveal real usage; people help interpret quality and disagreement.
-Choose a combination that fits the decision and risk. This multi-method
-recommendation follows the [article's section on combining methods for a
-holistic understanding of agents](https://www.anthropic.com/research/demystifying-evals-for-ai-agents),
-not a Foundry service requirement. The Foundry
+Choose a combination that fits the business objectives and risk tolerence. 
+
+For human reviews, consider the
 [human evaluation workflow](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/human-evaluation)
-is one documented option for structured review.
+in Foundry to add structure to the review process.
 
 ## Set policy and fund the full loop
 
@@ -250,14 +257,14 @@ coverage. Follow the relevant Foundry
 [evaluation permissions](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluation-permissions)
 for the selected workflow.
 
-### Leadership launch checklist
+### Launch checklist
 
 - The customer outcome, task success criteria, and unacceptable failures are clear.
 - Product, engineering, safety, data, and platform owners know their decisions.
 - Tasks are balanced, reviewable, and grounded in observable evidence.
 - The team can distinguish an agent failure from a task, grader, or environment failure.
-- Required coverage, thresholds, exceptions, and rollback authority are documented.
+- Required coverage, thresholds, exceptions, and rollback authority are known and documented.
 - Suite maintenance, evidence retention, access, and full operating cost have owners.
 
 Continue with [workflow selection](../choose-workflow/choose-workflow.md) or the
-[architecture capstone](../reference-architecture/reference-architecture.md).
+[referendc architecture](../reference-architecture/reference-architecture.md).
