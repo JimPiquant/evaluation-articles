@@ -94,6 +94,16 @@ checklists without code. Use the Contoso Support scenario consistently: knowledg
 retrieval, customer-authorized order lookup, and confirmed ticket creation.
 Separate product fact, editorial recommendation, and illustrative policy.
 
+Make guidance decision-oriented: explain when a recommendation applies, why it
+matters, and what tradeoffs affect the choice. Keep evaluation purpose, grading
+method, application architecture, and evaluation level distinct. Connect
+general methodology to documented Foundry capabilities without assuming a
+one-to-one mapping. Use concise examples and reserve tip callouts for practical
+advice readers might otherwise miss.
+
+For a structured editorial and grounding review, use the
+[evaluation article review skill](skills/evaluation-article-review/SKILL.md).
+
 Use only the catalog statuses `planned`, `draft`, `review`, `ready`, and `published`.
 `draft` means authored, not customer-validated or externally published. `review`
 means technical/editorial review is pending or in progress. `ready` means the
