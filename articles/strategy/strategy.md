@@ -86,13 +86,14 @@ identifies these categories:
 * Rubric
 * Custom 
 
-While Anthropic uses grading method:
+While Anthropic uses grading methods:
 * Model 
 * Code
 * Human
 
 As well as: 
 * Capability (quality) vs regression
+* Workflow 
 
 Or you could categorize by the applicability to an application architecture:
 * Chat bot

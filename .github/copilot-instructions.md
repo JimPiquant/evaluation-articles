@@ -94,6 +94,11 @@ checklists without code. Use the Contoso Support scenario consistently: knowledg
 retrieval, customer-authorized order lookup, and confirmed ticket creation.
 Separate product fact, editorial recommendation, and illustrative policy.
 
+Use professional, clear language rather than shortening sentences at the
+expense of meaning. Prefer precise verbs and complete objects over vague
+shorthand: write "services integrate with a VNet" rather than "services meet a
+VNet", and "verify DNS returns the expected IP address" rather than "prove DNS".
+
 Make guidance decision-oriented: explain when a recommendation applies, why it
 matters, and what tradeoffs affect the choice. Keep evaluation purpose, grading
 method, application architecture, and evaluation level distinct. Connect

@@ -12,7 +12,13 @@ date: "2026-11-13"
 - Approve release
 - Detect operational drift
 
-# Define task and purpose
+::: notes
+The workshop follows Microsoft Learn's [Build an evaluation workflow](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-overview#build-an-evaluation-workflow):
+choose what to evaluate, select evaluators, run the evaluation, then review and
+improve.
+:::
+
+# 1. Choose what to evaluate: task and purpose
 
 - Task: test inputs and success criteria
 - Trial: one attempt at a task
@@ -22,10 +28,10 @@ date: "2026-11-13"
 ::: notes
 Task and trial are agent-evaluation methodology terms. Capability and regression
 describe different evaluation purposes, not evaluation units or execution tools.
-Source: https://www.anthropic.com/research/demystifying-evals-for-ai-agents
+See [Demystifying evals for AI agents](https://www.anthropic.com/research/demystifying-evals-for-ai-agents).
 :::
 
-# Choose the unit
+# 1. Choose what to evaluate: unit
 
 - Turn: one response in context
 - Conversation: complete interaction outcome
@@ -36,7 +42,7 @@ Messages alone do not select conversation-level scoring. Specify the level:
 https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evaluation-conversations
 :::
 
-# Choose the source
+# 1. Choose what to evaluate: evidence
 
 - Precomputed responses
 - Responses generated at run time
@@ -51,7 +57,7 @@ https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evalu
 https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evaluation-targets
 :::
 
-# Match criteria to outcomes
+# 2. Select evaluators
 
 - Business rubric
 - Compatible Foundry evaluators
@@ -63,18 +69,6 @@ Anthropic uses grader for scoring logic that may be code-based, model-based, or
 human. Foundry's evaluator is a product interface. These terms are related but
 not interchangeable API names.
 Methodology: https://www.anthropic.com/research/demystifying-evals-for-ai-agents
-:::
-
-# Choose the execution surface
-
-- Portal for exploration/review
-- SDK for controlled integration
-- CLI or CI/CD for repeatability
-- Monitoring for live sampling
-
-::: notes
-Evaluation CLI is an independently versioned preview extension:
-https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/azure-developer-cli-evaluation
 :::
 
 # Write the evaluation contract
@@ -94,6 +88,31 @@ criteria; its examples are not Foundry request requirements:
 https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 :::
 
+# 3. Run the evaluation
+
+- On demand during development
+- In CI/CD for promotion decisions
+- On a recurring basis for production monitoring
+- Choose the portal, SDK, or CLI as appropriate
+
+::: notes
+Cadence and execution tooling are separate choices. See
+[Run agent evaluations with the azd CLI (preview)](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/azure-developer-cli-evaluation)
+for the independently versioned evaluation extension.
+:::
+
+# 4. Review and improve
+
+- Verify candidate identity and required results
+- Inspect individual failures behind the metrics
+- Fix recurring issues
+- Rerun comparable cases to check for improvement
+
+::: notes
+A strong communication score does not offset a missing ticket record. Inspect
+the evidence to distinguish an agent failure from a gap in the evaluation.
+:::
+
 # Avoid the false shortcuts
 
 - Dataset registration is not always required
@@ -103,7 +122,7 @@ https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 
 # Grounding and next path
 
-[Overview](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-overview)
+[Build an evaluation workflow](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-overview#build-an-evaluation-workflow)
 
 [Datasets](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluation-datasets)
 
