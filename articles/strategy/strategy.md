@@ -268,4 +268,4 @@ for the selected workflow.
 - Suite maintenance, evidence retention, access, and full operating cost have owners.
 
 Continue with [workflow selection](../choose-workflow/choose-workflow.md) or the
-[referendc architecture](../reference-architecture/reference-architecture.md).
+[reference architecture](../reference-architecture/reference-architecture.md).

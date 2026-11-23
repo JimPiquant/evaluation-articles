@@ -143,6 +143,13 @@ new default. Resolve the exact surface/version with maintained documentation or
 support before adopting it. No assumption that both statements imply the same
 availability.
 
+As of 2026-11-19, the [built-in catalog](https://learn.microsoft.com/en-us/azure/foundry/concepts/built-in-evaluators)
+labels its rubric evaluator preview, while the
+[rubric reference](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rubric-evaluators)
+labels safety and task-level rubrics preview but does not label the quality
+rubric preview. Confirm the status and scoring options for the specific rubric
+and interface; an absent preview label alone does not establish availability.
+
 The red-teaming concept page lists five cloud regions, while the general
 [region/limit reference](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-regions-limits-virtual-network)
 lists two red-teaming regions. Do not merge those lists into an invented guarantee.

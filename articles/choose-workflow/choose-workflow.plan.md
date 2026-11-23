@@ -8,8 +8,8 @@ Outcome: a written evaluation contract and an appropriate next how-to.
 Developers new to evaluations; architects can use the decision tables.
 
 ## Outline
-1. Choose what to evaluate: name the decision, task, and purpose; choose a turn
-   or conversation and an evidence source.
+1. Choose what to evaluate: name the decision, task, and purpose; consult the
+   evaluator catalog; choose a turn or conversation and an evidence source.
 2. Select evaluators: define observable Contoso success criteria, choose
    compatible graders, and capture the choices in an illustrative contract.
 3. Run the evaluation: choose the cadence and execution surface separately.
@@ -28,9 +28,11 @@ purpose, or execution surface.
 ## References
 F01: [Build an evaluation workflow](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-overview#build-an-evaluation-workflow)
 (four-step structure verified 2026-11-19).
-F02: [catalog](https://learn.microsoft.com/en-us/azure/foundry/concepts/built-in-evaluators).
+F02: [catalog](https://learn.microsoft.com/en-us/azure/foundry/concepts/built-in-evaluators)
+(listing reviewed 2026-11-19).
 F04: [datasets](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluation-datasets).
 F06: [levels](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evaluation-conversations).
+F07: [rubric evaluators](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rubric-evaluators).
 F13: [CLI](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/azure-developer-cli-evaluation).
 F28: [precomputed responses](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evaluation-datasets).
 F29: [responses generated at run time](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evaluation-targets).

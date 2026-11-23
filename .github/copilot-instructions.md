@@ -68,6 +68,10 @@ include `title`, `subtitle`, `author`, and `date`; use level-one slide headings
 and `::: notes` for presenter notes. Write a curated narrative, not a prose dump.
 Markdown is canonical; Office files are generated, not separately edited masters.
 
+In articles and PowerPoint decks, introduce each topic and present its main points
+before explaining the details. In decks, sequence the slides so this progression
+is clear to the audience.
+
 Treat topic content as reusable knowledge and presentations as curated adaptations.
 Keep technical facts, executable examples, and diagrams canonical wherever
 practical. Reuse an article body for Word and full-length blog publication rather
@@ -98,6 +102,10 @@ Use professional, clear language rather than shortening sentences at the
 expense of meaning. Prefer precise verbs and complete objects over vague
 shorthand: write "services integrate with a VNet" rather than "services meet a
 VNet", and "verify DNS returns the expected IP address" rather than "prove DNS".
+Avoid vague or unnecessary caveats that distract from the point. For example,
+when defining evaluation terms from a methodology source, cite the source
+directly instead of adding "it is not a Foundry request schema" unless that
+distinction is relevant to the reader.
 
 Make guidance decision-oriented: explain when a recommendation applies, why it
 matters, and what tradeoffs affect the choice. Keep evaluation purpose, grading

@@ -1,12 +1,12 @@
 {
   "sources": [
     {"id":"F01","url":"https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-overview","authority":"Foundry workflow overview","reviewed":"2026-11-13","revision":"25173d4271b56d582b8a40cb6cfd66bdef989633"},
-    {"id":"F02","url":"https://learn.microsoft.com/en-us/azure/foundry/concepts/built-in-evaluators","authority":"Evaluator catalog and supported levels","reviewed":"2026-11-12"},
+    {"id":"F02","url":"https://learn.microsoft.com/en-us/azure/foundry/concepts/built-in-evaluators","authority":"Evaluator catalog and supported levels","reviewed":"2026-11-19","revision":"9f569454df894e4187555a2587a75fe1a2afcde5"},
     {"id":"F03","url":"https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evaluation","authority":"Cloud SDK prerequisites and setup","reviewed":"2026-11-12"},
     {"id":"F04","url":"https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluation-datasets","authority":"Dataset workflow selection","reviewed":"2026-11-12"},
     {"id":"F05","url":"https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluation-dataset-schema","authority":"Dataset schema reference","reviewed":"2026-11-12"},
     {"id":"F06","url":"https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evaluation-conversations","authority":"Conversation workflow and evaluator compatibility","reviewed":"2026-11-13","revision":"f09feb61a74b8013e231f9bb9f481b3cc2441276"},
-    {"id":"F07","url":"https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rubric-evaluators","authority":"Rubric generation, criteria, and scores","reviewed":"2026-11-13","revision":"3f372af1290f0e9ba3d05d8c727aa6a62ee00412"},
+    {"id":"F07","url":"https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rubric-evaluators","authority":"Rubric generation, criteria, and scores","reviewed":"2026-11-19","revision":"9f569454df894e4187555a2587a75fe1a2afcde5"},
     {"id":"F08","url":"https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/risk-safety-evaluators","authority":"Risk/safety evaluator semantics","reviewed":"2026-11-12"},
     {"id":"F09","url":"https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evaluation-results","authority":"Result retrieval and per-item evidence","reviewed":"2026-11-12"},
     {"id":"F10","url":"https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cluster-analysis","authority":"Failure clustering and export limitations","reviewed":"2026-11-12"},
