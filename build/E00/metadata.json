@@ -43,12 +43,12 @@
   "outputs": [
     {
       "path": "E00/E00.docx",
-      "sha256": "6b824036aad9003e2a260dffc50dfaae59b8b14ba86bc945751f54e17c7d1430",
-      "bytes": 19646,
+      "sha256": "6cefcec8d9801ef39b8b1a0ec06c480c3e3b52a313e878d42186b8960f09fe9f",
+      "bytes": 19783,
       "checks": {
         "zip_crc_and_xml": "passed",
-        "reference_urls": 8,
-        "hyperlinks": 8,
+        "reference_urls": 9,
+        "hyperlinks": 9,
         "embedded_media": 0,
         "visual_review": "not_performed"
       }
@@ -56,17 +56,17 @@
   ],
   "diagrams": [],
   "source": {
-    "commit": "21a49f37cc9bc049a0e4ac50c526c09846ad2766",
+    "commit": "e2d7c7f7cfd6f565acb8eb386dc81b7927363bd4",
     "dirty": true,
-    "source_bundle_sha256": "9f9fd74476e013b8896b6f315382c9c98f3891923685bb01001a5906ac22013f",
+    "source_bundle_sha256": "5940f7504f75e5bca2ab64c3ac59a95cb9809f495d2923eef2327cb0db5d18ab",
     "files": [
       {
         "path": "articles/strategy/strategy.md",
-        "sha256": "e6701560931a76196a6734f6c97a01457f8fac16392d3c6291a1e494255531a4"
+        "sha256": "b4e7407e4b31e36cf37ac84214d6b4b5fecfe6b7684b43fe4ca32a8486b0bf79"
       },
       {
         "path": "articles/strategy/strategy.plan.md",
-        "sha256": "1f119a359a8ec81138fef9373cd5cec9670edf547fc8007591e281f20003fecb"
+        "sha256": "7e483ef3f8554ac2c43385563c9450d39ab90033b155a571642c817fcb31290a"
       },
       {
         "path": "articles/strategy/strategy.slides.md",
